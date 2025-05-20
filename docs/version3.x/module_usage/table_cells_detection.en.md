@@ -28,7 +28,7 @@ The Table Cell Detection Module is a key component of the table recognition task
 <td rowspan="2">35.00 / 10.45</td>
 <td rowspan="2">495.51 / 495.51</td>
 <td rowspan="2">124M</td>
-<td rowspan="2">RT-DETR is the first real-time end-to-end object detection model. The Baidu PaddlePaddle Vision team pre-trained on a self-built table cell detection dataset based on the RT-DETR-L as the base model, achieving good performance in detecting both wired and wireless table cells.</td>
+<td rowspan="2">RT-DETR is a real-time end-to-end object detection model. The Baidu PaddlePaddle Vision team pre-trained on a self-built table cell detection dataset based on the RT-DETR-L as the base model, achieving good performance in detecting both wired and wireless table cells.</td>
 </tr>
 <tr>
 <td>RT-DETR-L_wireless_table_cell_det</td>
@@ -81,7 +81,7 @@ The Table Cell Detection Module is a key component of the table recognition task
 
 ## III. Quick Start
 
-> ❗ Before starting quickly, please first install the PaddleOCR wheel package. For details, please refer to the [installation tutorial](../ppocr/installation.md).
+> ❗ Before starting quickly, please first install the PaddleOCR wheel package. For details, please refer to the [installation tutorial](../installation.md).
 
 You can quickly experience it with one command:
 
@@ -330,6 +330,6 @@ The relevant methods, parameters, etc., are described as follows:
 
 ## IV. Secondary Development
 
-Since PaddleOCR does not directly provide training for the table cell detection module, if you need to train a table cell detection model, you can refer to the [PaddleX Table Cell Detection Module Secondary Development](https://paddlepaddle.github.io/PaddleX/latest/module_usage/tutorials/ocr_modules/table_cells_detection.html#_4) section for training. The trained model can be seamlessly integrated into the PaddleOCR API for inference.
+Since PaddleOCR does not directly provide training for the table cell detection module, if you need to train a table cell detection model, you can refer to the [PaddleX Table Cell Detection Module Secondary Development](https://paddlepaddle.github.io/PaddleX/latest/en/module_usage/tutorials/ocr_modules/table_cells_detection.html#iv-secondary-development) section for training. The trained model can be seamlessly integrated into the PaddleOCR API for inference.
 
 ## V. FAQ

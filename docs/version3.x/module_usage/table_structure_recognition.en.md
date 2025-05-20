@@ -2,7 +2,7 @@
 comments: true
 ---
 
-# Table Structure Recognition Module Usage Tutorial
+# Table Structure Recognition Module Tutorial
 
 ## 1. Overview
 
@@ -97,7 +97,7 @@ Table structure recognition is an important component of table recognition syste
 
 ## 3. Quick Start
 
-> ❗ Before getting started, please install the PaddleOCR wheel package. For details, please refer to the [Installation Tutorial](../ppocr/installation.md).
+> ❗ Before getting started, please install the PaddleOCR wheel package. For details, please refer to the [Installation Tutorial](../installation.en.md).
 
 Quickly experience with a single command:
 
@@ -290,7 +290,7 @@ Descriptions of related methods and parameters are as follows:
 
 ## 4. Secondary Development
 
-If the above models are still not ideal for your scenario, you can try the following steps for secondary development. Here, training `SLANet` is used as an example, and for other models, just replace the corresponding configuration file. First, you need to prepare a dataset for table structure recognition, which can be prepared with reference to the format of the [table structure recognition demo data](https://paddle-model-ecology.bj.bcebos.com/paddlex/data/table_rec_dataset_examples.tar). Once ready, you can train and export the model as follows. After exporting, you can quickly integrate the model into the above API. Here, the table structure recognition demo data is used as an example. Before training the model, please make sure you have installed the dependencies required by PaddleOCR according to the [installation documentation](xxx).
+If the above models are still not ideal for your scenario, you can try the following steps for secondary development. Here, training `SLANet` is used as an example, and for other models, just replace the corresponding configuration file. First, you need to prepare a dataset for table structure recognition, which can be prepared with reference to the format of the [table structure recognition demo data](https://paddle-model-ecology.bj.bcebos.com/paddlex/data/table_rec_dataset_examples.tar). Once ready, you can train and export the model as follows. After exporting, you can quickly integrate the model into the above API. Here, the table structure recognition demo data is used as an example. Before training the model, please make sure you have installed the dependencies required by PaddleOCR according to the [installation documentation](../installation.en.md).
 
 
 ## 4.1 Dataset and Pretrained Model Preparation
@@ -327,24 +327,24 @@ python3 -m paddle.distributed.launch --gpus '0,1,2,3'  tools/train.py -c configs
 ```
 
 
-### 4.4 Model Evaluation
+### 4.3 Model Evaluation
 
-You can evaluate the trained weights, such as `output/xxx/xxx.pdprams`, using the following command:
+You can evaluate the trained weights, such as `output/xxx/xxx.pdparams`, using the following command:
 
 ```bash
 # Note to set the path of pretrained_model to the local path. If you use the model saved by your own training, please modify the path and file name to {path/to/weights}/{model_name}.
  # Demo test set evaluation
  python3 tools/eval.py -c configs/table/SLANet.yml -o \
- Global.pretrained_model=output/xxx/xxx.pdprams
- ```
+ Global.pretrained_model=output/xxx/xxx.pdparams
+```
 
-### 4.5 Model Export
+### 4.4 Model Export
 
 ```bash
  python3 tools/export_model.py -c configs/table/SLANet.yml -o \
- Global.pretrained_model=output/xxx/xxx.pdprams \
+ Global.pretrained_model=output/xxx/xxx.pdparams \
  save_inference_dir="./SLANet_infer/"
- ```
+```
 
  After exporting the model, the static graph model will be stored in `./SLANet_infer/` in the current directory. In this directory, you will see the following files:
  ```

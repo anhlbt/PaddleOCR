@@ -87,7 +87,7 @@ The seal text detection module typically outputs multi-point bounding boxes arou
 
 ## III. Quick Integration  <a id="quick"> </a>
 
-> ❗ Before quick integration, please install the PaddleOCR wheel package. For detailed instructions, refer to [PaddleOCR Local Installation Tutorial](../ppocr/installation.en.md)。
+> ❗ Before quick integration, please install the PaddleOCR wheel package. For detailed instructions, refer to [PaddleOCR Local Installation Tutorial](../installation.en.md)。
 
 Quickly experience with just one command:
 
@@ -449,21 +449,21 @@ The explanations of related methods and parameters are as follows:
 </tr>
 </table>
 
-For more information on using PaddleX's single-model inference API, refer to the [PaddleX Single Model Python Script Usage Instructions](../../instructions/model_python_API.en.md).
-
 ## IV. Custom Development
 
-If the above model is still not performing well in your scenario, you can try the following steps for secondary development. Here, we'll use training `PP-OCRv4_server_seal_det` as an example; you can replace it with the corresponding configuration files for other models. First, you need to prepare a text detection dataset. You can refer to the format of the [seal text detection demo data](https://paddle-model-ecology.bj.bcebos.com/paddlex/data/ocr_curve_det_dataset_examples.tar) for preparation. Once prepared, you can follow the steps below for model training and export. After export, you can quickly integrate the model into the above API. This example uses a seal text detection demo dataset. Before training the model, please ensure that you have installed the dependencies required by PaddleOCR as per the [installation documentation](xxx).
+If the above model is still not performing well in your scenario, you can try the following steps for secondary development. Here, we'll use training `PP-OCRv4_server_seal_det` as an example; you can replace it with the corresponding configuration files for other models. First, you need to prepare a text detection dataset. You can refer to the format of the [seal text detection demo data](https://paddle-model-ecology.bj.bcebos.com/paddlex/data/ocr_curve_det_dataset_examples.tar) for preparation. Once prepared, you can follow the steps below for model training and export. After export, you can quickly integrate the model into the above API. This example uses a seal text detection demo dataset. Before training the model, please ensure that you have installed the dependencies required by PaddleOCR as per the [installation documentation](../installation.en.md).
 
 ### 4.1 Dataset and Pre-trained Model Preparation
 
-### 4.1.1 Preparing the Dataset
+#### 4.1.1 Preparing the Dataset
 
 ```shell
 wget https://paddle-model-ecology.bj.bcebos.com/paddlex/data/ocr_curve_det_dataset_examples.tar -P ./dataset
 tar -xf ./dataset/ocr_curve_det_dataset_examples.tar -C ./dataset/
 ```
-### 4.1.1 Preparing the pre-trained model
+
+#### 4.1.1 Preparing the pre-trained model
+
 
 ```shell
 wget https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv4_server_seal_det_pretrained.pdparams
@@ -485,7 +485,7 @@ python3 -m paddle.distributed.launch --gpus '0,1,2,3' tools/train.py -c configs/
         -o Global.pretrained_model=./PP-OCRv4_server_seal_det_pretrained.pdparams
 ```
 
-### 4.4 Model Evaluation
+### 4.3 Model Evaluation
 
 You can evaluate the trained weights, such as `output/xxx/xxx.pdparams`, using the following command:
 
@@ -496,7 +496,7 @@ python3 tools/eval.py -c configs/det/PP-OCRv4/PP-OCRv4_server_seal_det.yml -o \
 Global.pretrained_model=output/xxx/xxx.pdparams
 ```
 
-### 4.5 Model Export
+### 4.4 Model Export
 
 ```bash
 python3 tools/export_model.py -c configs/det/PP-OCRv4/PP-OCRv4_server_seal_det.yml -o \

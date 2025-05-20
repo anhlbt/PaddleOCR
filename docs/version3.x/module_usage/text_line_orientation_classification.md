@@ -40,7 +40,7 @@ comments: true
   <ul>
       <li><b>性能测试环境</b>
           <ul>
-              <li><strong>测试数据集：</strong>PaddleX 自建的数据集，覆盖证件和文档等多个场景，包含 1000 张图片。</li>
+              <li><strong>测试数据集：</strong>PaddleOCR 自建的数据集，覆盖证件和文档等多个场景，包含 1000 张图片。</li>
               <li><strong>硬件配置：</strong>
                   <ul>
                       <li>GPU：NVIDIA Tesla T4</li>
@@ -81,7 +81,7 @@ comments: true
 
 ## 三、快速开始
 
-> ❗ 在快速开始前，请先安装 PaddleOCR 的 wheel 包，详细请参考 [安装教程](../ppocr/installation.md)。
+> ❗ 在快速开始前，请先安装 PaddleOCR 的 wheel 包，详细请参考 [安装教程](../installation.md)。
 
 使用一行命令即可快速体验：
 
@@ -168,7 +168,7 @@ for res in output:
 </tr>
 </table>
 
-* 其中，`model_name` 必须指定，指定 `model_name` 后，默认使用 PaddleX 内置的模型参数，在此基础上，指定 `model_dir` 时，使用用户自定义的模型。
+* 其中，`model_name` 必须指定，在此基础上，指定 `model_dir` 时，使用用户自定义的模型。
 
 * 调用文本行方向分类模型的 `predict()` 方法进行推理预测，该方法会返回一个结果列表。另外，本模块还提供了 `predict_iter()` 方法。两者在参数接受和结果返回方面是完全一致的，区别在于 `predict_iter()` 返回的是一个 `generator`，能够逐步处理和获取预测结果，适合处理大型数据集或希望节省内存的场景。可以根据实际需求选择使用这两种方法中的任意一种。`predict()` 方法参数有 `input` 和 `batch_size`，具体说明如下：
 
@@ -292,4 +292,4 @@ for res in output:
 
 ## 四、二次开发
 
-......
+由于 PaddleOCR 并不直接提供文本行方向分类的训练，因此，如果需要训练文档图像方向分类模型，可以参考 [PaddleX 文本行方向分类二次开发](https://paddlepaddle.github.io/PaddleX/latest/module_usage/tutorials/ocr_modules/textline_orientation_classification.html#_5)部分进行训练。训练后的模型可以无缝集成到 PaddleOCR 的 API 中进行推理。

@@ -8,7 +8,7 @@ comments: true
 
 OCR（光学字符识别，Optical Character Recognition）是一种将图像中的文字转换为可编辑文本的技术。它广泛应用于文档数字化、信息提取和数据处理等领域。OCR 可以识别印刷文本、手写文本，甚至某些类型的字体和符号。
 
-通用 OCR 产线用于解决文字识别任务，提取图片中的文字信息以文本形式输出，本产线集成了业界知名的 PP-OCRv3 和 PP-OCRv4 的端到端 OCR 串联系统，支持超过 80 种语言的识别，并在此基础上，增加了对图像的方向矫正和扭曲矫正功能。基于本产线，可实现 CPU 上毫秒级的文本内容精准预测，使用场景覆盖通用、制造、金融、交通等各个领域。本产线同时提供了灵活的服务化部署方式，支持在多种硬件上使用多种编程语言调用。不仅如此，本产线也提供了二次开发的能力，您可以基于本产线在您自己的数据集上训练调优，训练后的模型也可以无缝集成。
+通用 OCR 产线用于解决文字识别任务，提取图片中的文字信息以文本形式输出，本产线支持PP-OCRv3、PP-OCRv4、PP-OCRv5模型的使用，其中默认模型为 PaddleOCR3.0 发布的 PP-OCRv5_mobile 模型，其在多个场景中较 PP-OCRv4_mobile 提升 13 个百分点。
 
 <img src="https://raw.githubusercontent.com/cuicheng01/PaddleX_doc_images/main/images/pipelines/ocr/01.png"/>
 
@@ -85,8 +85,24 @@ OCR（光学字符识别，Optical Character Recognition）是一种将图像中
 </thead>
 <tbody>
 <tr>
+<td>PP-OCRv5_server_det</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-OCRv5_server_det_infer.tar">推理模型</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv5_server_det_pretrained.pdparams">训练模型</a></td>
+<td>83.8</td>
+<td>89.55 / 70.19</td>
+<td>371.65 / 371.65</td>
+<td>84.3</td>
+<td>PP-OCRv5 的服务端文本检测模型，精度更高，适合在性能较好的服务器上部署</td>
+</tr>
+<tr>
+<td>PP-OCRv5_mobile_det</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-OCRv5_mobile_det_infer.tar">推理模型</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv5_mobile_det_pretrained.pdparams">训练模型</a></td>
+<td>79.0</td>
+<td>8.79 / 3.13</td>
+<td>51.00 / 28.58</td>
+<td>4.7</td>
+<td>PP-OCRv5 的移动端文本检测模型，效率更高，适合在端侧设备部署</td>
+</tr>
+<tr>
 <td>PP-OCRv4_server_det</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-OCRv4_server_det_infer.tar">推理模型</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv4_server_det_pretrained.pdparams">训练模型</a></td>
-<td>82.56</td>
+<td>69.2</td>
 <td>83.34 / 80.91</td>
 <td>442.58 / 442.58</td>
 <td>109</td>
@@ -94,27 +110,11 @@ OCR（光学字符识别，Optical Character Recognition）是一种将图像中
 </tr>
 <tr>
 <td>PP-OCRv4_mobile_det</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-OCRv4_mobile_det_infer.tar">推理模型</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv4_mobile_det_pretrained.pdparams">训练模型</a></td>
-<td>77.35</td>
+<td>63.8</td>
 <td>8.79 / 3.13</td>
 <td>51.00 / 28.58</td>
 <td>4.7</td>
 <td>PP-OCRv4 的移动端文本检测模型，效率更高，适合在端侧设备部署</td>
-</tr>
-<tr>
-<td>PP-OCRv3_mobile_det</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-OCRv3_mobile_det_infer.tar">推理模型</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv3_mobile_det_pretrained.pdparams">训练模型</a></td>
-<td>78.68</td>
-<td>8.44 / 2.91</td>
-<td>27.87 / 27.87</td>
-<td>2.1</td>
-<td>PP-OCRv3 的移动端文本检测模型，效率更高，适合在端侧设备部署</td>
-</tr>
-<tr>
-<td>PP-OCRv3_server_det</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-OCRv3_server_det_infer.tar">推理模型</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv3_server_det_pretrained.pdparams">训练模型</a></td>
-<td>80.11</td>
-<td>65.41 / 13.67</td>
-<td>305.07 / 305.07</td>
-<td>102.1</td>
-<td>PP-OCRv3 的服务端文本检测模型，精度更高，适合在性能较好的服务器上部署</td>
 </tr>
 </tbody>
 </table>
@@ -135,19 +135,18 @@ OCR（光学字符识别，Optical Character Recognition）是一种将图像中
 <td>PP-OCRv5_server_rec</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/\
 PP-OCRv5_server_rec_infer.tar">推理模型</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv5_server_rec_pretrained.pdparams">训练模型</a></td>
 <td>86.38</td>
-<td> - </td>
-<td> - </td>
-<td>205 M</td>
-<td>PP-OCRv5_server_rec 是新一代文本识别模型。该模型致力于以单一模型高效、精准地支持简体中文、繁体中文、英文、日文四种主要语言，以及手写、竖版、拼音、生僻字等复杂文本场景的识别。在保持识别效果的同时，兼顾推理速度和模型鲁棒性，为各种场景下的文档理解提供高效、精准的技术支撑。</td>
+<td> 8.45/2.36 </td>
+<td> 122.69/122.69 </td>
+<td>81 M</td>
+<td rowspan="2">PP-OCRv5_rec 是新一代文本识别模型。该模型致力于以单一模型高效、精准地支持简体中文、繁体中文、英文、日文四种主要语言，以及手写、竖版、拼音、生僻字等复杂文本场景的识别。在保持识别效果的同时，兼顾推理速度和模型鲁棒性，为各种场景下的文档理解提供高效、精准的技术支撑。</td>
 </tr>
 <tr>
 <td>PP-OCRv5_mobile_rec</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/\
 PP-OCRv5_mobile_rec_infer.tar">推理模型</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv5_mobile_rec_pretrained.pdparams">训练模型</a></td>
 <td>81.29</td>
-<td> - </td>
-<td> - </td>
-<td>136 M</td>
-<td>PP-OCRv5_mobile_rec 是新一代文本识别模型。该模型致力于以单一模型高效、精准地支持简体中文、繁体中文、英文、日文四种主要语言，以及手写、竖版、拼音、生僻字等复杂文本场景的识别。在保持识别效果的同时，兼顾推理速度和模型鲁棒性，为各种场景下的文档理解提供高效、精准的技术支撑。</td>
+<td> 1.46/5.43 </td>
+<td> 5.32/91.79 </td>
+<td>16 M</td>
 </tr>
 <tr>
 <td>PP-OCRv4_server_rec_doc</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/\
@@ -155,7 +154,7 @@ PP-OCRv4_server_rec_doc_infer.tar">推理模型</a>/<a href="https://paddle-mode
 <td>86.58</td>
 <td>6.65 / 2.38</td>
 <td>32.92 / 32.92</td>
-<td>91 M</td>
+<td>181 M</td>
 <td>PP-OCRv4_server_rec_doc是在PP-OCRv4_server_rec的基础上，在更多中文文档数据和PP-OCR训练数据的混合数据训练而成，增加了部分繁体字、日文、特殊字符的识别能力，可支持识别的字符为1.5万+，除文档相关的文字识别能力提升外，也同时提升了通用文字的识别能力</td>
 </tr>
 <tr>
@@ -163,7 +162,7 @@ PP-OCRv4_server_rec_doc_infer.tar">推理模型</a>/<a href="https://paddle-mode
 <td>83.28</td>
 <td>4.82 / 1.20</td>
 <td>16.74 / 4.64</td>
-<td>11 M</td>
+<td>88 M</td>
 <td>PP-OCRv4的轻量级识别模型，推理效率高，可以部署在包含端侧设备的多种硬件设备中</td>
 </tr>
 <tr>
@@ -171,7 +170,7 @@ PP-OCRv4_server_rec_doc_infer.tar">推理模型</a>/<a href="https://paddle-mode
 <td>85.19 </td>
 <td>6.58 / 2.43</td>
 <td>33.17 / 33.17</td>
-<td>87 M</td>
+<td>151 M</td>
 <td>PP-OCRv4的服务器端模型，推理精度高，可以部署在多种不同的服务器上</td>
 </tr>
 <tr>
@@ -180,7 +179,7 @@ en_PP-OCRv4_mobile_rec_infer.tar">推理模型</a>/<a href="https://paddle-model
 <td>70.39</td>
 <td>4.81 / 0.75</td>
 <td>16.10 / 5.31</td>
-<td>7.3 M</td>
+<td>66 M</td>
 <td>基于PP-OCRv4识别模型训练得到的超轻量英文识别模型，支持英文、数字识别</td>
 </tr>
 </table>
@@ -210,10 +209,10 @@ PP-OCRv5_server_rec_infer.tar">推理模型</a>/<a href="https://paddle-model-ec
 <td>64.70</td>
 <td>93.29</td>
 <td>60.35</td>
-<td> - </td>
-<td> - </td>
-<td>205 M</td>
-<td>PP-OCRv5_server_rec 是新一代文本识别模型。该模型致力于以单一模型高效、精准地支持简体中文、繁体中文、英文、日文四种主要语言，以及手写、竖版、拼音、生僻字等复杂文本场景的识别。在保持识别效果的同时，兼顾推理速度和模型鲁棒性，为各种场景下的文档理解提供高效、精准的技术支撑。</td>
+<td> 1.46/5.43 </td>
+<td> 5.32/91.79 </td>
+<td>81 M</td>
+<td rowspan="2">PP-OCRv5_rec 是新一代文本识别模型。该模型致力于以单一模型高效、精准地支持简体中文、繁体中文、英文、日文四种主要语言，以及手写、竖版、拼音、生僻字等复杂文本场景的识别。在保持识别效果的同时，兼顾推理速度和模型鲁棒性，为各种场景下的文档理解提供高效、精准的技术支撑。</td>
 </tr>
 <tr>
 <td>PP-OCRv5_mobile_rec</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/\
@@ -222,10 +221,9 @@ PP-OCRv5_mobile_rec_infer.tar">推理模型</a>/<a href="https://paddle-model-ec
 <td>66.00</td>
 <td>83.55</td>
 <td>54.65</td>
-<td> - </td>
-<td> - </td>
-<td>136 M</td>
-<td>PP-OCRv5_mobile_rec 是新一代文本识别模型。该模型致力于以单一模型高效、精准地支持简体中文、繁体中文、英文、日文四种主要语言，以及手写、竖版、拼音、生僻字等复杂文本场景的识别。在保持识别效果的同时，兼顾推理速度和模型鲁棒性，为各种场景下的文档理解提供高效、精准的技术支撑。</td>
+<td> 1.46/5.43 </td>
+<td> 5.32/91.79 </td>
+<td>16 M</td>
 </tr>
 </table>
 
@@ -459,15 +457,15 @@ devanagari_PP-OCRv3_mobile_rec_infer.tar">推理模型</a>/<a href="https://padd
             <li><strong>测试数据集：
              </strong>
                 <ul>
-                  <li>文档图像方向分类模型：PaddleX 自建的数据集，覆盖证件和文档等多个场景，包含 1000 张图片。</li>
+                  <li>文档图像方向分类模型：PaddleOCR 自建的数据集，覆盖证件和文档等多个场景，包含 1000 张图片。</li>
                   <li>文本图像矫正模型：<a href="https://www3.cs.stonybrook.edu/~cvl/docunet.html">DocUNet</a>。</li>
                   <li>文本检测模型：PaddleOCR 自建的中文数据集，覆盖街景、网图、文档、手写多个场景，其中检测包含 500 张图片。</li>
                   <li>中文识别模型： PaddleOCR 自建的中文数据集，覆盖街景、网图、文档、手写多个场景，其中文本识别包含 1.1w 张图片。</li>
                   <li>ch_SVTRv2_rec：<a href="https://aistudio.baidu.com/competition/detail/1131/0/introduction">PaddleOCR算法模型挑战赛 - 赛题一：OCR端到端识别任务</a>A榜评估集。</li>
                   <li>ch_RepSVTR_rec：<a href="https://aistudio.baidu.com/competition/detail/1131/0/introduction">PaddleOCR算法模型挑战赛 - 赛题一：OCR端到端识别任务</a>B榜评估集。</li>
-                  <li>英文识别模型：PaddleX 自建的英文数据集。</li>
-                  <li>多语言识别模型：PaddleX 自建的多语种数据集。</li>
-                  <li>文本行方向分类模型：PaddleX 自建的数据集，覆盖证件和文档等多个场景，包含 1000 张图片。</li>
+                  <li>英文识别模型：PaddleOCR 自建的英文数据集。</li>
+                  <li>多语言识别模型：PaddleOCR 自建的多语种数据集。</li>
+                  <li>文本行方向分类模型：PaddleOCR 自建的数据集，覆盖证件和文档等多个场景，包含 1000 张图片。</li>
                 </ul>
              </li>
               <li><strong>硬件配置：</strong>
@@ -514,27 +512,23 @@ devanagari_PP-OCRv3_mobile_rec_infer.tar">推理模型</a>/<a href="https://padd
 
 ## 2. 快速开始
 
-在本地使用通用OCR产线前，请确保您已经按照[安装教程](../ppocr/installation.md)完成了wheel包安装。安装完成后，可以在本地使用命令行体验或 Python 集成。
+在本地使用通用OCR产线前，请确保您已经按照[安装教程](../installation.md)完成了wheel包安装。安装完成后，可以在本地使用命令行体验或 Python 集成。
 
 ### 2.1 命令行方式
 
 一行命令即可快速体验OCR产线效果：
 
 ```bash
-# 默认使用 PP-OCRv4 的中文语言模型
-paddleocr ocr -i https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/general_ocr_002.png
-
-# 通过 --lang 指定语言模型
-paddleocr ocr -i ./general_ocr_002.png --lang en
+# 默认使用 PP-OCRv5 模型
+paddleocr ocr -i https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/general_ocr_002.png \
+    --use_doc_orientation_classify False \
+    --use_doc_unwarping False \
+    --use_textline_orientation False \
+    --save_path ./output \
+    --device gpu:0 
 
 # 通过 --ocr_version 指定 PP-OCR 其他版本
-paddleocr ocr -i ./general_ocr_002.png --ocr_version PP-OCRv3
-
-# 通过 --device 指定模型推理时使用 GPU
-paddleocr ocr -i ./general_ocr_002.png --device gpu
-
-# 通过 --use_textline_orientation 指定是否使用文本行方向分类模型
-paddleocr ocr -i ./general_ocr_002.png --use_textline_orientation False
+paddleocr ocr -i ./general_ocr_002.png --ocr_version PP-OCRv5
 ```
 
 <details><summary><b>命令行支持更多参数设置，点击展开以查看命令行参数的详细说明</b></summary>
@@ -548,6 +542,24 @@ paddleocr ocr -i ./general_ocr_002.png --use_textline_orientation False
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><code>input</code></td>
+<td>待预测数据，支持多种输入类型，必填。
+<ul>
+<li><b>Python Var</b>：如 <code>numpy.ndarray</code> 表示的图像数据</li>
+<li><b>str</b>：如图像文件或者PDF文件的本地路径：<code>/root/data/img.jpg</code>；<b>如URL链接</b>，如图像文件或PDF文件的网络URL：<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/general_doc_preprocessor_002.png">示例</a>；<b>如本地目录</b>，该目录下需包含待预测图像，如本地路径：<code>/root/data/</code>(当前不支持目录中包含PDF文件的预测，PDF文件需要指定到具体文件路径)</li>
+<li><b>List</b>：列表元素需为上述类型数据，如<code>[numpy.ndarray, numpy.ndarray]</code>，<code>["/root/data/img1.jpg", "/root/data/img2.jpg"]</code>，<code>["/root/data1", "/root/data2"]</code></li>
+</ul>
+</td>
+<td><code>Python Var|str|list</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>save_path</code></td>
+<td>指定推理结果文件保存的路径。如果设置为<code>None</code>, 推理结果将不会保存到本地。</td>
+<td><code>str</code></td>
+<td><code>None</code></td>
+</tr>
 <tr>
 <td><code>doc_orientation_classify_model_name</code></td>
 <td>文档方向分类模型的名称。如果设置为<code>None</code>, 将会使用产线默认模型。</td>
@@ -744,21 +756,86 @@ paddleocr ocr -i ./general_ocr_002.png --use_textline_orientation False
 <td><code>None</code></td>
 </tr>
 <tr>
-<td><code>input</code></td>
-<td>待预测数据，支持多种输入类型，必填。
-<ul>
-<li><b>Python Var</b>：如 <code>numpy.ndarray</code> 表示的图像数据</li>
-<li><b>str</b>：如图像文件或者PDF文件的本地路径：<code>/root/data/img.jpg</code>；<b>如URL链接</b>，如图像文件或PDF文件的网络URL：<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/general_doc_preprocessor_002.png">示例</a>；<b>如本地目录</b>，该目录下需包含待预测图像，如本地路径：<code>/root/data/</code>(当前不支持目录中包含PDF文件的预测，PDF文件需要指定到具体文件路径)</li>
-<li><b>List</b>：列表元素需为上述类型数据，如<code>[numpy.ndarray, numpy.ndarray]</code>，<code>["/root/data/img1.jpg", "/root/data/img2.jpg"]</code>，<code>["/root/data1", "/root/data2"]</code></li>
-</ul>
-</td>
-<td><code>Python Var|str|list</code></td>
+<td><code>det_model_dir</code></td>
+<td>已废弃，请使用<code>text_detection_model_dir</code>代替。文本检测模型的目录路径。如果设置为None, 将会下载官方模型。</td>
+<td><code>str</code></td>
 <td><code>None</code></td>
 </tr>
 <tr>
-<td><code>save_path</code></td>
-<td>指定推理结果文件保存的路径。如果设置为<code>None</code>, 推理结果将不会保存到本地。</td>
+<td><code>det_limit_side_len</code></td>
+<td>已废弃，请使用<code>text_det_limit_side_len</code>代替。文本检测的最大边长度限制。</td>
+<td><code>int</code></td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>det_limit_type</code></td>
+<td>已废弃，请使用<code>text_det_limit_type</code>代替。文本检测的边长度限制类型。
+<ul>
+<li><b>str</b>：支持 <code>min</code> 和 <code>max</code>，<code>min</code> 表示保证图像最短边不小于 <code>det_limit_side_len</code>，<code>max</code> 表示保证图像最长边不大于 <code>limit_side_len</code></li>
+<li><b>None</b>：如果设置为 <code>None</code>, 将默认使用产线初始化的该参数值，初始化为 <code>max</code>；</li>
+</ul>
+</td>
 <td><code>str</code></td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>det_db_thresh</code></td>
+<td>已废弃，请使用<code>text_det_thresh</code>代替。文本检测像素阈值，输出的概率图中，得分大于该阈值的像素点才会被认为是文字像素点。
+<ul>
+<li><b>float</b>：大于 <code>0</code> 的任意浮点数
+    <li><b>None</b>：如果设置为 <code>None</code>, 将默认使用产线初始化的该参数值 <code>0.3</code></li></li></ul>
+</td>
+<td><code>float</code></td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>det_db_box_thresh</code></td>
+<td>已废弃，请使用<code>text_det_box_thresh</code>代替。文本检测框阈值，检测结果边框内，所有像素点的平均得分大于该阈值时，该结果会被认为是文字区域。
+<ul>
+<li><b>float</b>：大于 <code>0</code> 的任意浮点数
+<li><b>None</b>：如果设置为 <code>None</code>, 将默认使用产线初始化的该参数值 <code>0.6</code></li></li></ul>
+</td>
+<td><code>float</code></td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>det_db_unclip_ratio</code></td>
+<td>已废弃，请使用<code>text_det_unclip_ratio</code>代替。文本检测扩张系数，使用该方法对文字区域进行扩张，该值越大，扩张的面积越大。
+<ul>
+<li><b>float</b>：大于 <code>0</code> 的任意浮点数
+    <li><b>None</b>：如果设置为 <code>None</code>, 将默认使用产线初始化的该参数值 <code>2.0</code></li></li></ul>
+</td>
+<td><code>float</code></td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>rec_model_dir</code></td>
+<td>已废弃，请使用<code>text_recognition_model_dir</code>代替。文本识别模型的目录路径。如果设置为<code>None</code>, 将会下载官方模型。</td>
+<td><code>str</code></td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>rec_batch_num</code></td>
+<td>已废弃，请使用<code>text_recognition_batch_size</code>代替。文本识别模型的批处理大小。如果设置为<code>None</code>, 将默认设置批处理大小为<code>1</code>。</td>
+<td><code>int</code></td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>use_angle_cls</code></td>
+<td>已废弃，请使用<code>use_textline_orientation</code>代替。是否使用文本行方向功能。如果设置为<code>None</code>, 将默认使用产线初始化的该参数值，初始化为<code>True</code>。</td>
+<td><code>bool</code></td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>cls_model_dir</code></td>
+<td>已废弃，请使用<code>text_line_orientation_model_dir</code>代替。文本行方向模型的目录路径。如果设置为<code>None</code>, 将会下载官方模型。</td>
+<td><code>str</code></td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>cls_batch_num</code></td>
+<td>已废弃，请使用<code>text_line_orientation_batch_size</code>代替。文本行方向模型的批处理大小。如果设置为<code>None</code>, 将默认设置批处理大小为<code>1</code>。</td>
+<td><code>int</code></td>
 <td><code>None</code></td>
 </tr>
 <tr>
@@ -814,35 +891,39 @@ paddleocr ocr -i ./general_ocr_002.png --use_textline_orientation False
 <td><code>int</code></td>
 <td><code>8</code></td>
 </tr>
+<tr>
+<td><code>paddlex_config</code></td>
+<td>PaddleX产线配置文件路径。</td>
+<td><code>str</code></td>
+<td><code>None</code></td>
+</tr>
 </tbody>
 </table>
 </details>
 <br />
 
-运行结果会被打印到终端上，默认配置的OCR产线的运行结果如下：
+运行结果会被打印到终端上：
 
 ```bash
-{'res': {'input_path': '/root/.paddlex/predict_input/general_ocr_002.png', 'page_index': None, 'model_settings': {'use_doc_preprocessor': True, 'use_textline_orientation': True}, 'doc_preprocessor_res': {'input_path': None, 'page_index': None, 'model_settings': {'use_doc_orientation_classify': True, 'use_doc_unwarping': True}, 'angle': 0}, 
-'dt_polys': array([[[143,   6],
+{'res': {'input_path': './general_ocr_002.png', 'page_index': None, 'model_settings': {'use_doc_preprocessor': True, 'use_textline_orientation': False}, 'doc_preprocessor_res': {'input_path': None, 'page_index': None, 'model_settings': {'use_doc_orientation_classify': False, 'use_doc_unwarping': False}, 'angle': -1}, 'dt_polys': array([[[  3,  10],
         ...,
-        [143,  71]],
+        [  4,  30]],
+
        ...,
-       [[325, 361],
+
+       [[ 99, 456],
         ...,
-        [325, 386]]], dtype=int16), 
-'text_det_params': {'limit_side_len': 960, 'limit_type': 'max', 'thresh': 0.3, 'box_thresh': 0.6, 'unclip_ratio': 2.0}, 'text_type': 'general', 'textline_orientation_angles': array([0, ..., 0]), 'text_rec_score_thresh': 0.0, 
-'rec_texts': ['登机牌', 'BOARDING', 'PASS', '航班FLIGHT', '日期', 'DATE', '舱位', 'CLASS', '序号', 'SERIALNO.', '座位号', 'SEAT NO.', '一', 'MU 2379', '03DEC', 'M', '0', '目的地TO', '始发地', 'FROM', '登机口', 'GATE', '登机时间', 'BDT', '福州', 'FUZHOU', 'TAIYUAN', 'G11', '姓名NAME', '身份识别IDNO', 'ZHANGQIWEI', '张祺伟', '票号TKTNO', '票价FARE', 'ETKT7813699238489/1'], 
-'rec_scores': array([0.99898976, ..., 0.99082142]), 
-'rec_polys': array([[[143,   6],
+        [ 99, 479]]], dtype=int16), 'text_det_params': {'limit_side_len': 736, 'limit_type': 'min', 'thresh': 0.3, 'max_side_limit': 4000, 'box_thresh': 0.6, 'unclip_ratio': 1.5}, 'text_type': 'general', 'textline_orientation_angles': array([-1, ..., -1]), 'text_rec_score_thresh': 0.0, 'rec_texts': ['www.997700', '', 'Cm', '登机牌', 'BOARDING', 'PASS', 'CLASS', '序号SERIAL NO.', '座位号', 'SEAT NO.', '航班FLIGHT', '日期DATE', '舱位', '', 'W', '035', '12F', 'MU2379', '03DEc', '始发地', 'FROM', '登机口', 'GATE', '登机时间BDT', '目的地TO', '福州', 'TAIYUAN', 'G11', 'FUZHOU', '身份识别IDNO.', '姓名NAME', 'ZHANGQIWEI', '票号TKT NO.', '张祺伟', '票价FARE', 'ETKT7813699238489/1', '登机口于起飞前10分钟关闭 GATESCL0SE10MINUTESBEFOREDEPARTURETIME'], 'rec_scores': array([0.67634439, ..., 0.97416091]), 'rec_polys': array([[[  3,  10],
         ...,
-        [143,  71]],
+        [  4,  30]],
+
        ...,
-       [[325, 361],
+
+       [[ 99, 456],
         ...,
-        [325, 386]]], dtype=int16), 
-'rec_boxes': array([[143, ...,  71],
+        [ 99, 479]]], dtype=int16), 'rec_boxes': array([[  3, ...,  30],
        ...,
-       [325, ..., 392]], dtype=int16)}}
+       [ 99, ..., 479]], dtype=int16)}}
 ```
 
 若指定了`save_path`，则会保存可视化结果在`save_path`下。可视化结果如下：
@@ -856,11 +937,14 @@ paddleocr ocr -i ./general_ocr_002.png --use_textline_orientation False
 ```python
 from paddleocr import PaddleOCR
 
-ocr = PaddleOCR()
+ocr = PaddleOCR(
+    use_doc_orientation_classify=False, # 通过 use_doc_orientation_classify 参数指定不使用文档方向分类模型
+    use_doc_unwarping=False, # 通过 use_doc_unwarping 参数指定不使用文本图像矫正模型
+    use_textline_orientation=False, # 通过 use_textline_orientation 参数指定不使用文本行方向分类模型
+)
 # ocr = PaddleOCR(lang="en") # 通过 lang 参数来使用英文模型
-# ocr = PaddleOCR(ocr_version="PP-OCRv3") # 通过 ocr_version 参数来使用 PP-OCR 其他版本
+# ocr = PaddleOCR(ocr_version="PP-OCRv4") # 通过 ocr_version 参数来使用 PP-OCR 其他版本
 # ocr = PaddleOCR(device="gpu") # 通过 device 参数使得在模型推理时使用 GPU
-# ocr = PaddleOCR(use_textline_orientation=False) # 通过 device 参数指定不使用文本行方向分类模型
 result = ocr.predict("./general_ocr_002.png")
 for res in result:
     res.print()
@@ -1130,6 +1214,12 @@ for res in result:
 <td><code>int</code></td>
 <td><code>8</code></td>
 </tr>
+<tr>
+<td><code>paddlex_config</code></td>
+<td>PaddleX产线配置文件路径。</td>
+<td><code>str</code></td>
+<td><code>None</code></td>
+</tr>
 </tbody>
 </table>
 </details>
@@ -1155,7 +1245,7 @@ for res in result:
 </ul>
 </td>
 <td><code>Python Var|str|list</code></td>
-<td><code>None</code></td>
+<td></td>
 </tr>
 <tr>
 <td><code>device</code></td>
@@ -1349,13 +1439,13 @@ for res in result:
 
 如果通用 OCR 产线可以达到您对产线推理速度和精度的要求，您可以直接进行开发集成/部署。
 
-若您需要将通用 OCR 产线直接应用在您的Python项目中，可以参考[2.2 Python脚本方式](#22-python脚本方式)中的示例代码。
+若您需要将通用 OCR 产线直接应用在您的Python项目中，可以参考[2.2 Python脚本方式集成](#22-python脚本方式集成)中的示例代码。
 
 此外，PaddleOCR 也提供了其他两种部署方式，详细说明如下：
 
-🚀 高性能推理：在实际生产环境中，许多应用对部署策略的性能指标（尤其是响应速度）有着较严苛的标准，以确保系统的高效运行与用户体验的流畅性。为此，PaddleOCR 提供高性能推理功能，旨在对模型推理及前后处理进行深度性能优化，实现端到端流程的显著提速，详细的高性能推理流程请参考[高性能推理指南](../deployment/high_performance_inference.md)。
+🚀 高性能推理：在实际生产环境中，许多应用对部署策略的性能指标（尤其是响应速度）有着较严苛的标准，以确保系统的高效运行与用户体验的流畅性。为此，PaddleOCR 提供高性能推理功能，旨在对模型推理及前后处理进行深度性能优化，实现端到端流程的显著提速，详细的高性能推理流程请参考[高性能推理](../deployment/high_performance_inference.md)。
 
-☁️ 服务化部署：服务化部署是实际生产环境中常见的一种部署形式。通过将推理功能封装为服务，客户端可以通过网络请求来访问这些服务，以获取推理结果。详细的产线服务化部署流程请参考[服务化部署指南](../deployment/serving.md)。
+☁️ 服务化部署：服务化部署是实际生产环境中常见的一种部署形式。通过将推理功能封装为服务，客户端可以通过网络请求来访问这些服务，以获取推理结果。详细的产线服务化部署流程请参考[服务化部署](../deployment/serving.md)。
 
 以下是基础服务化部署的API参考与多语言服务调用示例：
 
@@ -1609,7 +1699,109 @@ for i, res in enumerate(result["ocrResults"]):
 </details>
 
 ## 4. 二次开发
+如果 通用OCR 产线提供的默认模型权重在您的场景中，精度或速度不满意，您可以尝试利用<b>您自己拥有的特定领域或应用场景的数据</b>对现有模型进行进一步的<b>微调</b>，以提升 通用OCR 产线的在您的场景中的识别效果。
 
-如果通用 OCR 产线提供的默认模型权重在您的场景中，精度或速度不满意，您可以尝试利用您自己拥有的特定领域或应用场景的数据对现有模型进行进一步的微调，以提升通用 OCR 产线的在您的场景中的识别效果。
+### 4.1 模型微调
+通用 OCR 产线包含若干模块，模型产线的效果如果不及预期，可能来自于其中任何一个模块。您可以对识别效果差的图片进行分析，进而确定是哪个模块存在问题，并参考以下表格中对应的微调教程链接进行模型微调。
 
-...
+<table>
+<thead>
+<tr>
+<th>情形</th>
+<th>微调模块</th>
+<th>微调参考链接</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>整图旋转矫正不准</td>
+<td>文档图像方向分类模块</td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/module_usage/tutorials/ocr_modules/doc_img_orientation_classification.html#_5">链接</a></td>
+</tr>
+<tr>
+<td>图像扭曲矫正不准</td>
+<td>文本图像矫正模块</td>
+<td>暂不支持微调</td>
+</tr>
+<tr>
+<td>文本行旋转矫正不准</td>
+<td>文本行方向分类模块</td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/module_usage/tutorials/ocr_modules/textline_orientation_classification.html#_5">链接</a></td>
+</tr>
+<tr>
+<td>文本漏检</td>
+<td>文本检测模块</td>
+<td><a href="https://paddlepaddle.github.io/PaddleOCR/main/version3.x/module_usage/text_detection.html#_5">链接</a></td>
+</tr>
+<tr>
+<td>文本内容不准</td>
+<td>文本识别模块</td>
+<td><a href="https://paddlepaddle.github.io/PaddleOCR/main/version3.x/module_usage/text_recognition.html#_5">链接</a></td>
+</tr>
+</tbody>
+</table>
+
+### 4.2 模型应用
+当您使用私有数据集完成微调训练后，可获得本地模型权重文件，然后可以通过自定义产线配置文件的方式，使用微调后的模型权重。
+
+1. 获取产线配置文件
+
+可调用 PaddleOCR 中 通用OCR 产线对象的 `export_paddlex_config_to_yaml` 方法，将当前产线配置导出为 YAML 文件：
+
+```Python
+from paddleocr import PaddleOCR
+
+pipeline = PaddleOCR()
+pipeline.export_paddlex_config_to_yaml("PaddleOCR.yaml")
+```
+
+2. 修改配置文件
+
+在得到默认的产线配置文件后，将微调后模型权重的本地路径替换至产线配置文件中的对应位置即可。例如
+
+```yaml
+......
+SubModules:
+  TextDetection:
+    box_thresh: 0.6
+    limit_side_len: 960
+    limit_type: max
+    max_side_limit: 4000
+    model_dir: null # 替换为微调后的文本测模型权重路径
+    model_name: PP-OCRv5_server_det
+    module_name: text_detection
+    thresh: 0.3
+    unclip_ratio: 1.5
+  TextLineOrientation:
+    batch_size: 6
+    model_dir: null
+    model_name: PP-LCNet_x0_25_textline_ori
+    module_name: textline_orientation
+  TextRecognition:
+    batch_size: 6
+    model_dir: null # 替换为微调后的文本识模型权重路径
+    model_name: PP-OCRv5_server_rec
+    module_name: text_recognition
+    score_thresh: 0.0
+......
+```
+
+在产线配置文件中，不仅包含 PaddleOCR CLI 和 Python API 支持的参数，还可进行更多高级配置，具体信息可在 [PaddleX模型产线使用概览](https://paddlepaddle.github.io/PaddleX/3.0/pipeline_usage/pipeline_develop_guide.html) 中找到对应的产线使用教程，参考其中的详细说明，根据需求调整各项配置。
+
+3. 在 CLI 中加载产线配置文件
+
+在修改完成配置文件后，通过命令行的 --paddlex_config 参数指定修改后的产线配置文件的路径，PaddleOCR 会读取其中的内容作为产线配置。示例如下：
+
+```bash
+paddleocr ocr --paddlex_config PaddleOCR.yaml ...
+```
+
+4. 在 Python API 中加载产线配置文件
+
+初始化产线对象时，可通过 paddlex_config 参数传入 PaddleX 产线配置文件路径或配置字典，PaddleOCR 会读取其中的内容作为产线配置。示例如下：
+
+```python
+from paddleocr import PaddleOCR
+
+pipeline = PaddleOCR(paddlex_config="PaddleOCR.yaml")
+```

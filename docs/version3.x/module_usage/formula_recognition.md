@@ -86,7 +86,7 @@ comments: true
   <ul>
       <li><b>性能测试环境</b>
           <ul>
-              <li><strong>测试数据集：</strong>PaddleX 内部自建公式识别测试集</li>
+              <li><strong>测试数据集：</strong>PaddleOCR 内部自建公式识别测试集</li>
               <li><strong>硬件配置：</strong>
                   <ul>
                       <li>GPU：NVIDIA Tesla T4</li>
@@ -127,7 +127,7 @@ comments: true
 
 ## 三、快速开始
 
-> ❗ 在快速开始前，请先安装 PaddleOCR 的 wheel 包，详细请参考 [安装教程](../ppocr/installation.md)。
+> ❗ 在快速开始前，请先安装 PaddleOCR 的 wheel 包，详细请参考 [安装教程](../installation.md)。
 
 使用一行命令即可快速体验：
 
@@ -186,7 +186,7 @@ sudo apt-get install texlive texlive-latex-base texlive-xetex latex-cjk-all texl
 <td><code>model_name</code></td>
 <td>模型名称</td>
 <td><code>str</code></td>
-<td>所有PaddleX支持的模型名称</td>
+<td>所有支持的模型名称</td>
 <td>无</td>
 </tr>
 <tr>
@@ -219,7 +219,7 @@ sudo apt-get install texlive texlive-latex-base texlive-xetex latex-cjk-all texl
 </tr>
 </table>
 
-* 其中，`model_name` 必须指定，指定 `model_name` 后，默认使用 PaddleX 内置的模型参数，在此基础上，指定 `model_dir` 时，使用用户自定义的模型。
+* 其中，`model_name` 必须指定，指定 `model_name` 后，默认使用内置的模型参数，在此基础上，指定 `model_dir` 时，使用用户自定义的模型。
 
 * 调用公式识别模型的 `predict()` 方法进行推理预测，该方法会返回一个结果列表。另外，本模块还提供了 `predict_iter()` 方法。两者在参数接受和结果返回方面是完全一致的，区别在于 `predict_iter()` 返回的是一个 `generator`，能够逐步处理和获取预测结果，适合处理大型数据集或希望节省内存的场景。可以根据实际需求选择使用这两种方法中的任意一种。`predict()` 方法参数有 `input` 和 `batch_size`，具体说明如下：
 
@@ -342,9 +342,9 @@ sudo apt-get install texlive texlive-latex-base texlive-xetex latex-cjk-all texl
 
 
 ## 四、二次开发
-如果以上模型在您的场景下效果仍然不理想，您可以尝试以下步骤进行二次开发，此处以训练 `PP-FormulaNet_plus-M` 举例，其他模型替换对应配置文件即可。首先，您需要准备公式识别的数据集，可以参考[公式识别 Demo 数据](https://paddle-model-ecology.bj.bcebos.com/paddlex/data/ocr_rec_latexocr_dataset_example.tar)的格式准备，准备好后，即可按照以下步骤进行模型训练和导出，导出后，可以将模型快速集成到上述API中。此处以公式识别 Demo 数据示例。在训练模型之前，请确保已经按照[安装文档](xxx)安装了 PaddleOCR 所需要的依赖。
+如果以上模型在您的场景下效果仍然不理想，您可以尝试以下步骤进行二次开发，此处以训练 `PP-FormulaNet-S` 举例，其他模型替换对应配置文件即可。首先，您需要准备公式识别的数据集，可以参考[公式识别 Demo 数据](https://paddle-model-ecology.bj.bcebos.com/paddlex/data/ocr_rec_latexocr_dataset_example.tar)的格式准备，准备好后，即可按照以下步骤进行模型训练和导出，导出后，可以将模型快速集成到上述API中。此处以公式识别 Demo 数据示例。在训练模型之前，请确保已经按照[安装文档](../installation.md)安装了 PaddleOCR 所需要的依赖。
 
-## 4.1 环境配置
+### 4.1 环境配置
 
 训练公式识别模型需要安装额外的Python依赖和linux依赖，执行如下命令安装：
 ```shell
@@ -353,9 +353,9 @@ sudo apt-get install libmagickwand-dev
 pip install tokenizers==0.19.1 imagesize ftfy Wand
 ```
 
-## 4.2 数据集、预训练模型准备
+### 4.2 数据集、预训练模型准备
 
-### 4.2.1 准备数据集
+#### 4.2.1 准备数据集
 
 ```shell
 # 下载示例数据集
@@ -363,7 +363,7 @@ wget https://paddle-model-ecology.bj.bcebos.com/paddlex/data/ocr_rec_latexocr_da
 tar -xf ocr_rec_latexocr_dataset_example.tar
 ```
 
-### 4.2.2 下载预训练模型
+#### 4.2.2 下载预训练模型
 
 ```shell
 # 下载 PP-FormulaNet_plus-M 预训练模型
@@ -398,22 +398,23 @@ python3  -m paddle.distributed.launch --gpus '0,1,2,3'  tools/train.py -c config
 
 ### 4.4 模型评估
 
-您可以评估已经训练好的权重，如，`output/xxx/xxx.pdprams`，也可以使用已经下载的[模型文件](https://paddleocr.bj.bcebos.com/contribution/rec_ppformulanet_plus_m_train.tar )，使用如下命令进行评估：
+您可以评估已经训练好的权重，如，`output/xxx/xxx.pdparams`，也可以使用已经下载的[模型文件](https://paddleocr.bj.bcebos.com/contribution/rec_ppformulanet_s_train.tar)，使用如下命令进行评估：
 
 ```bash
-# 注意将pretrained_model的路径设置为本地路径。若使用自行训练保存的模型，请注意修改路径和文件名为{path/to/weights}/{model_name}。
- # demo 测试集评估
+
+#注意将pretrained_model的路径设置为本地路径。若使用自行训练保存的模型，请注意修改路径和文件名为{path/to/weights}/{model_name}。
+#demo 测试集评估
  python3 tools/eval.py -c configs/rec/PP-FormuaNet/PP-FormulaNet_plus-M.yaml -o \
  Global.pretrained_model=./rec_ppformulanet_plus_m_train/best_accuracy.pdparams
- ```
+```
 
 ### 4.5 模型导出
 
 ```bash
- python3 tools/export_model.py -c configs/rec/PP-FormuaNet/PP-FormulaNet_plus-M.yaml -o \
- Global.pretrained_model=./rec_ppformulanet_plus_m_train/best_accuracy.pdparams \
- Global.save_inference_dir="./PP-FormulaNet_plus-M_infer/"
- ```
+python3 tools/export_model.py -c configs/rec/PP-FormuaNet/PP-FormulaNet_plus-M.yaml -o \
+Global.pretrained_model=./rec_ppformulanet_plus_m_train/best_accuracy.pdparams \
+Global.save_inference_dir="./PP-FormulaNet_plus-M_infer/"
+```
 
  导出模型后，静态图模型会存放于当前目录的`./PP-FormulaNet_plus-M_infer/`中，在该目录下，您将看到如下文件：
  ```
@@ -426,7 +427,7 @@ python3  -m paddle.distributed.launch --gpus '0,1,2,3'  tools/train.py -c config
 
 ## 五、FAQ
 
-**Q1:PaddleOCR 更推荐哪个公式识别模型？**
+**Q1: PaddleOCR 更推荐哪个公式识别模型？**
 
 A1: 更推荐使用 PP-FormulaNet 系列模型，如果是英文场景居多且不考虑推理耗时，则可以使用 PP-FormulaNet-L 或者 PP-FormulaNet_plus-L 模型，如果中文场景居多，则可以使用 PP-FormulaNet_plus-L 或者 PP-FormulaNet_plus-M，如果推理设备算力有限且是英文场景，则可以使用 PP-FormulaNet-S。
 

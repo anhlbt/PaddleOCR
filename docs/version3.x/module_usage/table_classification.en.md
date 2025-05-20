@@ -21,7 +21,7 @@ The Table Classification Module is a key component in computer vision systems, r
 <th>Model Storage Size (M)</th>
 </tr>
 <tr>
-<td>PP-LCNet_x1_0_table_cls</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/CLIP_vit_base_patch16_224_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-LCNet_x1_0_table_cls_pretrained.pdparams">Training Model</a></td>
+<td>PP-LCNet_x1_0_table_cls</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-LCNet_x1_0_table_cls_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-LCNet_x1_0_table_cls_pretrained.pdparams">Training Model</a></td>
 <td>94.2</td>
 <td>2.35 / 0.47</td>
 <td>4.03 / 1.35</td>
@@ -74,7 +74,7 @@ The Table Classification Module is a key component in computer vision systems, r
 
 ## 3. Quick Start
 
-> ❗ Before starting quickly, please first install the PaddleOCR wheel package. For details, please refer to the [installation tutorial](../ppocr/installation.md).
+> ❗ Before starting quickly, please first install the PaddleOCR wheel package. For details, please refer to the [installation tutorial](../installation.md).
 
 You can quickly experience it with one command:
 
@@ -272,10 +272,8 @@ The relevant methods, parameters, etc., are described as follows:
 </tr>
 </table>
 
-For more information on how to use PaddleX's single-model inference API, you can refer to the [PaddleX Single Model Python Script Usage Instructions](../../instructions/model_python_API.md).
-
 ## 4. Secondary Development
 
-Since PaddleOCR does not directly provide training for the table classification module, if you need to train a table classification model, you can refer to the [PaddleX Table Classification Module Secondary Development](https://paddlepaddle.github.io/PaddleX/latest/module_usage/tutorials/ocr_modules/table_classification.html#_4) section for training. The trained model can be seamlessly integrated into the PaddleOCR API for inference.
+Since PaddleOCR does not directly provide training for the table classification module, if you need to train a table classification model, you can refer to the [PaddleX Table Classification Module Secondary Development](https://paddlepaddle.github.io/PaddleX/latest/en/module_usage/tutorials/ocr_modules/table_classification.html#iv-secondary-development) section for training. The trained model can be seamlessly integrated into the PaddleOCR API for inference.
 
 ## 5. FAQ

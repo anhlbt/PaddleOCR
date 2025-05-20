@@ -10,7 +10,7 @@ PP-ChatOCRv4 是飞桨特色的文档和图像智能分析解决方案，结合�
 
 <img src="https://github.com/user-attachments/assets/0870cdec-1909-4247-9004-d9efb4ab9635">
 
-PP-ChatOCRv4 产线中包含<b>版面区域检测模块</b>、<b>表格结构识别模块</b>、<b>表格分类模块</b>、<b>表格单元格定位模块</b>、<b>文本检测模块</b>、<b>文本识别模块</b>、<b>印章文本检测模块</b>、<b>文本图像矫正模块</b>、<b>文档图像方向分类模块</b>。其中相关的模型是以子产线的方式集成，您可以通过[产线配置](../../../../paddlex/configs/pipelines/PP-ChatOCRv4-doc.yaml)来查看不同模块的模型配置。
+PP-ChatOCRv4 产线中包含<b>版面区域检测模块</b>、<b>表格结构识别模块</b>、<b>表格分类模块</b>、<b>表格单元格定位模块</b>、<b>文本检测模块</b>、<b>文本识别模块</b>、<b>印章文本检测模块</b>、<b>文本图像矫正模块</b>、<b>文档图像方向分类模块</b>。
 
 <b>PP-ChatOCRv4 产线中包含以下9个模块。每个模块均可独立进行训练和推理，并包含多个模型。有关详细信息，请点击相应模块以查看文档。</b>
 
@@ -225,8 +225,24 @@ PP-ChatOCRv4 产线中包含<b>版面区域检测模块</b>、<b>表格结构识
 </thead>
 <tbody>
 <tr>
+<td>PP-OCRv5_server_det</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-OCRv5_server_det_infer.tar">推理模型</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv5_server_det_pretrained.pdparams">训练模型</a></td>
+<td>83.8</td>
+<td>89.55 / 70.19</td>
+<td>371.65 / 371.65</td>
+<td>84.3</td>
+<td>PP-OCRv5 的服务端文本检测模型，精度更高，适合在性能较好的服务器上部署</td>
+</tr>
+<tr>
+<td>PP-OCRv5_mobile_det</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-OCRv5_mobile_det_infer.tar">推理模型</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv5_mobile_det_pretrained.pdparams">训练模型</a></td>
+<td>79.0</td>
+<td>8.79 / 3.13</td>
+<td>51.00 / 28.58</td>
+<td>4.7</td>
+<td>PP-OCRv5 的移动端文本检测模型，效率更高，适合在端侧设备部署</td>
+</tr>
+<tr>
 <td>PP-OCRv4_server_det</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-OCRv4_server_det_infer.tar">推理模型</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv4_server_det_pretrained.pdparams">训练模型</a></td>
-<td>82.56</td>
+<td>69.2</td>
 <td>83.34 / 80.91</td>
 <td>442.58 / 442.58</td>
 <td>109</td>
@@ -234,27 +250,11 @@ PP-ChatOCRv4 产线中包含<b>版面区域检测模块</b>、<b>表格结构识
 </tr>
 <tr>
 <td>PP-OCRv4_mobile_det</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-OCRv4_mobile_det_infer.tar">推理模型</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv4_mobile_det_pretrained.pdparams">训练模型</a></td>
-<td>77.35</td>
+<td>63.8</td>
 <td>8.79 / 3.13</td>
 <td>51.00 / 28.58</td>
 <td>4.7</td>
 <td>PP-OCRv4 的移动端文本检测模型，效率更高，适合在端侧设备部署</td>
-</tr>
-<tr>
-<td>PP-OCRv3_mobile_det</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-OCRv3_mobile_det_infer.tar">推理模型</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv3_mobile_det_pretrained.pdparams">训练模型</a></td>
-<td>78.68</td>
-<td>8.44 / 2.91</td>
-<td>27.87 / 27.87</td>
-<td>2.1</td>
-<td>PP-OCRv3 的移动端文本检测模型，效率更高，适合在端侧设备部署</td>
-</tr>
-<tr>
-<td>PP-OCRv3_server_det</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-OCRv3_server_det_infer.tar">推理模型</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv3_server_det_pretrained.pdparams">训练模型</a></td>
-<td>80.11</td>
-<td>65.41 / 13.67</td>
-<td>305.07 / 305.07</td>
-<td>102.1</td>
-<td>PP-OCRv3 的服务端文本检测模型，精度更高，适合在性能较好的服务器上部署</td>
 </tr>
 </tbody>
 </table>
@@ -275,27 +275,25 @@ PP-ChatOCRv4 产线中包含<b>版面区域检测模块</b>、<b>表格结构识
 <td>PP-OCRv5_server_rec</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/\
 PP-OCRv5_server_rec_infer.tar">推理模型</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv5_server_rec_pretrained.pdparams">训练模型</a></td>
 <td>86.38</td>
-<td> - </td>
-<td> - </td>
-<td>205 M</td>
-<td>PP-OCRv5_server_rec 是新一代文本识别模型。该模型致力于以单一模型高效、精准地支持简体中文、繁体中文、英文、日文四种主要语言，以及手写、竖版、拼音、生僻字等复杂文本场景的识别。在保持识别效果的同时，兼顾推理速度和模型鲁棒性，为各种场景下的文档理解提供高效、精准的技术支撑。</td>
+<td> 8.45/2.36 </td>
+<td> 122.69/122.69 </td>
+<td>81 M</td>
+<td rowspan="2">PP-OCRv5_rec 是新一代文本识别模型。该模型致力于以单一模型高效、精准地支持简体中文、繁体中文、英文、日文四种主要语言，以及手写、竖版、拼音、生僻字等复杂文本场景的识别。在保持识别效果的同时，兼顾推理速度和模型鲁棒性，为各种场景下的文档理解提供高效、精准的技术支撑。</td>
 </tr>
 <tr>
 <td>PP-OCRv5_mobile_rec</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/\
 PP-OCRv5_mobile_rec_infer.tar">推理模型</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv5_mobile_rec_pretrained.pdparams">训练模型</a></td>
 <td>81.29</td>
-<td> - </td>
-<td> - </td>
-<td>136 M</td>
-<td>PP-OCRv5_mobile_rec 是新一代文本识别模型。该模型致力于以单一模型高效、精准地支持简体中文、繁体中文、英文、日文四种主要语言，以及手写、竖版、拼音、生僻字等复杂文本场景的识别。在保持识别效果的同时，兼顾推理速度和模型鲁棒性，为各种场景下的文档理解提供高效、精准的技术支撑。</td>
-</tr>
+<td> 1.46/5.43 </td>
+<td> 5.32/91.79 </td>
+<td>16 M</td>
 <tr>
 <td>PP-OCRv4_server_rec_doc</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/\
 PP-OCRv4_server_rec_doc_infer.tar">推理模型</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv4_server_rec_doc_pretrained.pdparams">训练模型</a></td>
 <td>86.58</td>
 <td>6.65 / 2.38</td>
 <td>32.92 / 32.92</td>
-<td>91 M</td>
+<td>181 M</td>
 <td>PP-OCRv4_server_rec_doc是在PP-OCRv4_server_rec的基础上，在更多中文文档数据和PP-OCR训练数据的混合数据训练而成，增加了部分繁体字、日文、特殊字符的识别能力，可支持识别的字符为1.5万+，除文档相关的文字识别能力提升外，也同时提升了通用文字的识别能力</td>
 </tr>
 <tr>
@@ -303,7 +301,7 @@ PP-OCRv4_server_rec_doc_infer.tar">推理模型</a>/<a href="https://paddle-mode
 <td>83.28</td>
 <td>4.82 / 1.20</td>
 <td>16.74 / 4.64</td>
-<td>11 M</td>
+<td>88 M</td>
 <td>PP-OCRv4的轻量级识别模型，推理效率高，可以部署在包含端侧设备的多种硬件设备中</td>
 </tr>
 <tr>
@@ -311,7 +309,7 @@ PP-OCRv4_server_rec_doc_infer.tar">推理模型</a>/<a href="https://paddle-mode
 <td>85.19 </td>
 <td>6.58 / 2.43</td>
 <td>33.17 / 33.17</td>
-<td>87 M</td>
+<td>151 M</td>
 <td>PP-OCRv4的服务器端模型，推理精度高，可以部署在多种不同的服务器上</td>
 </tr>
 <tr>
@@ -320,7 +318,7 @@ en_PP-OCRv4_mobile_rec_infer.tar">推理模型</a>/<a href="https://paddle-model
 <td>70.39</td>
 <td>4.81 / 0.75</td>
 <td>16.10 / 5.31</td>
-<td>7.3 M</td>
+<td>66 M</td>
 <td>基于PP-OCRv4识别模型训练得到的超轻量英文识别模型，支持英文、数字识别</td>
 </tr>
 </table>
@@ -350,10 +348,10 @@ PP-OCRv5_server_rec_infer.tar">推理模型</a>/<a href="https://paddle-model-ec
 <td>64.70</td>
 <td>93.29</td>
 <td>60.35</td>
-<td> - </td>
-<td> - </td>
-<td>205 M</td>
-<td>PP-OCRv5_server_rec 是新一代文本识别模型。该模型致力于以单一模型高效、精准地支持简体中文、繁体中文、英文、日文四种主要语言，以及手写、竖版、拼音、生僻字等复杂文本场景的识别。在保持识别效果的同时，兼顾推理速度和模型鲁棒性，为各种场景下的文档理解提供高效、精准的技术支撑。</td>
+<td> 1.46/5.43 </td>
+<td> 5.32/91.79 </td>
+<td>81 M</td>
+<td rowspan="2">PP-OCRv5_server_rec 是新一代文本识别模型。该模型致力于以单一模型高效、精准地支持简体中文、繁体中文、英文、日文四种主要语言，以及手写、竖版、拼音、生僻字等复杂文本场景的识别。在保持识别效果的同时，兼顾推理速度和模型鲁棒性，为各种场景下的文档理解提供高效、精准的技术支撑。</td>
 </tr>
 <tr>
 <td>PP-OCRv5_mobile_rec</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/\
@@ -362,10 +360,9 @@ PP-OCRv5_mobile_rec_infer.tar">推理模型</a>/<a href="https://paddle-model-ec
 <td>66.00</td>
 <td>83.55</td>
 <td>54.65</td>
-<td> - </td>
-<td> - </td>
-<td>136 M</td>
-<td>PP-OCRv5_mobile_rec 是新一代文本识别模型。该模型致力于以单一模型高效、精准地支持简体中文、繁体中文、英文、日文四种主要语言，以及手写、竖版、拼音、生僻字等复杂文本场景的识别。在保持识别效果的同时，兼顾推理速度和模型鲁棒性，为各种场景下的文档理解提供高效、精准的技术支撑。</td>
+<td> 1.46/5.43 </td>
+<td> 5.32/91.79 </td>
+<td>16 M</td>
 </tr>
 </table>
 
@@ -688,18 +685,18 @@ devanagari_PP-OCRv3_mobile_rec_infer.tar">推理模型</a>/<a href="https://padd
                        <li><strong>测试数据集：
              </strong>
                 <ul>
-                  <li>文档图像方向分类模型：PaddleX 自建的数据集，覆盖证件和文档等多个场景，包含 1000 张图片。</li>
+                  <li>文档图像方向分类模型：PaddleOCR 自建的数据集，覆盖证件和文档等多个场景，包含 1000 张图片。</li>
                   <li>文本图像矫正模型：<a href="https://www3.cs.stonybrook.edu/~cvl/docunet.html">DocUNet</a>。 </li>
                   <li>版面区域检测模型：PaddleOCR 自建的版面区域分析数据集，包含中英文论文、杂志和研报等常见的 1w 张文档类型图片。 </li>
-                  <li> 表格结构识别模型：PaddleX 内部自建英文表格识别数据集。</li>
+                  <li> 表格结构识别模型：内部自建的英文表格识别数据集。</li>
                   <li> 文本检测模型：PaddleOCR 自建的中文数据集，覆盖街景、网图、文档、手写多个场景，其中检测包含 500 张图片。</li>
                   <li>中文识别模型： PaddleOCR 自建的中文数据集，覆盖街景、网图、文档、手写多个场景，其中文本识别包含 1.1w 张图片。 </li>
                   <li>ch_SVTRv2_rec：<a href="https://aistudio.baidu.com/competition/detail/1131/0/introduction">PaddleOCR算法模型挑战赛 - 赛题一：OCR端到端识别任务</a>A榜评估集。</li>
                   <li>ch_RepSVTR_rec：<a href="https://aistudio.baidu.com/competition/detail/1131/0/introduction">PaddleOCR算法模型挑战赛 - 赛题一：OCR端到端识别任务</a>B榜评估集。</li>
-                  <li>英文识别模型：PaddleX 自建的英文数据集。</li>
-                  <li>多语言识别模型：PaddleX 自建的多语种数据集。</li>
-                  <li>文本行方向分类模型：PaddleX 自建的数据集，覆盖证件和文档等多个场景，包含 1000 张图片。</li>
-                  <li>印章文本检测模型：PaddleX 自建的数据集，包含500张圆形印章图像。</li>
+                  <li>英文识别模型：PaddleOCR 自建的英文数据集。</li>
+                  <li>多语言识别模型：PaddleOCR 自建的多语种数据集。</li>
+                  <li>文本行方向分类模型：PaddleOCR 自建的数据集，覆盖证件和文档等多个场景，包含 1000 张图片。</li>
+                  <li>印章文本检测模型：PaddleOCR 自建的数据集，包含500张圆形印章图像。</li>
                 </ul>
              </li>
               <li><strong>硬件配置：</strong>
@@ -745,7 +742,7 @@ devanagari_PP-OCRv3_mobile_rec_infer.tar">推理模型</a>/<a href="https://padd
 
 ## 2. 快速开始
 
-在本地使用 PP-ChatOCRv4 产线前，请确保您已经按照[安装教程](../ppocr/installation.md)完成了wheel包安装。
+在本地使用 PP-ChatOCRv4 产线前，请确保您已经按照[安装教程](../installation.md)完成了wheel包安装。
 
 在进行模型推理之前，首先需要准备大语言模型的 api_key，PP-ChatOCRv4 支持在[百度云千帆平台](https://console.bce.baidu.com/qianfan/ais/console/onlineService)或者本地部署的标准 OpenAI 接口大模型服务。如果使用百度云千帆平台，可以参考[认证鉴权](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/Um2wxbaps) 获取 api_key。如果使用本地部署的大模型服务，可以参考[PaddleNLP大模型部署文档](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm)进行大模型部署对话接口部署和向量化接口部署，并填写对应的 base_url 和 api_key 即可。如果需要使用多模态大模型进行数据融合，可以参考[PaddleMIX模型文档](https://github.com/PaddlePaddle/PaddleMIX/tree/develop/paddlemix/examples/ppdocbee)中的OpenAI服务部署进行多模态大模型部署，并填写对应的 base_url 和 api_key 即可。
 
@@ -783,7 +780,13 @@ paddleocr pp_chatocrv4_doc -i vehicle_certificate-1.png -k 驾驶室准乘人数
 </ul>
 </td>
 <td><code>Python Var|str|list</code></td>
-<td><code>None</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>keys</code></td>
+<td>用于信息提取的键。</td>
+<td><code>str</code></td>
+<td></td>
 </tr>
 <tr>
 <td><code>save_path</code></td>
@@ -792,73 +795,8 @@ paddleocr pp_chatocrv4_doc -i vehicle_certificate-1.png -k 驾驶室准乘人数
 <td><code>None</code></td>
 </tr>
 <tr>
-<td><code>device</code></td>
-<td>用于推理的设备。支持指定具体卡号。
-<ul>
-<li><b>CPU</b>：如 <code>cpu</code> 表示使用 CPU 进行推理；</li>
-<li><b>GPU</b>：如 <code>gpu:0</code> 表示使用第 1 块 GPU 进行推理；</li>
-<li><b>NPU</b>：如 <code>npu:0</code> 表示使用第 1 块 NPU 进行推理；</li>
-<li><b>XPU</b>：如 <code>xpu:0</code> 表示使用第 1 块 XPU 进行推理；</li>
-<li><b>MLU</b>：如 <code>mlu:0</code> 表示使用第 1 块 MLU 进行推理；</li>
-<li><b>DCU</b>：如 <code>dcu:0</code> 表示使用第 1 块 DCU 进行推理；</li>
-<li><b>None</b>：如果设置为 <code>None</code>, 将默认使用产线初始化的该参数值，初始化时，会优先使用本地的 GPU 0号设备，如果没有，则使用 CPU 设备；</li>
-</ul>
-</td>
-<td><code>str</code></td>
-<td><code>None</code></td>
-</tr>
-<tr>
-<td><code>enable_hpi</code></td>
-<td>是否启用高性能推理。</td>
-<td><code>bool</code></td>
-<td><code>False</code></td>
-</tr>
-<tr>
-<td><code>use_tensorrt</code></td>
-<td>是否使用 TensorRT 进行推理加速。</td>
-<td><code>bool</code></td>
-<td><code>False</code></td>
-</tr>
-<tr>
-<td><code>min_subgraph_size</code></td>
-<td>最小子图大小，用于优化模型子图的计算。</td>
-<td><code>int</code></td>
-<td><code>3</code></td>
-</tr>
-<tr>
-<td><code>precision</code></td>
-<td>计算精度，如 fp32、fp16。</td>
-<td><code>str</code></td>
-<td><code>fp32</code></td>
-</tr>
-<tr>
-<td><code>enable_mkldnn</code></td>
-<td>是否启用 MKL-DNN 加速库。如果设置为<code>None</code>, 将默认启用。
-</td>
-<td><code>bool</code></td>
-<td><code>None</code></td>
-</tr>
-<tr>
-<td><code>cpu_threads</code></td>
-<td>在 CPU 上进行推理时使用的线程数。</td>
-<td><code>int</code></td>
-<td><code>8</code></td>
-</tr>
-<tr>
 <td><code>invoke_mllm</code></td>
 <td>是否使用多模态大模型。</td>
-<td><code>bool</code></td>
-<td><code>False</code></td>
-</tr>
-<tr>
-<td><code>qianfan_api_key</code></td>
-<td>qianfan api_key</td>
-<td><code>str</code></td>
-<td><code>None</code></td>
-</tr>
-<tr>
-<td><code>pp_docbee_base_url</code></td>
-<td>多模态大模型服务的url。</td>
 <td><code>bool</code></td>
 <td><code>False</code></td>
 </tr>
@@ -983,12 +921,6 @@ paddleocr pp_chatocrv4_doc -i vehicle_certificate-1.png -k 驾驶室准乘人数
 <td><code>None</code></td>
 </tr>
 <tr>
-<td><code>use_general_ocr</code></td>
-<td>是否加载通用OCR子产线。如果设置为<code>None</code>，将默认使用产线初始化的该参数值，初始化为<code>True</code>。</td>
-<td><code>bool</code></td>
-<td><code>None</code></td>
-</tr>
-<tr>
 <td><code>use_seal_recognition</code></td>
 <td>是否加载印章识别子产线。如果设置为<code>None</code>，将默认使用产线初始化的该参数值，初始化为<code>True</code>。</td>
 <td><code>bool</code></td>
@@ -1056,7 +988,7 @@ paddleocr pp_chatocrv4_doc -i vehicle_certificate-1.png -k 驾驶室准乘人数
 </tr>
 <tr>
 <td><code>text_det_limit_type</code></td>
-<td>
+<td>文本检测的边长度限制类型。
 <ul>
 <li><b>str</b>：支持 <code>min</code> 和 <code>max</code>，<code>min</code> 表示保证图像最短边不小于 <code>det_limit_side_len</code>，<code>max</code> 表示保证图像最长边不大于 <code>limit_side_len</code></li>
 <li><b>None</b>：如果设置为 <code>None</code>, 将默认使用产线初始化的该参数值，初始化为 <code>max</code>。</li>
@@ -1167,6 +1099,77 @@ paddleocr pp_chatocrv4_doc -i vehicle_certificate-1.png -k 驾驶室准乘人数
 <td><code>float</code></td>
 <td><code>None</code></td>
 </tr>
+<tr>
+<td><code>qianfan_api_key</code></td>
+<td>qianfan api_key</td>
+<td><code>str</code></td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>pp_docbee_base_url</code></td>
+<td>多模态大模型服务的url。</td>
+<td><code>bool</code></td>
+<td><code>False</code></td>
+</tr>
+<tr>
+<td><code>device</code></td>
+<td>用于推理的设备。支持指定具体卡号。
+<ul>
+<li><b>CPU</b>：如 <code>cpu</code> 表示使用 CPU 进行推理；</li>
+<li><b>GPU</b>：如 <code>gpu:0</code> 表示使用第 1 块 GPU 进行推理；</li>
+<li><b>NPU</b>：如 <code>npu:0</code> 表示使用第 1 块 NPU 进行推理；</li>
+<li><b>XPU</b>：如 <code>xpu:0</code> 表示使用第 1 块 XPU 进行推理；</li>
+<li><b>MLU</b>：如 <code>mlu:0</code> 表示使用第 1 块 MLU 进行推理；</li>
+<li><b>DCU</b>：如 <code>dcu:0</code> 表示使用第 1 块 DCU 进行推理；</li>
+<li><b>None</b>：如果设置为 <code>None</code>, 将默认使用产线初始化的该参数值，初始化时，会优先使用本地的 GPU 0号设备，如果没有，则使用 CPU 设备；</li>
+</ul>
+</td>
+<td><code>str</code></td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>enable_hpi</code></td>
+<td>是否启用高性能推理。</td>
+<td><code>bool</code></td>
+<td><code>False</code></td>
+</tr>
+<tr>
+<td><code>use_tensorrt</code></td>
+<td>是否使用 TensorRT 进行推理加速。</td>
+<td><code>bool</code></td>
+<td><code>False</code></td>
+</tr>
+<tr>
+<td><code>min_subgraph_size</code></td>
+<td>最小子图大小，用于优化模型子图的计算。</td>
+<td><code>int</code></td>
+<td><code>3</code></td>
+</tr>
+<tr>
+<td><code>precision</code></td>
+<td>计算精度，如 fp32、fp16。</td>
+<td><code>str</code></td>
+<td><code>fp32</code></td>
+</tr>
+<tr>
+<td><code>enable_mkldnn</code></td>
+<td>是否启用 MKL-DNN 加速库。如果设置为<code>None</code>, 将默认启用。
+</td>
+<td><code>bool</code></td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>cpu_threads</code></td>
+<td>在 CPU 上进行推理时使用的线程数。</td>
+<td><code>int</code></td>
+<td><code>8</code></td>
+</tr>
+<tr>
+<td><code>paddlex_config</code></td>
+<td>PaddleX产线配置文件路径。</td>
+<td><code>str</code></td>
+<td><code>None</code></td>
+</tr>
 </tbody>
 </table>
 </details>
@@ -1203,7 +1206,7 @@ retriever_config = {
 
 mllm_chat_bot_config = {
     "module_name": "chat_bot",
-    "model_name": "PP-DocBee",
+    "model_name": "PP-DocBee2",
     "base_url": "http://127.0.0.1:8080/",  # your local mllm service url
     "api_type": "openai",
     "api_key": "api_key",  # your api_key
@@ -1389,12 +1392,6 @@ PP-ChatOCRv4 预测的流程、API说明、产出说明如下：
 <td><code>None</code></td>
 </tr>
 <tr>
-<td><code>use_general_ocr</code></td>
-<td>是否加载通用OCR子产线。如果设置为<code>None</code>，将默认使用产线初始化的该参数值，初始化为<code>True</code>。</td>
-<td><code>bool</code></td>
-<td><code>None</code></td>
-</tr>
-<tr>
 <td><code>use_seal_recognition</code></td>
 <td>是否加载印章识别子产线。如果设置为<code>None</code>，将默认使用产线初始化的该参数值，初始化为<code>True</code>。</td>
 <td><code>bool</code></td>
@@ -1462,7 +1459,7 @@ PP-ChatOCRv4 预测的流程、API说明、产出说明如下：
 </tr>
 <tr>
 <td><code>text_det_limit_type</code></td>
-<td>
+<td>文本检测的边长度限制类型。
 <ul>
 <li><b>str</b>：支持 <code>min</code> 和 <code>max</code>，<code>min</code> 表示保证图像最短边不小于 <code>det_limit_side_len</code>，<code>max</code> 表示保证图像最长边不大于 <code>limit_side_len</code></li>
 <li><b>None</b>：如果设置为 <code>None</code>, 将默认使用产线初始化的该参数值，初始化为 <code>max</code>。</li>
@@ -1588,12 +1585,12 @@ PP-ChatOCRv4 预测的流程、API说明、产出说明如下：
 <td><code>None</code></td>
 </tr>
 <tr>
-<td><code>chat_bot_config</code></td>
-<td>大语言模型配置信息。配置内容为如下字典：
+<td><code>mllm_chat_bot_config</code></td>
+<td>多模态大模型配置参数。配置内容为如下字典：
 <pre><code>{
 "module_name": "chat_bot",
-"model_name": "ernie-3.5-8k",
-"base_url": "https://qianfan.baidubce.com/v2",
+"model_name": "PP-DocBee",
+"base_url": "http://127.0.0.1:8080/", # 请将此设置为实际的多模态大模型服务的url
 "api_type": "openai",
 "api_key": "api_key"  # 请将此设置为实际的API密钥
 }</code></pre>
@@ -1602,12 +1599,12 @@ PP-ChatOCRv4 预测的流程、API说明、产出说明如下：
 <td><code>None</code></td>
 </tr>
 <tr>
-<td><code>mllm_chat_bot_config</code></td>
-<td>多模态大模型配置参数。配置内容为如下字典：
+<td><code>chat_bot_config</code></td>
+<td>大语言模型配置信息。配置内容为如下字典：
 <pre><code>{
 "module_name": "chat_bot",
-"model_name": "PP-DocBee",
-"base_url": "http://127.0.0.1:8080/", # 请将此设置为实际的多模态大模型服务的url
+"model_name": "ernie-3.5-8k",
+"base_url": "https://qianfan.baidubce.com/v2",
 "api_type": "openai",
 "api_key": "api_key"  # 请将此设置为实际的API密钥
 }</code></pre>
@@ -1686,6 +1683,12 @@ PP-ChatOCRv4 预测的流程、API说明、产出说明如下：
 <td><code>int</code></td>
 <td><code>8</code></td>
 </tr>
+<tr>
+<td><code>paddlex_config</code></td>
+<td>PaddleX产线配置文件路径。</td>
+<td><code>str</code></td>
+<td><code>None</code></td>
+</tr>
 </tbody>
 </table>
 </details>
@@ -1711,7 +1714,7 @@ PP-ChatOCRv4 预测的流程、API说明、产出说明如下：
 </ul>
 </td>
 <td><code>Python Var|str|list</code></td>
-<td><code>None</code></td>
+<td></td>
 </tr>
 <tr>
 <td><code>device</code></td>
@@ -1734,12 +1737,6 @@ PP-ChatOCRv4 预测的流程、API说明、产出说明如下：
 <tr>
 <td><code>use_textline_orientation</code></td>
 <td>是否在推理时使用文本行方向分类模块。</td>
-<td><code>bool</code></td>
-<td><code>None</code></td>
-</tr>
-<tr>
-<td><code>use_general_ocr</code></td>
-<td>是否在推理时使用 OCR 子产线。</td>
 <td><code>bool</code></td>
 <td><code>None</code></td>
 </tr>
@@ -1959,7 +1956,6 @@ for res in visual_predict_res:
     - `model_settings`: `(Dict[str, bool])` 配置产线所需的模型参数
 
         - `use_doc_preprocessor`: `(bool)` 控制是否启用文档预处理子产线
-        - `use_general_ocr`: `(bool)` 控制是否启用 OCR 子产线
         - `use_seal_recognition`: `(bool)` 控制是否启用印章识别子产线
         - `use_table_recognition`: `(bool)` 控制是否启用表格识别子产线
         - `use_formula_recognition`: `(bool)` 控制是否启用公式识别子产线
@@ -2115,7 +2111,7 @@ for res in visual_predict_res:
 </ul>
 </td>
 <td><code>Python Var|str</code></td>
-<td><code>None</code></td>
+<td></td>
 </tr>
 <tr>
 <td><code>key_list</code></td>
@@ -2280,9 +2276,9 @@ for res in visual_predict_res:
 
 此外，PaddleOCR 也提供了其他两种部署方式，详细说明如下：
 
-🚀 高性能推理：在实际生产环境中，许多应用对部署策略的性能指标（尤其是响应速度）有着较严苛的标准，以确保系统的高效运行与用户体验的流畅性。为此，PaddleOCR 提供高性能推理功能，旨在对模型推理及前后处理进行深度性能优化，实现端到端流程的显著提速，详细的高性能推理流程请参考[高性能推理指南](../deployment/high_performance_inference.md)。
+🚀 高性能推理：在实际生产环境中，许多应用对部署策略的性能指标（尤其是响应速度）有着较严苛的标准，以确保系统的高效运行与用户体验的流畅性。为此，PaddleOCR 提供高性能推理功能，旨在对模型推理及前后处理进行深度性能优化，实现端到端流程的显著提速，详细的高性能推理流程请参考[高性能推理](../deployment/high_performance_inference.md)。
 
-☁️ 服务化部署：服务化部署是实际生产环境中常见的一种部署形式。通过将推理功能封装为服务，客户端可以通过网络请求来访问这些服务，以获取推理结果。详细的产线服务化部署流程请参考[服务化部署指南](../deployment/serving.md)。
+☁️ 服务化部署：服务化部署是实际生产环境中常见的一种部署形式。通过将推理功能封装为服务，客户端可以通过网络请求来访问这些服务，以获取推理结果。详细的产线服务化部署流程请参考[服务化部署](../deployment/serving.md)。
 
 以下是基础服务化部署的API参考与多语言服务调用示例：
 
@@ -2399,12 +2395,6 @@ for res in visual_predict_res:
 <td><code>useDocUnwarping</code></td>
 <td><code>boolean</code> | <code>null</code></td>
 <td>请参阅产线对象中 <code>visual_predict</code> 方法的 <code>use_doc_unwarping</code> 参数相关说明。</td>
-<td>否</td>
-</tr>
-<tr>
-<td><code>useGeneralOcr</code></td>
-<td><code>boolean</code> | <code>null</code></td>
-<td>请参阅产线对象中 <code>visual_predict</code> 方法的 <code>use_general_ocr</code> 参数相关说明。</td>
 <td>否</td>
 </tr>
 <tr>
@@ -2963,37 +2953,37 @@ print(result_chat["chatResult"])
     <tr>
       <td>版面区域检测不准，如印章、表格未检出等</td>
       <td>版面区域检测模块</td>
-      <td><a href="../module_usage/layout_detection.md#四二次开发">链接</a></td>
+      <td><a href="https://paddlepaddle.github.io/PaddleX/latest/module_usage/tutorials/ocr_modules/layout_detection.html#_5">链接</a></td>
     </tr>
     <tr>
       <td>表格结构识别不准</td>
       <td>表格结构识别</td>
-      <td><a href="../module_usage/table_structure_recognition.md#四二次开发">链接</a></td>
+      <td><a href="https://paddlepaddle.github.io/PaddleOCR/main/version3.x/module_usage/table_structure_recognition.html#_5">链接</a></td>
     </tr>
     <tr>
       <td>印章文本存在漏检</td>
       <td>印章文本检测模块</td>
-      <td><a href="../module_usage/seal_text_detection.md#四二次开发">链接</a></td>
+      <td><a href="https://paddlepaddle.github.io/PaddleOCR/main/version3.x/module_usage/seal_text_detection.html#_5">链接</a></td>
     </tr>
     <tr>
       <td>文本存在漏检</td>
       <td>文本检测模块</td>
-      <td><a href="../module_usage/text_detection.md#四二次开发">链接</a></td>
+      <td><a href="https://paddlepaddle.github.io/PaddleOCR/main/version3.x/module_usage/text_detection.html#_5">链接</a></td>
     </tr>
     <tr>
       <td>文本内容都不准</td>
       <td>文本识别模块</td>
-      <td><a href="../module_usage/text_recognition.md#四二次开发">链接</a></td>
+      <td><a href="https://paddlepaddle.github.io/PaddleOCR/main/version3.x/module_usage/text_recognition.html#_5">链接</a></td>
     </tr>
     <tr>
       <td>垂直或者旋转文本行矫正不准</td>
       <td>文本行方向分类模块</td>
-      <td><a href="../module_usage/text_line_orientation_classification.md#四二次开发">链接</a></td>
+      <td><a href="https://paddlepaddle.github.io/PaddleX/latest/module_usage/tutorials/ocr_modules/textline_orientation_classification.html#_5">链接</a></td>
     </tr>
     <tr>
       <td>整图旋转矫正不准</td>
       <td>文档图像方向分类模块</td>
-      <td><a href="../module_usage/doc_img_orientation_classification.md#四二次开发">链接</a></td>
+      <td><a href="https://paddlepaddle.github.io/PaddleX/latest/module_usage/tutorials/ocr_modules/doc_img_orientation_classification.html#_5">链接</a></td>
     </tr>
     <tr>
       <td>图像扭曲矫正不准</td>
@@ -3005,9 +2995,22 @@ print(result_chat["chatResult"])
 
 
 ### 4.2 模型应用
-当您使用私有数据集完成微调训练后，可获得本地模型权重文件。
+当您使用私有数据集完成微调训练后，可获得本地模型权重文件，然后可以通过自定义产线配置文件的方式，使用微调后的模型权重。
 
-若您需要使用微调后的模型权重，只需对产线配置文件做修改，将微调后模型权重的本地路径替换至产线配置文件中的对应位置即可：
+1. 获取产线配置文件
+
+可调用 PaddleOCR 中 PPChatOCRv4 产线对象的 `export_paddlex_config_to_yaml` 方法，将当前产线配置导出为 YAML 文件：
+
+```Python
+from paddleocr import PPChatOCRv4
+
+pipeline = PPChatOCRv4()
+pipeline.export_paddlex_config_to_yaml("PP-ChatOCRv4.yaml")
+```
+
+2. 修改配置文件
+
+在得到默认的产线配置文件后，将微调后模型权重的本地路径替换至产线配置文件中的对应位置即可。例如
 
 ```yaml
 ......
@@ -3031,4 +3034,22 @@ SubModules:
 ......
 ```
 
-随后， 参考[2.2 本地体验](#22-本地体验)中的命令行方式或Python脚本方式，加载修改后的产线配置文件即可。
+在产线配置文件中，不仅包含 PaddleOCR CLI 和 Python API 支持的参数，还可进行更多高级配置，具体信息可在 [PaddleX模型产线使用概览](https://paddlepaddle.github.io/PaddleX/3.0/pipeline_usage/pipeline_develop_guide.html) 中找到对应的产线使用教程，参考其中的详细说明，根据需求调整各项配置。
+
+3. 在 CLI 中加载产线配置文件
+
+在修改完成配置文件后，通过命令行的 --paddlex_config 参数指定修改后的产线配置文件的路径，PaddleOCR 会读取其中的内容作为产线配置。示例如下：
+
+```bash
+paddleocr pp_chatocrv4_doc --paddlex_config PP-ChatOCRv4.yaml ...
+```
+
+4. 在 Python API 中加载产线配置文件
+
+初始化产线对象时，可通过 paddlex_config 参数传入 PaddleX 产线配置文件路径或配置字典，PaddleOCR 会读取其中的内容作为产线配置。示例如下：
+
+```python
+from paddleocr import PPChatOCRv4
+
+pipeline = PPChatOCRv4(paddlex_config="PP-ChatOCRv4.yaml")
+```
