@@ -10,8 +10,8 @@ Global:
   eval_batch_step: [0, 2000]
   cal_metric_during_train: true
   calc_epoch_interval: 1
-  pretrained_model: 
-  checkpoints:
+  pretrained_model: null # ./pretrained_models/PP-OCRv5_server_rec_pretrained.pdparams
+  checkpoints: ./output/PP-OCRv5_server_rec/latest
   save_inference_dir:
   use_visualdl: false
   infer_img: doc/imgs_words/ch/word_1.jpg
@@ -78,10 +78,10 @@ Train:
   dataset:
     name: MultiScaleDataSet
     ds_width: false
-    data_dir: ./train_data/
+    data_dir: ./datasets/ocr_rec_dataset_examples/
     ext_op_transform_idx: 1
     label_file_list:
-    - ./train_data/train_list.txt
+    - ./datasets/ocr_rec_dataset_examples/train.txt
     transforms:
     - DecodeImage:
         img_mode: BGR
@@ -99,7 +99,7 @@ Train:
   sampler:
     name: MultiScaleSampler
     scales: [[320, 32], [320, 48], [320, 64]]
-    first_bs: &bs 128
+    first_bs: &bs 64
     fix_bs: false
     divided_factor: [8, 16] # w, h
     is_training: True
@@ -111,9 +111,9 @@ Train:
 Eval:
   dataset:
     name: SimpleDataSet
-    data_dir: ./train_data
+    data_dir: ./datasets/ocr_rec_dataset_examples/
     label_file_list:
-    - ./train_data/val_list.txt
+    - ./datasets/ocr_rec_dataset_examples/val.txt
     transforms:
     - DecodeImage:
         img_mode: BGR

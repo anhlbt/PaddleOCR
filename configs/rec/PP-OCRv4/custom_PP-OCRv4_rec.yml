@@ -9,7 +9,7 @@ Global:
   save_epoch_step: 10
   eval_batch_step: [0, 2000]
   cal_metric_during_train: true
-  pretrained_model: ./pretrained_models/PP-OCRv4/PP-OCRv4_server_rec_pretrained
+  pretrained_model: ./pretrained_models/PP-OCRv4_server_rec_pretrained
   checkpoints:
   save_inference_dir:
   use_visualdl: false
@@ -123,7 +123,7 @@ Eval:
     - MultiLabelEncode:
         gtc_encode: NRTRLabelEncode
     - RecResizeImg:
-        image_shape: [3, 64, 640] # [3, 48, 320]
+        image_shape: [3, 48, 640] # [3, 48, 320]
     - KeepKeys:
         keep_keys:
         - image
