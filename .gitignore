@@ -33,5 +33,5 @@ paddleocr.egg-info/
 test_tipc/web/models/
 test_tipc/web/node_modules/
 pretrained_models/
-datasets/
-output/
+datasets/*
+output/*
