@@ -11,7 +11,10 @@ python3 tools/train.py -c configs/rec/PP-OCRv5/PP-OCRv5_server_rec.yml
 ## export 
 python3 tools/export_model.py -c configs/rec/PP-OCRv5/PP-OCRv5_server_rec.yml -o \
 Global.pretrained_model=output/PP-OCRv5_server_rec/best_accuracy.pdparams \
-Global.save_inference_dir="./PP-OCRv5_server_rec_infer/"
+Global.save_inference_dir="output/PP-OCRv5_server_rec_infer/"
+
+
+
 
 ## formula_recognition
 https://github.com/PaddlePaddle/PaddleX/blob/release/3.0/docs/module_usage/tutorials/ocr_modules/formula_recognition.en.md
