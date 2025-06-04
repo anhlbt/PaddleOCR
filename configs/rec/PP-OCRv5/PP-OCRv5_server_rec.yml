@@ -99,7 +99,7 @@ Train:
   sampler:
     name: MultiScaleSampler
     scales: [[320, 32], [320, 48], [320, 64]]
-    first_bs: &bs 64
+    first_bs: &bs 24 # 64 -> 8Gb
     fix_bs: false
     divided_factor: [8, 16] # w, h
     is_training: True
@@ -107,7 +107,7 @@ Train:
     shuffle: true
     batch_size_per_card: *bs
     drop_last: true
-    num_workers: 16
+    num_workers: 8
 Eval:
   dataset:
     name: SimpleDataSet
