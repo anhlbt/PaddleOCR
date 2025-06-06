@@ -7,6 +7,10 @@ pip install "paddlex[base]==3.0.1"
 ## train
 python3 tools/train.py -c configs/rec/PP-OCRv5/PP-OCRv5_server_rec.yml
 
+## train dataset paddleocr
+## train
+python3 tools/train.py -c configs/rec/PP-OCRv5/PP-OCRv5_server_rec_a0.yml
+
 
 ## export 
 python3 tools/export_model.py -c configs/rec/PP-OCRv5/PP-OCRv5_server_rec.yml -o \
