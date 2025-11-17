@@ -13,11 +13,20 @@ python3 tools/train.py -c configs/rec/PP-OCRv5/PP-OCRv5_server_rec_a0.yml
 
 
 ## export 
-python3 tools/export_model.py -c configs/rec/PP-OCRv5/PP-OCRv5_server_rec.yml -o \
-Global.pretrained_model=output/PP-OCRv5_server_rec/best_accuracy.pdparams \
-Global.save_inference_dir="output/PP-OCRv5_server_rec_infer/"
+python3 tools/export_model.py -c configs/rec/PP-OCRv5/PP-OCRv5_server_rec_a0.yml -o \
+Global.pretrained_model=output/PP-OCRv5_server_rec_a0/best_accuracy.pdparams \
+Global.save_inference_dir="output/PP-OCRv5_server_rec_a0_infer/"
 
+## infer
+python3 tools/infer_rec.py \
+    -c configs/rec/PP-OCRv5/PP-OCRv5_server_rec_a0.yml \
+    -o Global.infer_img=/media/anhlbt/AnhLBT/DATASET/paddleocr/dataset/8.jpg \
+       Global.pretrained_model=output/PP-OCRv5_server_rec_a0_infer \
+       Global.save_res_path=output/PP-OCRv5_server_rec_a0_infer/output.txt
 
+## eval
+python3 tools/eval.py -c configs/rec/PP-OCRv5/PP-OCRv5_server_rec_a0.yml -o \
+Global.pretrained_model=output/PP-OCRv5_server_rec_a0/xxx.pdparams
 
 
 ## formula_recognition

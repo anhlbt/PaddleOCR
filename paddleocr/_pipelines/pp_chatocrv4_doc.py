@@ -81,6 +81,26 @@ class PPChatOCRv4Doc(PaddleXPipelineWrapper):
     def _paddlex_pipeline_name(self):
         return "PP-ChatOCRv4-doc"
 
+    def save_vector(self, vector_info, save_path, retriever_config=None):
+        return self.paddlex_pipeline.save_vector(
+            vector_info=vector_info,
+            save_path=save_path,
+            retriever_config=retriever_config,
+        )
+
+    def load_vector(self, data_path, retriever_config=None):
+        return self.paddlex_pipeline.load_vector(
+            data_path=data_path, retriever_config=retriever_config
+        )
+
+    def load_visual_info_list(self, data_path):
+        return self.paddlex_pipeline.load_visual_info_list(data_path=data_path)
+
+    def save_visual_info_list(self, visual_info, save_path):
+        return self.paddlex_pipeline.save_visual_info_list(
+            visual_info=visual_info, save_path=save_path
+        )
+
     def visual_predict_iter(
         self,
         input,
@@ -422,9 +442,9 @@ class PPChatOCRv4DocCLISubcommandExecutor(PipelineCLISubcommandExecutor):
         subparser.add_argument(
             "--save_path",
             type=str,
-            default="output",
             help="Path to the output directory.",
         )
+
         subparser.add_argument(
             "--invoke_mllm",
             type=str2bool,
@@ -693,7 +713,7 @@ class PPChatOCRv4DocCLISubcommandExecutor(PipelineCLISubcommandExecutor):
 
         chatocr = PPChatOCRv4Doc(**params)
 
-        result_visual = chatocr.visual_predict(input)
+        result_visual = chatocr.visual_predict_iter(input)
 
         visual_info_list = []
         for res in result_visual:

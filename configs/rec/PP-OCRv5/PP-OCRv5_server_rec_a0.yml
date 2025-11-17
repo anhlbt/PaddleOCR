@@ -1,5 +1,5 @@
 Global:
-  model_name: PPHGNetV2_B4 # To use static model for inference.
+  model_name: PP-OCRv5_server_rec # To use static model for inference.
   debug: false
   use_gpu: true
   epoch_num: 250
@@ -10,11 +10,11 @@ Global:
   eval_batch_step: [0, 2000]
   cal_metric_during_train: true
   calc_epoch_interval: 1
-  pretrained_model: /media/anhlbt/SSD2/workspace/OCR/PaddleOCR/pretrained_models/PP-OCRv5_server_rec_pretrained.pdparams #https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv5_server_rec_pretrained.pdparams
-  # checkpoints: ./output/PP-OCRv5_server_rec/latest
+  pretrained_model: null # /media/anhlbt/SSD2/workspace/OCR/PaddleOCR/pretrained_models/PP-OCRv5_server_rec_pretrained.pdparams #https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv5_server_rec_pretrained.pdparams
+  checkpoints: /media/anhlbt/SSD2/workspace/OCR/PaddleOCR/output/PP-OCRv5_server_rec_a0/latest.pdparams
   save_inference_dir:
   use_visualdl: false
-  infer_img: /media/anhlbt/AnhLBT/DATASET/paddleocr/dataset/38.jpg # bên thủy lợi với lâm nghiệp thôi
+  infer_img: /media/anhlbt/AnhLBT/DATASET/paddleocr/dataset/3.jpg # bên thủy lợi với lâm nghiệp thôi
   character_dict_path: /media/anhlbt/AnhLBT/DATASET/paddleocr/dict.txt
   max_text_length: &max_text_length 40
   infer_mode: false

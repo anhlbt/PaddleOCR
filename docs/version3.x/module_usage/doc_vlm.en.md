@@ -48,6 +48,8 @@ You can quickly experience it with one line of command:
 paddleocr doc_vlm -i "{'image': 'https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/medal_table.png', 'query': '识别这份表格的内容, 以markdown格式输出'}"
 ```
 
+<b>Note: </b>The official models would be download from HuggingFace by default. If can't access to HuggingFace, please set the environment variable `PADDLE_PDX_MODEL_SOURCE="BOS"` to change the model source to BOS. In the future, more model sources will be supported.
+
 You can also integrate the model inference from the open document visual language model module into your project. Before running the following code, please download the [sample image](https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/medal_table.png) locally.
 
 ```python
@@ -110,69 +112,27 @@ Explanations of related methods, parameters, etc., are as follows:
 <tbody>
 <tr>
 <td><code>model_name</code></td>
-<td>Model name</td>
-<td><code>str</code></td>
-<td><code>PP-DocBee-2B</code></td>
+<td>Model name. If set to <code>None</code>, <code>PP-DocBee-2B</code> will be used.</td>
+<td><code>str|None</code></td>
+<td><code>None</code></td>
 </tr>
 <tr>
 <td><code>model_dir</code></td>
-<td>Model storage path</td>
-<td><code>str</code></td>
+<td>Model storage path.</td>
+<td><code>str|None</code></td>
 <td><code>None</code></td>
 </tr>
 <tr>
 <td><code>device</code></td>
-<td>Device(s) to use for inference.<br/>
-<b>Examples:</b> <code>cpu</code>, <code>gpu</code>, <code>npu</code>, <code>gpu:0</code>, <code>gpu:0,1</code>.<br/>
-If multiple devices are specified, inference will be performed in parallel. Note that parallel inference is not always supported.<br/>
-By default, GPU 0 will be used if available; otherwise, the CPU will be used.
+<td>Device for inference.<br/>
+<b>For example:</b><code>"cpu"</code>, <code>"gpu"</code>, <code>"npu"</code>, <code>"gpu:0"</code>, <code>"gpu:0,1"</code>.<br/>
+By default, GPU 0 is used if available; otherwise, CPU is used.
 </td>
-<td><code>str</code></td>
+<td><code>str|None</code></td>
 <td><code>None</code></td>
-</tr>
-<tr>
-<td><code>enable_hpi</code></td>
-<td>Whether to use the high performance inference.</td>
-<td><code>bool</code></td>
-<td><code>False</code></td>
-</tr>
-<tr>
-<td><code>use_tensorrt</code></td>
-<td>Whether to use the Paddle Inference TensorRT subgraph engine.</td>
-<td><code>bool</code></td>
-<td><code>False</code></td>
-</tr>
-<tr>
-<td><code>min_subgraph_size</code></td>
-<td>Minimum subgraph size for TensorRT when using the Paddle Inference TensorRT subgraph engine.</td>
-<td><code>int</code></td>
-<td><code>3</code></td>
-</tr>
-<tr>
-<td><code>precision</code></td>
-<td>Precision for TensorRT when using the Paddle Inference TensorRT subgraph engine.<br/><b>Options:</b> <code>fp32</code>, <code>fp16</code>, etc.</td>
-<td><code>str</code></td>
-<td><code>fp32</code></td>
-</tr>
-<tr>
-<td><code>enable_mkldnn</code></td>
-<td>
-Whether to use MKL-DNN acceleration for inference.
-</td>
-<td><code>bool</code></td>
-<td><code>True</code></td>
-</tr>
-<tr>
-<td><code>cpu_threads</code></td>
-<td>Number of threads to use for inference on CPUs.</td>
-<td><code>int</code></td>
-<td><code>10</code></td>
 </tr>
 </tbody>
 </table>
-
-
-* Among them, `model_name` must be specified. After specifying `model_name`, the default PaddleX built-in model parameters will be used. On this basis, when specifying `model_dir`, user-defined models will be used.
 
 * Call the `predict()` method of the document visual language model for inference prediction. This method will return a result list. Additionally, this module also provides the `predict_iter()` method. Both are completely consistent in terms of parameter acceptance and result return, the difference being that `predict_iter()` returns a `generator`, capable of gradually processing and obtaining prediction results, suitable for handling large datasets or scenarios where memory saving is desired. You can choose to use either of these methods based on actual needs. The `predict()` method parameters include `input`, `batch_size`, with specific explanations as follows:
 
