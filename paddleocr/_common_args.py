@@ -23,6 +23,7 @@ from ._constants import (
     DEFAULT_PRECISION,
     DEFAULT_USE_TENSORRT,
     SUPPORTED_PRECISION_LIST,
+    DEFAULT_USE_CINN,
 )
 from ._utils.cli import str2bool
 
@@ -36,6 +37,7 @@ def parse_common_args(kwargs, *, default_enable_hpi):
         "enable_mkldnn": DEFAULT_ENABLE_MKLDNN,
         "mkldnn_cache_capacity": DEFAULT_MKLDNN_CACHE_CAPACITY,
         "cpu_threads": DEFAULT_CPU_THREADS,
+        "enable_cinn": DEFAULT_USE_CINN,
     }
 
     unknown_names = kwargs.keys() - default_vals.keys()
@@ -59,22 +61,13 @@ def prepare_common_init_args(model_name, common_args):
     device = common_args["device"]
     if device is None:
         device = get_default_device()
-    device_type, device_ids = parse_device(device)
-    if device_ids is not None:
-        device_id = device_ids[0]
-    else:
-        device_id = None
+    device_type, _ = parse_device(device)
 
     init_kwargs = {}
+    init_kwargs["device"] = device
     init_kwargs["use_hpip"] = common_args["enable_hpi"]
-    init_kwargs["hpi_config"] = {
-        "device_type": device_type,
-        "device_id": device_id,
-    }
 
-    pp_option = PaddlePredictorOption(
-        model_name, device_type=device_type, device_id=device_id
-    )
+    pp_option = PaddlePredictorOption()
     if device_type == "gpu":
         if common_args["use_pptrt"]:
             if common_args["pptrt_precision"] == "fp32":
@@ -89,13 +82,13 @@ def prepare_common_init_args(model_name, common_args):
     elif device_type == "cpu":
         enable_mkldnn = common_args["enable_mkldnn"]
         if enable_mkldnn:
-            pp_option.run_mode = "mkldnn"
             pp_option.mkldnn_cache_capacity = common_args["mkldnn_cache_capacity"]
         else:
             pp_option.run_mode = "paddle"
         pp_option.cpu_threads = common_args["cpu_threads"]
     else:
         pp_option.run_mode = "paddle"
+    pp_option.enable_cinn = common_args["enable_cinn"]
     init_kwargs["pp_option"] = pp_option
 
     return init_kwargs
@@ -148,4 +141,10 @@ def add_common_cli_opts(parser, *, default_enable_hpi, allow_multiple_devices):
         type=int,
         default=DEFAULT_CPU_THREADS,
         help="Number of threads to use for inference on CPUs.",
+    )
+    parser.add_argument(
+        "--enable_cinn",
+        type=str2bool,
+        default=DEFAULT_USE_CINN,
+        help="Whether to use the CINN compiler.",
     )

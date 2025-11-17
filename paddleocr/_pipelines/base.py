@@ -18,6 +18,7 @@ import yaml
 from paddlex import create_pipeline
 from paddlex.inference import load_pipeline_config
 from paddlex.utils.config import AttrDict
+from paddlex.utils.deps import DependencyError
 
 from .._abstract import CLISubcommandExecutor
 from .._common_args import (
@@ -75,6 +76,9 @@ class PaddleXPipelineWrapper(metaclass=abc.ABCMeta):
             config = _to_builtin(self._merged_paddlex_config)
             yaml.safe_dump(config, f)
 
+    def close(self):
+        self.paddlex_pipeline.close()
+
     @classmethod
     @abc.abstractmethod
     def get_cli_subcommand_executor(cls):
@@ -97,7 +101,12 @@ class PaddleXPipelineWrapper(metaclass=abc.ABCMeta):
 
     def _create_paddlex_pipeline(self):
         kwargs = prepare_common_init_args(None, self._common_args)
-        return create_pipeline(config=self._merged_paddlex_config, **kwargs)
+        try:
+            return create_pipeline(config=self._merged_paddlex_config, **kwargs)
+        except DependencyError as e:
+            raise RuntimeError(
+                "A dependency error occurred during pipeline creation. Please refer to the installation documentation to ensure all required dependencies are installed."
+            ) from e
 
 
 class PipelineCLISubcommandExecutor(CLISubcommandExecutor):

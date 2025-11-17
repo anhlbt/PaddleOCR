@@ -10,6 +10,8 @@ comments: true
 
 ## 二、支持模型列表
 
+> 推理耗时仅包含模型推理耗时，不包含前后处理耗时。
+
 <table>
 <tr>
 <th>模型</th><th>模型下载链接</th>
@@ -225,7 +227,7 @@ sudo apt-get install texlive texlive-latex-base texlive-xetex latex-cjk-all texl
 <td><code>use_tensorrt</code></td>
 <td>是否启用 Paddle Inference 的 TensorRT 子图引擎。如果模型不支持通过 TensorRT 加速，即使设置了此标志，也不会使用加速。<br/>
 对于 CUDA 11.8 版本的飞桨，兼容的 TensorRT 版本为 8.x（x>=6），建议安装 TensorRT 8.6.1.6。<br/>
-对于 CUDA 12.6 版本的飞桨，兼容的 TensorRT 版本为 10.x（x>=5），建议安装 TensorRT 10.5.0.18。
+
 </td>
 <td><code>bool</code></td>
 <td><code>False</code></td>

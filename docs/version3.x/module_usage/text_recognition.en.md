@@ -10,6 +10,8 @@ The text recognition module is the core part of the OCR (Optical Character Recog
 
 ## 2. List of Supported Models
 
+> The inference time only includes the model inference time and does not include the time for pre- or post-processing.
+
 <table>
 <tr>
 <th>Model</th><th>Model Download Links</th>
@@ -224,6 +226,16 @@ PP-OCRv3_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model
 <th>Introduction</th>
 </tr>
 <tr>
+<td>en_PP-OCRv5_mobile_rec</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/\
+en_PP-OCRv5_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/en_PP-OCRv5_mobile_rec_pretrained.pdparams">Training Model</a></td>
+<td> 85.25</td>
+<td>-</td>
+<td>-</td>
+<td>7.5</td>
+<td>The ultra-lightweight English text recognition model, trained based on the PP-OCRv5 framework, further improves the accuracy of English text recognition, optimizes the omission of spaces, and enhances the recognition performance on handwritten English text.</td>
+</tr>
+<tr>
 <td>en_PP-OCRv4_mobile_rec</td>
 <td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/\
 en_PP-OCRv4_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/en_PP-OCRv4_mobile_rec_pretrained.pdparams">Pretrained Model</a></td>
@@ -284,6 +296,71 @@ eslav_PP-OCRv5_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle
 <td>21.20 / 5.32</td>
 <td>14</td>
 <td>An East Slavic language recognition model trained based on the PP-OCRv5 recognition framework. Supports East Slavic languages, English and numeric text recognition.</td>
+</tr>
+<tr>
+<td>th_PP-OCRv5_mobile_rec</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/\
+th_PP-OCRv5_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/th_PP-OCRv5_mobile_rec_pretrained.pdparams">Training Model</a></td>
+<td>82.68</td>
+<td>-</td>
+<td>-</td>
+<td>7.5</td>
+<td>The Thai recognition model trained based on the PP-OCRv5 recognition model supports recognition of Thai, English, and numbers.</td>
+</tr>
+<tr>
+<td>el_PP-OCRv5_mobile_rec</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/\
+el_PP-OCRv5_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/el_PP-OCRv5_mobile_rec_pretrained.pdparams">Training Model</a></td>
+<td>89.28</td>
+<td>-</td>
+<td>-</td>
+<td>7.5</td>
+<td>The Greek recognition model trained based on the PP-OCRv5 recognition model supports recognition of Greek, English, and numbers.</td>
+</tr>
+<tr>
+<td>arabic_PP-OCRv5_mobile_rec</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/arabic_PP-OCRv5_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/arabic_PP-OCRv5_mobile_rec_pretrained.pdparams">Pretrained Model</a></td>
+<td>81.27</td>
+<td>-</td>
+<td>-</td>
+<td>7.6</td>
+<td>Ultra-lightweight Arabic character recognition model trained based on the PP-OCRv5 recognition model, supports Arabic letters and number recognition</td>
+</tr>
+<tr>
+<td>cyrillic_PP-OCRv5_mobile_rec</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/cyrillic_PP-OCRv5_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/cyrillic_PP-OCRv5_mobile_rec_pretrained.pdparams">Pretrained Model</a></td>
+<td>80.27</td>
+<td>-</td>
+<td>-</td>
+<td>7.7</td>
+<td>Ultra-lightweight Cyrillic character recognition model trained based on the PP-OCRv5 recognition model, supports Cyrillic letters and number recognition</td>
+</tr>
+<tr>
+<td>devanagari_PP-OCRv5_mobile_rec</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/devanagari_PP-OCRv5_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/devanagari_PP-OCRv5_mobile_rec_pretrained.pdparams">Pretrained Model</a></td>
+<td>84.96</td>
+<td>-</td>
+<td>-</td>
+<td>7.5</td>
+<td>Ultra-lightweight Devanagari script recognition model trained based on the PP-OCRv5 recognition model, supports Hindi, Sanskrit and other Devanagari letters, as well as number recognition</td>
+</tr>
+<tr>
+<td>te_PP-OCRv5_mobile_rec</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/te_PP-OCRv5_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/te_PP-OCRv5_mobile_rec_pretrained.pdparams">Pretrained Model</a></td>
+<td>87.65</td>
+<td>-</td>
+<td>-</td>
+<td>7.5</td>
+<td>Ultra-lightweight Telugu script recognition model trained based on the PP-OCRv5 recognition model, supports Telugu script and number recognition</td>
+</tr>
+<tr>
+<td>ta_PP-OCRv5_mobile_rec</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/ta_PP-OCRv5_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/ta_PP-OCRv5_mobile_rec_pretrained.pdparams">Pretrained Model</a></td>
+<td>94.2</td>
+<td>-</td>
+<td>-</td>
+<td>7.5</td>
+<td>Ultra-lightweight Tamil script recognition model trained based on the PP-OCRv5 recognition model, supports Tamil script and number recognition</td>
 </tr>
 <tr>
 <td>korean_PP-OCRv3_mobile_rec</td>
@@ -539,7 +616,7 @@ By default, GPU 0 is used; if unavailable, CPU is used.
 <td><code>use_tensorrt</code></td>
 <td>Whether to enable the TensorRT subgraph engine of Paddle Inference.<br/>
 For Paddle with CUDA 11.8, the compatible TensorRT version is 8.x (x>=6), recommended 8.6.1.6.<br/>
-For Paddle with CUDA 12.6, the compatible TensorRT version is 10.x (x>=5), recommended 10.5.0.18.
+
 </td>
 <td><code>bool</code></td>
 <td><code>False</code></td>

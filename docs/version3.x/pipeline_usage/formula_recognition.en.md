@@ -23,6 +23,8 @@ The formula recognition pipeline includes the following four modules. Each modul
 
 In this pipeline, you can choose the model you want to use based on the benchmark data provided below.
 
+> The inference time only includes the model inference time and does not include the time for pre- or post-processing.
+
 <details>
 <summary><b>Document Image Orientation Classification Module (Optional):</b></summary>
 <table>
@@ -412,7 +414,7 @@ In this pipeline, you can choose the model you want to use based on the benchmar
 
 ## 2. Quick Start
 
-Before using the formula recognition pipeline locally, please ensure that you have completed the wheel package installation according to the [installation guide](../installation.en.md). Once installed, you can experience it locally via the command line or integrate it with Python.
+Before using the formula recognition pipeline locally, please ensure that you have completed the wheel package installation according to the [installation guide](../installation.en.md). If you prefer to install dependencies selectively, please refer to the relevant instructions in the installation documentation. The corresponding dependency group for this pipeline is `doc-parser`. Once installed, you can experience it locally via the command line or integrate it with Python.
 
 Please note: If you encounter issues such as the program becoming unresponsive, unexpected program termination, running out of memory resources, or extremely slow inference during execution, please try adjusting the configuration according to the documentation, such as disabling unnecessary features or using lighter-weight models.
 
@@ -618,7 +620,7 @@ The name of the formula recognition model. If not set, the default model from th
 <td><code>use_tensorrt</code></td>
 <td>Whether to use the Paddle Inference TensorRT subgraph engine. If the model does not support acceleration through TensorRT, setting this flag will not enable acceleration.<br/>
 For Paddle with CUDA version 11.8, the compatible TensorRT version is 8.x (x>=6), and it is recommended to install TensorRT 8.6.1.6.<br/>
-For Paddle with CUDA version 12.6, the compatible TensorRT version is 10.x (x>=5), and it is recommended to install TensorRT 10.5.0.18.
+
 </td>
 <td><code>bool</code></td>
 <td><code>False</code></td>
@@ -875,7 +877,7 @@ In the above Python script, the following steps are executed:
 <td><code>use_tensorrt</code></td>
 <td>Whether to use the Paddle Inference TensorRT subgraph engine. If the model does not support acceleration through TensorRT, setting this flag will not enable acceleration.<br/>
 For Paddle with CUDA version 11.8, the compatible TensorRT version is 8.x (x>=6), and it is recommended to install TensorRT 8.6.1.6.<br/>
-For Paddle with CUDA version 12.6, the compatible TensorRT version is 10.x (x>=5), and it is recommended to install TensorRT 10.5.0.18.
+
 </td>
 <td><code>bool</code></td>
 <td><code>False</code></td>
@@ -1914,7 +1916,7 @@ use_layout_detection: true
 ......
 ```
 
-The pipeline configuration file includes not only the parameters supported by the PaddleOCR CLI and Python API but also advanced configurations. For detailed instructions, refer to the [PaddleX Pipeline Usage Overview](https://paddlepaddle.github.io/PaddleX/3.0/en/pipeline_usage/pipeline_develop_guide.html) and adjust the configurations as needed.  
+The pipeline configuration file includes not only the parameters supported by the PaddleOCR CLI and Python API but also advanced configurations. For detailed instructions, refer to the [PaddleX Pipeline Usage Overview](https://paddlepaddle.github.io/PaddleX/latest/en/pipeline_usage/pipeline_develop_guide.html) and adjust the configurations as needed.  
 
 3.Load the Configuration File in CLI  
 

@@ -10,6 +10,8 @@ comments: true
 
 ## 二、支持模型列表
 
+> 推理耗时仅包含模型推理耗时，不包含前后处理耗时。
+
 <table>
 <thead>
 <tr>
@@ -182,7 +184,7 @@ for res in output:
 <td><code>use_tensorrt</code></td>
 <td>是否启用 Paddle Inference 的 TensorRT 子图引擎。如果模型不支持通过 TensorRT 加速，即使设置了此标志，也不会使用加速。<br/>
 对于 CUDA 11.8 版本的飞桨，兼容的 TensorRT 版本为 8.x（x>=6），建议安装 TensorRT 8.6.1.6。<br/>
-对于 CUDA 12.6 版本的飞桨，兼容的 TensorRT 版本为 10.x（x>=5），建议安装 TensorRT 10.5.0.18。
+
 </td>
 <td><code>bool</code></td>
 <td><code>False</code></td>
@@ -429,11 +431,15 @@ PaddleOCR 对代码进行了模块化，训练 `PP-OCRv4_server_seal_det` 模型
 ```bash
 #单卡训练 (默认训练方式)
 python3 tools/train.py -c configs/det/PP-OCRv4/PP-OCRv4_server_seal_det.yml \
-   -o Global.pretrained_model=./PP-OCRv4_server_seal_det_pretrained.pdparams
+   -o Global.pretrained_model=./PP-OCRv4_server_seal_det_pretrained.pdparams \
+   Train.dataset.data_dir=./dataset/ocr_curve_det_dataset_examples Train.dataset.label_file_list=./dataset/ocr_curve_det_dataset_examples/train.txt \
+   Eval.dataset.data_dir=./dataset/ocr_curve_det_dataset_examples Eval.dataset.label_file_list=./dataset/ocr_curve_det_dataset_examples/val.txt
 
 #多卡训练，通过--gpus参数指定卡号
 python3 -m paddle.distributed.launch --gpus '0,1,2,3'  tools/train.py -c configs/det/PP-OCRv4/PP-OCRv4_server_seal_det.yml \
-        -o Global.pretrained_model=./PP-OCRv4_server_seal_det_pretrained.pdparams
+   -o Global.pretrained_model=./PP-OCRv4_server_seal_det_pretrained.pdparams \
+   Train.dataset.data_dir=./dataset/ocr_curve_det_dataset_examples Train.dataset.label_file_list=./dataset/ocr_curve_det_dataset_examples/train.txt \
+   Eval.dataset.data_dir=./dataset/ocr_curve_det_dataset_examples Eval.dataset.label_file_list=./dataset/ocr_curve_det_dataset_examples/val.txt
 ```
 
 
@@ -443,17 +449,17 @@ python3 -m paddle.distributed.launch --gpus '0,1,2,3'  tools/train.py -c configs
 
 ```bash
 # 注意将pretrained_model的路径设置为本地路径。若使用自行训练保存的模型，请注意修改路径和文件名为{path/to/weights}/{model_name}。
- # demo 测试集评估
- python3 tools/eval.py -c configs/det/PP-OCRv4/PP-OCRv4_server_seal_det.yml -o \
- Global.pretrained_model=output/xxx/xxx.pdparams
+# demo 测试集评估
+python3 tools/eval.py -c configs/det/PP-OCRv4/PP-OCRv4_server_seal_det.yml -o \
+    Global.pretrained_model=output/xxx/xxx.pdparams
 ```
 
 ### 4.4 模型导出
 
 ```bash
- python3 tools/export_model.py -c configs/det/PP-OCRv4/PP-OCRv4_server_seal_det.yml -o \
- Global.pretrained_model=output/xxx/xxx.pdparams \
- save_inference_dir="./PP-OCRv4_server_seal_det_infer/"
+python3 tools/export_model.py -c configs/det/PP-OCRv4/PP-OCRv4_server_seal_det.yml -o \
+    Global.pretrained_model=output/xxx/xxx.pdparams \
+    Global.save_inference_dir="./PP-OCRv4_server_seal_det_infer/"
 ```
 
  导出模型后，静态图模型会存放于当前目录的`./PP-OCRv4_server_seal_det_infer/`中，在该目录下，您将看到如下文件：

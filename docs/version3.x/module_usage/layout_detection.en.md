@@ -9,6 +9,8 @@ The core task of structure analysis is to parse and segment the content of input
 
 ## II. Supported Model List
 
+> The inference time only includes the model inference time and does not include the time for pre- or post-processing.
+
 * <b>The layout detection model includes 20 common categories: document title, paragraph title, text, page number, abstract, table, references, footnotes, header, footer, algorithm, formula, formula number, image, table, seal, figure_table title, chart, and sidebar text and lists of references</b>
 <table>
 <thead>
@@ -394,7 +396,7 @@ By default, GPU 0 is used if available; otherwise, CPU is used.
 <td><code>use_tensorrt</code></td>
 <td>Whether to use the Paddle Inference TensorRT subgraph engine. If the model does not support acceleration through TensorRT, setting this flag will not enable acceleration.<br/>
 For Paddle with CUDA version 11.8, the compatible TensorRT version is 8.x (x>=6), and it is recommended to install TensorRT 8.6.1.6.<br/>
-For Paddle with CUDA version 12.6, the compatible TensorRT version is 10.x (x>=5), and it is recommended to install TensorRT 10.5.0.18.
+
 </td>
 <td><code>bool</code></td>
 <td><code>False</code></td>

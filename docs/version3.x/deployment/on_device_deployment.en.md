@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # OCR On-Device Deployment Demo Usage Guide
 
 - [Quick Start](#quick-start)
@@ -192,7 +196,7 @@ The detection visualized image saved in ./test_img_result.jpg
 **Remarks**:
 
  - The `PaddleX-Lite-Deploy/ocr/assets/labels/` directory contains the dictionary files `ppocr_keys_v1.txt` for PP-OCRv3 and PP-OCRv4 models, and `ppocr_keys_ocrv5.txt` for the PP-OCRv5 model. The appropriate dictionary file is automatically selected during inference based on the model name, so no manual intervention is required.
- - If you are using an English/numeric or other language model, you need to replace it with the corresponding language dictionary. The PaddleOCR repository provides [some dictionary files](https://github.com/PaddlePaddle/PaddleOCR/tree/release/2.3/ppocr/utils).
+ - If you are using an English/numeric or other language model, you need to replace it with the corresponding language dictionary. The PaddleOCR repository provides [some dictionary files](../../../ppocr/utils).
 
 ```shell
 # Parameters of the executable in run.sh script:
@@ -343,7 +347,7 @@ For detailed instructions on converting `.nb` models using the Python script met
 **Notes**
 
 - For detailed information about the model optimization tool `opt`, refer to Paddle-Lite's [Model Optimization Tool opt](https://www.paddlepaddle.org.cn/lite/v2.12/user_guides/model_optimize_tool.html).
-- Currently, only static graph models in `.pdmodel` format can be converted to `.nb` format.
+- Currently, only static graph models in `.pdmodel` format can be converted to `.nb` format. In PaddlePaddle version 3.0 and above, the default exported model format is `.json`. If you want to export the model in `.pdmodel` format, simply add `-o Global.export_with_pir=False` during export.
 
 ### Updating Models, Label Files, and Prediction Images
 

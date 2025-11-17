@@ -22,6 +22,8 @@ The general OCR pipeline is used to solve text recognition tasks by extracting t
 
 In this pipeline, you can select models based on the benchmark test data provided below.
 
+> The inference time only includes the model inference time and does not include the time for pre- or post-processing.
+
 <details>
 <summary><b>Document Image Orientation Classification Module (Optional):</b></summary>
 <table>
@@ -384,6 +386,16 @@ SVTRv2 is a server-side text recognition model developed by the OpenOCR team fro
 <th>Description</th>
 </tr>
 <tr>
+<td>en_PP-OCRv5_mobile_rec</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/\
+en_PP-OCRv5_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/en_PP-OCRv5_mobile_rec_pretrained.pdparams">Training Model</a></td>
+<td> 85.25</td>
+<td>-</td>
+<td>-</td>
+<td>7.5</td>
+<td>The ultra-lightweight English text recognition model, trained based on the PP-OCRv5 framework, further improves the accuracy of English text recognition, optimizes the omission of spaces, and enhances the recognition performance on handwritten English text.</td>
+</tr>
+<tr>
 <td>en_PP-OCRv4_mobile_rec</td>
 <td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/\
 en_PP-OCRv4_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/en_PP-OCRv4_mobile_rec_pretrained.pdparams">Training Model</a></td>
@@ -445,6 +457,71 @@ eslav_PP-OCRv5_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle
 <td>21.20 / 5.32</td>
 <td>14</td>
 <td>An East Slavic language recognition model trained based on the PP-OCRv5 recognition framework. Supports East Slavic languages, English and numeric text recognition.</td>
+</tr>
+<tr>
+<td>th_PP-OCRv5_mobile_rec</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/\
+th_PP-OCRv5_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/th_PP-OCRv5_mobile_rec_pretrained.pdparams">Training Model</a></td>
+<td>82.68</td>
+<td>-</td>
+<td>-</td>
+<td>7.5</td>
+<td>The Thai recognition model trained based on the PP-OCRv5 recognition model supports recognition of Thai, English, and numbers.</td>
+</tr>
+<tr>
+<td>el_PP-OCRv5_mobile_rec</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/\
+el_PP-OCRv5_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/el_PP-OCRv5_mobile_rec_pretrained.pdparams">Training Model</a></td>
+<td>89.28</td>
+<td>-</td>
+<td>-</td>
+<td>7.5</td>
+<td>The Greek recognition model trained based on the PP-OCRv5 recognition model supports recognition of Greek, English, and numbers.</td>
+</tr>
+<tr>
+<td>arabic_PP-OCRv5_mobile_rec</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/arabic_PP-OCRv5_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/arabic_PP-OCRv5_mobile_rec_pretrained.pdparams">Pretrained Model</a></td>
+<td>81.27</td>
+<td>-</td>
+<td>-</td>
+<td>7.6</td>
+<td>Ultra-lightweight Arabic character recognition model trained based on the PP-OCRv5 recognition model, supports Arabic letters and number recognition</td>
+</tr>
+<tr>
+<td>cyrillic_PP-OCRv5_mobile_rec</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/cyrillic_PP-OCRv5_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/cyrillic_PP-OCRv5_mobile_rec_pretrained.pdparams">Pretrained Model</a></td>
+<td>80.27</td>
+<td>-</td>
+<td>-</td>
+<td>7.7</td>
+<td>Ultra-lightweight Cyrillic character recognition model trained based on the PP-OCRv5 recognition model, supports Cyrillic letters and number recognition</td>
+</tr>
+<tr>
+<td>devanagari_PP-OCRv5_mobile_rec</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/devanagari_PP-OCRv5_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/devanagari_PP-OCRv5_mobile_rec_pretrained.pdparams">Pretrained Model</a></td>
+<td>84.96</td>
+<td>-</td>
+<td>-</td>
+<td>7.5</td>
+<td>Ultra-lightweight Devanagari script recognition model trained based on the PP-OCRv5 recognition model, supports Hindi, Sanskrit and other Devanagari letters, as well as number recognition</td>
+</tr>
+<tr>
+<td>te_PP-OCRv5_mobile_rec</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/te_PP-OCRv5_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/te_PP-OCRv5_mobile_rec_pretrained.pdparams">Pretrained Model</a></td>
+<td>87.65</td>
+<td>-</td>
+<td>-</td>
+<td>7.5</td>
+<td>Ultra-lightweight Telugu script recognition model trained based on the PP-OCRv5 recognition model, supports Telugu script and number recognition</td>
+</tr>
+<tr>
+<td>ta_PP-OCRv5_mobile_rec</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/ta_PP-OCRv5_mobile_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/ta_PP-OCRv5_mobile_rec_pretrained.pdparams">Pretrained Model</a></td>
+<td>94.2</td>
+<td>-</td>
+<td>-</td>
+<td>7.5</td>
+<td>Ultra-lightweight Tamil script recognition model trained based on the PP-OCRv5 recognition model, supports Tamil script and number recognition</td>
 </tr>
 <tr>
 <td>korean_PP-OCRv3_mobile_rec</td>
@@ -808,6 +885,12 @@ Any floating-point number greater than <code>0</code>. If not set, the pipeline'
 <td></td>
 </tr>
 <tr>
+<td><code>return_word_box</code></td>
+<td>Whether to return word-level boxes. If not set, the pipeline's initialized value for this parameter (defaults to <code>False</code>) will be used.</td>
+<td><code>bool</code></td>
+<td></td>
+</tr>
+<tr>
 <td><code>text_rec_input_shape</code></td>
 <td>Input shape for text recognition.</td>
 <td><code>tuple</code></td>
@@ -929,7 +1012,7 @@ Please note that not every <code>ocr_version</code> supports all <code>lang</cod
 <td><code>use_tensorrt</code></td>
 <td>Whether to use the Paddle Inference TensorRT subgraph engine. If the model does not support acceleration through TensorRT, setting this flag will not enable acceleration.<br/>
 For Paddle with CUDA version 11.8, the compatible TensorRT version is 8.x (x>=6), and it is recommended to install TensorRT 8.6.1.6.<br/>
-For Paddle with CUDA version 12.6, the compatible TensorRT version is 10.x (x>=5), and it is recommended to install TensorRT 10.5.0.18.
+
 </td>
 <td><code>bool</code></td>
 <td><code>False</code></td>
@@ -1254,7 +1337,7 @@ Please note that not every <code>ocr_version</code> supports all <code>lang</cod
 <td><code>use_tensorrt</code></td>
 <td>Whether to use the Paddle Inference TensorRT subgraph engine. If the model does not support acceleration through TensorRT, setting this flag will not enable acceleration.<br/>
 For Paddle with CUDA version 11.8, the compatible TensorRT version is 8.x (x>=6), and it is recommended to install TensorRT 8.6.1.6.<br/>
-For Paddle with CUDA version 12.6, the compatible TensorRT version is 10.x (x>=5), and it is recommended to install TensorRT 10.5.0.18.
+
 </td>
 <td><code>bool</code></td>
 <td><code>False</code></td>
@@ -2283,7 +2366,7 @@ SubModules:
 ......  
 ```  
 
-The pipeline configuration file includes not only the parameters supported by the PaddleOCR CLI and Python API but also advanced configurations. For detailed instructions, refer to the [PaddleX Pipeline Usage Overview](https://paddlepaddle.github.io/PaddleX/3.0/en/pipeline_usage/pipeline_develop_guide.html) and adjust the configurations as needed.  
+The pipeline configuration file includes not only the parameters supported by the PaddleOCR CLI and Python API but also advanced configurations. For detailed instructions, refer to the [PaddleX Pipeline Usage Overview](https://paddlepaddle.github.io/PaddleX/latest/en/pipeline_usage/pipeline_develop_guide.html) and adjust the configurations as needed.  
 
 3.Load the Configuration File in CLI  
 

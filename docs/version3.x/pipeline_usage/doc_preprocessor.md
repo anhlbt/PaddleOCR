@@ -17,6 +17,8 @@ comments: true
 
 在本产线中，您可以根据下方的基准测试数据选择使用的模型。
 
+> 推理耗时仅包含模型推理耗时，不包含前后处理耗时。
+
 <details>
 <summary> <b>文档图像方向分类模块（可选）：</b></summary>
 <table>
@@ -240,7 +242,7 @@ paddleocr doc_preprocessor -i ./doc_test_rotated.jpg --device gpu
 <td><code>use_tensorrt</code></td>
 <td>是否启用 Paddle Inference 的 TensorRT 子图引擎。如果模型不支持通过 TensorRT 加速，即使设置了此标志，也不会使用加速。<br/>
 对于 CUDA 11.8 版本的飞桨，兼容的 TensorRT 版本为 8.x（x>=6），建议安装 TensorRT 8.6.1.6。<br/>
-对于 CUDA 12.6 版本的飞桨，兼容的 TensorRT 版本为 10.x（x>=5），建议安装 TensorRT 10.5.0.18。
+
 </td>
 <td><code>bool</code></td>
 <td><code>False</code></td>
@@ -390,7 +392,7 @@ for res in output:
 <td><code>use_tensorrt</code></td>
 <td>是否启用 Paddle Inference 的 TensorRT 子图引擎。如果模型不支持通过 TensorRT 加速，即使设置了此标志，也不会使用加速。<br/>
 对于 CUDA 11.8 版本的飞桨，兼容的 TensorRT 版本为 8.x（x>=6），建议安装 TensorRT 8.6.1.6。<br/>
-对于 CUDA 12.6 版本的飞桨，兼容的 TensorRT 版本为 10.x（x>=5），建议安装 TensorRT 10.5.0.18。
+
 </td>
 <td><code>bool</code></td>
 <td><code>False</code></td>

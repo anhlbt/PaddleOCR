@@ -17,6 +17,8 @@ The Document Image Preprocessing Pipeline integrates two key functions: document
 
 In this pipeline, you can select the models to use based on the benchmark data provided below.
 
+> The inference time only includes the model inference time and does not include the time for pre- or post-processing.
+
 <details>
 <summary> <b>Document Image Orientation Classification Module (Optional):</b></summary>
 <table>
@@ -237,7 +239,7 @@ If not set, the pipeline initialized value for this parameter will be used. Duri
 <td><code>use_tensorrt</code></td>
 <td>Whether to use the Paddle Inference TensorRT subgraph engine. If the model does not support acceleration through TensorRT, setting this flag will not enable acceleration.<br/>
 For Paddle with CUDA version 11.8, the compatible TensorRT version is 8.x (x>=6), and it is recommended to install TensorRT 8.6.1.6.<br/>
-For Paddle with CUDA version 12.6, the compatible TensorRT version is 10.x (x>=5), and it is recommended to install TensorRT 10.5.0.18.
+
 </td>
 <td><code>bool</code></td>
 <td><code>False</code></td>
@@ -383,7 +385,7 @@ In the above Python script, the following steps are executed:
 <td><code>use_tensorrt</code></td>
 <td>Whether to use the Paddle Inference TensorRT subgraph engine. If the model does not support acceleration through TensorRT, setting this flag will not enable acceleration.<br/>
 For Paddle with CUDA version 11.8, the compatible TensorRT version is 8.x (x>=6), and it is recommended to install TensorRT 8.6.1.6.<br/>
-For Paddle with CUDA version 12.6, the compatible TensorRT version is 10.x (x>=5), and it is recommended to install TensorRT 10.5.0.18.
+
 </td>
 <td><code>bool</code></td>
 <td><code>False</code></td>

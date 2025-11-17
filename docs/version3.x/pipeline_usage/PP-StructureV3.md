@@ -8,7 +8,7 @@ comments: true
 
 版面解析是一种从文档图像中提取结构化信息的技术，主要用于将复杂的文档版面转换为机器可读的数据格式。这项技术在文档管理、信息提取和数据数字化等领域具有广泛的应用。版面解析通过结合光学字符识别（OCR）、图像处理和机器学习算法，能够识别和提取文档中的文本块、标题、段落、图片、表格以及其他版面元素。此过程通常包括版面分析、元素分析和数据格式化三个主要步骤，最终生成结构化的文档数据，提升数据处理的效率和准确性。<b>PP-StructureV3 产线在通用版面解析v1产线的基础上，强化了版面区域检测、表格识别、公式识别的能力，增加了图表理解能力和多栏阅读顺序的恢复能力、结果转换 Markdown 文件的能力，在多种文档数据中，表现优异，可以处理较复杂的文档数据。</b>本产线同时提供了灵活的服务化部署方式，支持在多种硬件上使用多种编程语言调用。不仅如此，本产线也提供了二次开发的能力，您可以基于本产线在您自己的数据集上训练调优，训练后的模型也可以无缝集成。
 
-<b>PP-StructureV3 产线中包含以下6个模块或子产线。每个模块或子产线均可独立进行训练和推理，并包含多个模型。有关详细信息，请点击相应链接以查看文档。</b>
+<b>PP-StructureV3 产线中包含以下7个模块或子产线。每个模块或子产线均可独立进行训练和推理，并包含多个模型。有关详细信息，请点击相应链接以查看文档。</b>
 
 - [版面区域检测模块](../module_usage/layout_detection.md)
 - [通用OCR子产线](./OCR.md)
@@ -16,8 +16,11 @@ comments: true
 - [表格识别子产线](./table_recognition_v2.md) （可选）
 - [印章文本识别子产线](./seal_recognition.md) （可选）
 - [公式识别子产线](./formula_recognition.md) （可选）
+- [图表解析模块](../module_usage/chart_parsing.md) （可选）
 
 在本产线中，您可以根据下方的基准测试数据选择使用的模型。
+
+> 推理耗时仅包含模型推理耗时，不包含前后处理耗时。
 
 <details>
 <summary><b>文档图像方向分类模块：</b></summary>
@@ -1036,7 +1039,7 @@ devanagari_PP-OCRv3_mobile_rec_infer.tar">推理模型</a>/<a href="https://padd
 
 ## 2. 快速开始
 
-在本地使用 PP-StructureV3 产线前，请确保您已经按照[安装教程](../installation.md)完成了wheel包安装。安装完成后，可以在本地使用命令行体验或 Python 集成。
+在本地使用 PP-StructureV3 产线前，请确保您已经按照[安装教程](../installation.md)完成了wheel包安装。安装完成后，可以在本地使用命令行体验或 Python 集成。如果您希望选择性安装依赖，请参考安装教程中的相关说明。该产线对应的依赖分组为 `doc-parser`。
 
 **请注意，如果在执行过程中遇到程序失去响应、程序异常退出、内存资源耗尽、推理速度极慢等问题，请尝试参考文档调整配置，例如关闭不需要使用的功能或使用更轻量的模型。**
 
@@ -1453,25 +1456,25 @@ paddleocr pp_structurev3 -i ./pp_structure_v3_demo.png --device gpu
 </tr>
 <tr>
 <td><code>use_doc_orientation_classify</code></td>
-<td>是否使用文档方向分类模块。</td>
+<td>是否加载并使用文档方向分类模块。如果不设置，将使用产线初始化的该参数值，默认初始化为<code>False</code>。</td>
 <td><code>bool</code></td>
-<td><code>False</code></td>
+<td></td>
 </tr>
 <tr>
 <td><code>use_doc_unwarping</code></td>
-<td>是否使用文本图像矫正模块。</td>
+<td>是否加载并使用文本图像矫正模块。如果不设置，将使用产线初始化的该参数值，默认初始化为<code>False</code>。</td>
 <td><code>bool</code></td>
-<td><code>False</code></td>
+<td></td>
 </tr>
 <tr>
 <td><code>use_textline_orientation</code></td>
-<td>是否加载并使用文本行方向分类模块。如果不设置，将使用产线初始化的该参数值，默认初始化为<code>True</code>。</td>
+<td>是否加载并使用文本行方向分类模块。如果不设置，将使用产线初始化的该参数值，默认初始化为<code>False</code>。</td>
 <td><code>bool</code></td>
 <td></td>
 </tr>
 <tr>
 <td><code>use_seal_recognition</code></td>
-<td>是否加载并使用印章文本识别子产线。如果不设置，将使用产线初始化的该参数值，默认初始化为<code>True</code>。</td>
+<td>是否加载并使用印章文本识别子产线。如果不设置，将使用产线初始化的该参数值，默认初始化为<code>False</code>。</td>
 <td><code>bool</code></td>
 <td></td>
 </tr>
@@ -1489,13 +1492,13 @@ paddleocr pp_structurev3 -i ./pp_structure_v3_demo.png --device gpu
 </tr>
 <tr>
 <td><code>use_chart_recognition</code></td>
-<td>是否使用图表解析模块。</td>
+<td>是否加载并使用图表解析模块。如果不设置，将使用产线初始化的该参数值，默认初始化为<code>False</code>。</td>
 <td><code>bool</code></td>
-<td><code>False</code></td>
+<td></td>
 </tr>
 <tr>
 <td><code>use_region_detection</code></td>
-<td>是否加载并使用文档区域检测子产线。如果不设置，将使用产线初始化的该参数值，默认初始化为<code>True</code>。</td>
+<td>是否加载并使用文档区域检测模块。如果不设置，将使用产线初始化的该参数值，默认初始化为<code>True</code>。</td>
 <td><code>bool</code></td>
 <td></td>
 </tr>
@@ -1524,7 +1527,7 @@ paddleocr pp_structurev3 -i ./pp_structure_v3_demo.png --device gpu
 <td><code>use_tensorrt</code></td>
 <td>是否启用 Paddle Inference 的 TensorRT 子图引擎。如果模型不支持通过 TensorRT 加速，即使设置了此标志，也不会使用加速。<br/>
 对于 CUDA 11.8 版本的飞桨，兼容的 TensorRT 版本为 8.x（x>=6），建议安装 TensorRT 8.6.1.6。<br/>
-对于 CUDA 12.6 版本的飞桨，兼容的 TensorRT 版本为 10.x（x>=5），建议安装 TensorRT 10.5.0.18。
+
 </td>
 <td><code>bool</code></td>
 <td><code>False</code></td>
@@ -1572,25 +1575,25 @@ MKL-DNN 缓存容量。
 <details><summary> 👉点击展开</summary>
 <pre>
 <code>
-{'res': {'input_path': '/root/.paddlex/predict_input/pp_structure_v3_demo.png', 'page_index': None, 'model_settings': {'use_doc_preprocessor': True, 'use_seal_recognition': True, 'use_table_recognition': True, 'use_formula_recognition': True}, 'doc_preprocessor_res': {'input_path': None, 'page_index': None, 'model_settings': {'use_doc_orientation_classify': True, 'use_doc_unwarping': True}, 'angle': 0}, 'layout_det_res': {'input_path': None, 'page_index': None, 'boxes': [{'cls_id': 2, 'label': 'text', 'score': 0.9848763942718506, 'coordinate': [743.2788696289062, 777.3158569335938, 1115.24755859375, 1067.84228515625]}, {'cls_id': 2, 'label': 'text', 'score': 0.9827454686164856, 'coordinate': [1137.95556640625, 1127.66943359375, 1524, 1367.6356201171875]}, {'cls_id': 1, 'label': 'image', 'score': 0.9813530445098877, 'coordinate': [755.2349243164062, 184.64149475097656, 1523.7294921875, 684.6146392822266]}, {'cls_id': 2, 'label': 'text', 'score': 0.980336606502533, 'coordinate': [350.7603759765625, 1148.5648193359375, 706.8020629882812, 1367.00341796875]}, {'cls_id': 2, 'label': 'text', 'score': 0.9798877239227295, 'coordinate': [1147.3890380859375, 802.6549072265625, 1523.9051513671875, 994.9046630859375]}, {'cls_id': 2, 'label': 'text', 'score': 0.9724758863449097, 'coordinate': [741.2205810546875, 1074.2657470703125, 1110.120849609375, 1191.2010498046875]}, {'cls_id': 2, 'label': 'text', 'score': 0.9724437594413757, 'coordinate': [355.6563415527344, 899.6616821289062, 710.9073486328125, 1042.1270751953125]}, {'cls_id': 2, 'label': 'text', 'score': 0.9723313450813293, 'coordinate': [0, 181.92404174804688, 334.43384313583374, 330.294677734375]}, {'cls_id': 2, 'label': 'text', 'score': 0.9720360636711121, 'coordinate': [356.7376403808594, 753.35302734375, 714.37841796875, 892.6129760742188]}, {'cls_id': 2, 'label': 'text', 'score': 0.9711183905601501, 'coordinate': [1144.5242919921875, 1001.2548217773438, 1524, 1120.6578369140625]}, {'cls_id': 2, 'label': 'text', 'score': 0.9707457423210144, 'coordinate': [0, 849.873291015625, 325.0664693713188, 1067.2911376953125]}, {'cls_id': 2, 'label': 'text', 'score': 0.9700680375099182, 'coordinate': [363.04437255859375, 289.2635498046875, 719.1571655273438, 427.5818786621094]}, {'cls_id': 2, 'label': 'text', 'score': 0.9693533182144165, 'coordinate': [359.4466857910156, 606.0006103515625, 717.9885864257812, 746.55126953125]}, {'cls_id': 2, 'label': 'text', 'score': 0.9682930111885071, 'coordinate': [0.050221771001815796, 1073.1942138671875, 323.85799154639244, 1191.3121337890625]}, {'cls_id': 2, 'label': 'text', 'score': 0.9649553894996643, 'coordinate': [0.7939082384109497, 1198.5465087890625, 321.2581721544266, 1317.218017578125]}, {'cls_id': 2, 'label': 'text', 'score': 0.9644040465354919, 'coordinate': [0, 337.225830078125, 332.2462143301964, 428.298583984375]}, {'cls_id': 2, 'label': 'text', 'score': 0.9637495279312134, 'coordinate': [365.5925598144531, 188.2151336669922, 718.556640625, 283.7483215332031]}, {'cls_id': 2, 'label': 'text', 'score': 0.9603620767593384, 'coordinate': [355.30633544921875, 1048.5457763671875, 708.771484375, 1141.828369140625]}, {'cls_id': 2, 'label': 'text', 'score': 0.9508902430534363, 'coordinate': [361.0450744628906, 530.7780151367188, 719.6325073242188, 599.1027221679688]}, {'cls_id': 2, 'label': 'text', 'score': 0.9459834694862366, 'coordinate': [0.035085976123809814, 532.7417602539062, 330.5401824116707, 772.7175903320312]}, {'cls_id': 0, 'label': 'paragraph_title', 'score': 0.9400503635406494, 'coordinate': [760.1524658203125, 1214.560791015625, 1085.24853515625, 1274.7890625]}, {'cls_id': 2, 'label': 'text', 'score': 0.9341079592704773, 'coordinate': [1.025873064994812, 777.8804931640625, 326.99016749858856, 844.8532104492188]}, {'cls_id': 0, 'label': 'paragraph_title', 'score': 0.9259933233261108, 'coordinate': [0.11050379276275635, 450.3547058105469, 311.77746546268463, 510.5243835449219]}, {'cls_id': 0, 'label': 'paragraph_title', 'score': 0.9208691716194153, 'coordinate': [380.79510498046875, 447.859130859375, 698.1744384765625, 509.0489807128906]}, {'cls_id': 2, 'label': 'text', 'score': 0.8683002591133118, 'coordinate': [1149.1656494140625, 778.3809814453125, 1339.960205078125, 796.5060424804688]}, {'cls_id': 2, 'label': 'text', 'score': 0.8455104231834412, 'coordinate': [561.3448486328125, 140.87547302246094, 915.4432983398438, 162.76724243164062]}, {'cls_id': 11, 'label': 'doc_title', 'score': 0.735536515712738, 'coordinate': [76.71978759765625, 0, 1400.4561157226562, 98.32131713628769]}, {'cls_id': 6, 'label': 'figure_title', 'score': 0.7187536954879761, 'coordinate': [790.4249267578125, 704.4551391601562, 1509.9013671875, 747.6876831054688]}, {'cls_id': 2, 'label': 'text', 'score': 0.6218013167381287, 'coordinate': [737.427001953125, 1296.2047119140625, 1104.2994384765625, 1368]}]}, 'overall_ocr_res': {'input_path': None, 'page_index': None, 'model_settings': {'use_doc_preprocessor': False, 'use_textline_orientation': True}, 'dt_polys': array([[[  77,    0],
+{'res': {'input_path': 'pp_structure_v3_demo.png', 'page_index': None, 'model_settings': {'use_doc_preprocessor': False, 'use_general_ocr': True, 'use_seal_recognition': True, 'use_table_recognition': True, 'use_formula_recognition': True}, 'layout_det_res': {'input_path': None, 'page_index': None, 'boxes': [{'cls_id': 2, 'label': 'text', 'score': 0.9853514432907104, 'coordinate': [770.9531, 776.6814, 1122.6057, 1058.7322]}, {'cls_id': 1, 'label': 'image', 'score': 0.9848673939704895, 'coordinate': [775.7434, 202.27979, 1502.8113, 686.02136]}, {'cls_id': 2, 'label': 'text', 'score': 0.983731746673584, 'coordinate': [1152.3197, 1113.3275, 1503.3029, 1346.586]}, {'cls_id': 2, 'label': 'text', 'score': 0.9832221865653992, 'coordinate': [1152.5602, 801.431, 1503.8436, 986.3563]}, {'cls_id': 2, 'label': 'text', 'score': 0.9829439520835876, 'coordinate': [9.549545, 849.5713, 359.1173, 1058.7488]}, {'cls_id': 2, 'label': 'text', 'score': 0.9811657667160034, 'coordinate': [389.58298, 1137.2659, 740.66235, 1346.7488]}, {'cls_id': 2, 'label': 'text', 'score': 0.9775941371917725, 'coordinate': [9.1302185, 201.85, 359.0409, 339.05692]}, {'cls_id': 2, 'label': 'text', 'score': 0.9750366806983948, 'coordinate': [389.71454, 752.96924, 740.544, 889.92456]}, {'cls_id': 2, 'label': 'text', 'score': 0.9738152027130127, 'coordinate': [389.94565, 298.55988, 740.5585, 435.5124]}, {'cls_id': 2, 'label': 'text', 'score': 0.9737328290939331, 'coordinate': [771.50256, 1065.4697, 1122.2582, 1178.7324]}, {'cls_id': 2, 'label': 'text', 'score': 0.9728517532348633, 'coordinate': [1152.5154, 993.3312, 1503.2349, 1106.327]}, {'cls_id': 2, 'label': 'text', 'score': 0.9725610017776489, 'coordinate': [9.372787, 1185.823, 359.31738, 1298.7227]}, {'cls_id': 2, 'label': 'text', 'score': 0.9724331498146057, 'coordinate': [389.62848, 610.7389, 740.83234, 746.2377]}, {'cls_id': 2, 'label': 'text', 'score': 0.9720287322998047, 'coordinate': [389.29898, 897.0936, 741.41516, 1034.6616]}, {'cls_id': 2, 'label': 'text', 'score': 0.9713053703308105, 'coordinate': [10.323685, 1065.4663, 359.6786, 1178.8872]}, {'cls_id': 2, 'label': 'text', 'score': 0.9689728021621704, 'coordinate': [9.336395, 537.6609, 359.2901, 652.1881]}, {'cls_id': 2, 'label': 'text', 'score': 0.9684857130050659, 'coordinate': [10.7608185, 345.95068, 358.93616, 434.64087]}, {'cls_id': 2, 'label': 'text', 'score': 0.9681928753852844, 'coordinate': [9.674866, 658.89075, 359.56528, 770.4319]}, {'cls_id': 2, 'label': 'text', 'score': 0.9634978175163269, 'coordinate': [770.9464, 1281.1785, 1122.6522, 1346.7156]}, {'cls_id': 2, 'label': 'text', 'score': 0.96304851770401, 'coordinate': [390.0113, 201.28055, 740.1684, 291.53073]}, {'cls_id': 2, 'label': 'text', 'score': 0.962053120136261, 'coordinate': [391.21393, 1040.952, 740.5046, 1130.32]}, {'cls_id': 2, 'label': 'text', 'score': 0.9565253853797913, 'coordinate': [10.113251, 777.1482, 359.439, 842.437]}, {'cls_id': 2, 'label': 'text', 'score': 0.9497362375259399, 'coordinate': [390.31357, 537.86285, 740.47595, 603.9285]}, {'cls_id': 2, 'label': 'text', 'score': 0.9371236562728882, 'coordinate': [10.2034, 1305.9753, 359.5958, 1346.7295]}, {'cls_id': 0, 'label': 'paragraph_title', 'score': 0.9338151216506958, 'coordinate': [791.6062, 1200.8479, 1103.3257, 1259.9324]}, {'cls_id': 0, 'label': 'paragraph_title', 'score': 0.9326773285865784, 'coordinate': [408.0737, 457.37024, 718.9509, 516.63464]}, {'cls_id': 0, 'label': 'paragraph_title', 'score': 0.9274250864982605, 'coordinate': [29.448685, 456.6762, 340.99194, 515.6999]}, {'cls_id': 2, 'label': 'text', 'score': 0.8742568492889404, 'coordinate': [1154.7095, 777.3624, 1330.3086, 794.5853]}, {'cls_id': 2, 'label': 'text', 'score': 0.8442489504814148, 'coordinate': [586.49316, 160.15454, 927.468, 179.64203]}, {'cls_id': 11, 'label': 'doc_title', 'score': 0.8332607746124268, 'coordinate': [133.80017, 37.41908, 1380.8601, 124.1429]}, {'cls_id': 6, 'label': 'figure_title', 'score': 0.6770150661468506, 'coordinate': [812.1718, 705.1199, 1484.6973, 747.1692]}]}, 'overall_ocr_res': {'input_path': None, 'page_index': None, 'model_settings': {'use_doc_preprocessor': False, 'use_textline_orientation': False}, 'dt_polys': array([[[133,  35],
         ...,
-        [  76,   98]],
+        [133, 131]],
 
        ...,
 
-       [[1142, 1350],
+       [[ 13, 754],
         ...,
-        [1142, 1367]]], dtype=int16), 'text_det_params': {'limit_side_len': 736, 'limit_type': 'min', 'thresh': 0.3, 'box_thresh': 0.6, 'unclip_ratio': 1.5}, 'text_type': 'general', 'textline_orientation_angles': array([0, ..., 0]), 'text_rec_score_thresh': 0.0, 'rec_texts': ['助力双方交往', '搭建友谊桥梁', '本报记者沈小晓任彦', '黄培照', '身着中国传统民族服装的厄立特里亚青', '厄立特里亚高等教育与研究院合作建立，开', '次登台表演中国民族舞、现代舞、扇子舞', '设了中国语言课程和中国文化课程，注册学', '曼妙的舞姿赢得现场观众阵阵掌声。这', '生2万余人次。10余年来，厄特孔院已成为', '日前厄立特里亚高等教育与研究院孔子学', '当地民众了解中国的一扇窗口。', '以下简称"厄特孔院")举办“喜迎新年"中国', '黄鸣飞表示，随着来学习中文的人日益', '舞比赛的场景。', '增多，阿斯马拉大学教学点已难以满足教学', '中国和厄立特里亚传统友谊深厚。近年', '需要。2024年4月，由中企蜀道集团所属四', '在高质量共建"一带一路"框架下，中厄两', '川路桥承建的孔院教学楼项目在阿斯马拉开', '人文交流不断深化，互利合作的民意基础', '工建设，预计今年上半年竣工，建成后将为厄', '益深厚。', '特孔院提供全新的办学场地。', '学好中文，我们的', '□', '在中国学习的经历', '未来不是梦”', '让我看到更广阔的世界”', '“鲜花曾告诉我你怎样走过，大地知道你', '多年来，厄立特里亚广大赴华留学生和', '中的每一个角落"厄立特里亚阿斯马拉', '培训人员积极投身国家建设，成为助力该国', '综合楼二层，一阵优美的歌声在走廊里回', '发展的人才和厄中友好的见证者和推动者。', '循着熟悉的旋律轻轻推开一间教室的门，', '在厄立特里亚全国妇女联盟工作的约翰', '们正跟着老师学唱中文歌曲《同一首歌》。', '娜·特韦尔德·凯莱塔就是其中一位。她曾在', '这是厄特孔院阿斯马拉大学教学点的一', '中华女子学院攻读硕士学位，研究方向是女', '中文歌曲课。为了让学生们更好地理解歌', '性领导力与社会发展。其间，她实地走访中国', '大意，老师尤斯拉·穆罕默德萨尔·侯赛因逐', '多个地区，获得了观察中国社会发展的第一', '在厄立特里亚不久前举办的第六届中国风筝文化节上，当地小学生体验风筝制作。', '译和解释歌词。随着伴奏声响起，学生们', '手资料。', '中国驻厄立特里亚大使馆供图', '昌边随着节拍摇动身体，现场气氛热烈。', '谈起在中国求学的经历，约翰娜记忆犹', '“这是中文歌曲初级班，共有32人。学', '新：“中国的发展在当今世界是独一无二的。', '“不管远近都是客人，请不用客气；相约', '瓦的北红海省博物馆。', '大部分来自首都阿斯马拉的中小学，年龄', '沿着中国特色社会主义道路坚定前行，中国', '好了在一起，我们欢迎你…"在一场中厄青', '博物馆二层陈列着一个发掘自阿杜禾', '小的仅有6岁。"尤斯拉告诉记者。', '创造了发展奇迹，这一切都离不开中国共产党', '年联谊活动上，四川路桥中方员工同当地大', '斯古城的中国古代陶制酒器，罐身上写', '尤斯拉今年23岁，是厄立特里亚一所公立', '的领导。中国的发展经验值得许多国家学习', '学生合唱《北京欢迎你》。厄立特里亚技术学', '“万”“和”“禅”“山"等汉字。“这件文物证', '交的艺术老师。她12岁开始在厄特孔院学', '借鉴。”', '院计算机科学与工程专业学生鲁夫塔·谢拉', '明，很早以前我们就通过海上丝绸之路进行', '中文，在2017年第十届“汉语桥"世界中学生', '正在西南大学学习的厄立特里亚博士生', '是其中一名演唱者，她很早便在孔院学习中', '贸易往来与文化交流。这也是厄立特里亚', '文比赛中获得厄立特里亚赛区第一名，并和', '穆卢盖塔·泽穆伊对中国怀有深厚感情。8', '文，一直在为去中国留学作准备。“这句歌词', '与中国友好交往历史的有力证明。”北红海', '半代表厄立特里亚前往中国参加决赛，获得', '年前，在北京师范大学获得硕士学位后，穆卢', '是我们两国人民友谊的生动写照。无论是投', '省博物馆研究与文献部负责人伊萨亚斯·特', '本优胜奖。2022年起，尤斯拉开始在厄特孔', '盖塔在社交媒体上写下这样一段话：“这是我', '身于厄立特里亚基础设施建设的中企员工，', '斯法兹吉说。', '兼职教授中文歌曲，每周末两个课时。“中国', '人生的重要一步，自此我拥有了一双坚固的', '还是在中国留学的厄立特里亚学子，两国人', '厄立特里亚国家博物馆考古学和人类学', '化博大精深，我希望我的学生们能够通过中', '鞋子，赋予我穿越荆棘的力量。”', '民携手努力，必将推动两国关系不断向前发', '研究员菲尔蒙·特韦尔德十分喜爱中国文', '软曲更好地理解中国文化。"她说。', '穆卢盖塔密切关注中国在经济、科技、教', '展。"鲁夫塔说。', '化。他表示：“学习彼此的语言和文化，将帮', '“姐姐，你想去中国吗？"“非常想！我想', '育等领域的发展，“中国在科研等方面的实力', '厄立特里亚高等教育委员会主任助理萨', '助厄中两国人民更好地理解彼此，助力双方', '看故宫、爬长城。"尤斯拉的学生中有一对', '与日俱增。在中国学习的经历让我看到更广', '马瑞表示：“每年我们都会组织学生到中国访', '交往，搭建友谊桥梁。”', '软善舞的姐妹，姐姐露娅今年15岁，妹妹', '阔的世界，从中受益匪浅。”', '问学习，目前有超过5000名厄立特里亚学生', '厄立特里亚国家博物馆馆长塔吉丁·', '亚14岁，两人都已在厄特孔院学习多年，', '23岁的莉迪亚·埃斯蒂法诺斯已在厄特', '在中国留学。学习中国的教育经验，有助于', '里达姆·优素福曾多次访问中国，对中华文明', '文说得格外流利。', '孔院学习3年，在中国书法、中国画等方面表', '提升厄立特里亚的教育水平。”', '的传承与创新、现代化博物馆的建设与发用', '露娅对记者说：“这些年来，怀着对中文', '现十分优秀，在2024年厄立特里亚赛区的', '印象深刻。“中国博物馆不仅有许多保存完好', '“共同向世界展示非', '中国文化的热爱，我们姐妹俩始终相互鼓', '“汉语桥”比赛中获得一等奖。莉迪亚说：“学', '的文物，还充分运用先进科技手段进行展示', '一起学习。我们的中文一天比一天好，还', '习中国书法让我的内心变得安宁和纯粹。我', '洲和亚洲的灿烂文明”', '帮助人们更好理解中华文明。"塔吉丁说，“', '了中文歌和中国舞。我们一定要到中国', '也喜欢中国的服饰，希望未来能去中国学习，', '立特里亚与中国都拥有悠久的文明，始终木', '学好中文，我们的未来不是梦！”', '把中国不同民族元素融入服装设计中，创作', '从阿斯马拉出发，沿着蜿蜒曲折的盘山', '互理解、相互尊重。我希望未来与中国同行', '据厄特孔院中方院长黄鸣飞介绍，这所', '出更多精美作品，也把厄特文化分享给更多', '公路一路向东寻找丝路印迹。驱车两个小', '加强合作，共同向世界展示非洲和亚洲的灿', '中贵州财经大学和', '的中国朋友。”', '时，记者来到位于厄立特里亚港口城市马萨', '烂文明。”'], 'rec_scores': array([0.99875408, ..., 0.98324996]), 'rec_polys': array([[[  77,    0],
+        [ 13, 777]]], dtype=int16), 'text_det_params': {'limit_side_len': 960, 'limit_type': 'max', 'thresh': 0.3, 'box_thresh': 0.6, 'unclip_ratio': 2.0}, 'text_type': 'general', 'textline_orientation_angles': array([-1, ..., -1]), 'text_rec_score_thresh': 0.0, 'rec_texts': ['助力双方交往', '搭建友谊桥梁', '本报记者', '沈小晓', '任', '彦', '黄培昭', '身着中国传统民族服装的厄立特里亚青', '厄立特里亚高等教育与研究院合作建立，开', '年依次登台表演中国民族舞、现代舞、扇子舞', '设了中国语言课程和中国文化课程，注册学', '等,曼妙的舞姿赢得现场观众阵阵掌声。这', '生2万余人次。10余年来，厄特孔院已成为', '是日前厄立特里亚高等教育与研究院孔子学', '当地民众了解中国的一扇窗口。', '院(以下简称"厄特孔院")举办"喜迎新年"中国', '黄鸣飞表示,随着来学习中文的人日益', '歌舞比赛的场景。', '增多，阿斯马拉大学教学点已难以满足教学', '中国和厄立特里亚传统友谊深厚。近年', '需要。2024年4月，由中企蜀道集团所属四', '来,在高质量共建"一带一路"框架下，中厄两', '川路桥承建的孔院教学楼项目在阿斯马拉开', '国人文交流不断深化，互利合作的民意基础', '工建设,预计今年上半年竣工,建成后将为厄', '日益深厚。', '特孔院提供全新的办学场地。', '“学好中文，我们的', '“在中国学习的经历', '未来不是梦”', '让我看到更广阔的世界”', '多年来,厄立特里亚广大赴华留学生和', '培训人员积极投身国家建设,成为助力该国', '发展的人才和厄中友好的见证者和推动者。', '在厄立特里亚全国妇女联盟工作的约翰', '娜·特韦尔德·凯莱塔就是其中一位。她曾在', '中华女子学院攻读硕士学位,研究方向是女', '性领导力与社会发展。其间，她实地走访中国', '多个地区，获得了观察中国社会发展的第一', '在厄立特里亚不久前举办的第六届中国风筝文化节上，当地小学生体验风筝制作。', '手资料。', '中国驻厄立特里亚大使馆供图', '“这是中文歌曲初级班，共有32人。学', '“不管远近都是客人，请不用客气;相约', '瓦的北红海省博物馆。', '生大部分来自首都阿斯马拉的中小学，年龄', '好了在一起,我们欢迎你"在一场中厄青', '博物馆二层陈列着一个发掘自阿杜利', '最小的仅有6岁。"尤斯拉告诉记者。', '年联谊活动上,四川路桥中方员工同当地大', '斯古城的中国古代陶制酒器,罐身上写着', '尤斯拉今年23岁，是厄立特里亚一所公立', '学生合唱《北京欢迎你》。厄立特里亚技术学', '“万”“和""禅”“山"等汉字。“这件文物证', '学校的艺术老师。她12岁开始在厄特孔院学', '院计算机科学与工程专业学生鲁夫塔·谢拉', '明,很早以前我们就通过海上丝绸之路进行', '习中文,在2017年第十届"汉语桥"世界中学生', '是其中一名演唱者,她很早便在孔院学习中', '贸易往来与文化交流。这也是厄立特里亚', '中文比赛中获得厄立特里亚赛区第一名,并和', '文，一直在为去中国留学作准备。“这句歌词', '与中国友好交往历史的有力证明。"北红海', '同伴代表厄立特里亚前往中国参加决赛,获得', '是我们两国人民友谊的生动写照。无论是投', '省博物馆研究与文献部负责人伊萨亚斯·特', '团体优胜奖。2022年起，尤斯拉开始在厄特孔', '身于厄立特里亚基础设施建设的中企员工，', '斯法兹吉说。', '院兼职教授中文歌曲,每周末两个课时。中国', '还是在中国留学的厄立特里亚学子,两国人', '厄立特里亚国家博物馆考古学和人类学', '文化博大精深,我希望我的学生们能够通过中', '民携手努力,必将推动两国关系不断向前发', '研究员菲尔蒙·特韦尔德十分喜爱中国文', '文歌曲更好地理解中国文化。"她说。', '穆卢盖塔密切关注中国在经济、科技、教', '展。"鲁夫塔说。', '化。他表示：“学习彼此的语言和文化，将帮', '“姐姐,你想去中国吗?"“非常想！我想', '育等领域的发展，“中国在科研等方面的实力', '厄立特里亚高等教育委员会主任助理萨', '助厄中两国人民更好地理解彼此，助力双方', '去看故宫、爬长城。"尤斯拉的学生中有一对', '与日俱增。在中国学习的经历让我看到更广', '马瑞表示：“每年我们都会组织学生到中国访', '交往,搭建友谊桥梁。"', '能歌善舞的姐妹,姐姐露娅今年15岁，妹妹', '阔的世界，从中受益匪浅。', '问学习，目前有超过5000名厄立特里亚学生', '厄立特里亚国家博物馆馆长塔吉丁·努', '莉娅14岁，两人都已在厄特孔院学习多年，', '23岁的莉迪亚·埃斯蒂法诺斯已在厄特', '在中国留学。学习中国的教育经验,有助于', '里达姆·优素福曾多次访问中国，对中华文明', '中文说得格外流利。', '孔院学习3年，在中国书法、中国画等方面表', '提升厄立特里亚的教育水平。”', '的传承与创新、现代化博物馆的建设与发展', '露娅对记者说：“这些年来,怀着对中文', '现十分优秀，在2024年厄立特里亚赛区的', '“共同向世界展示非', '印象深刻。“中国博物馆不仅有许多保存完好', '和中国文化的热爱,我们姐妹俩始终相互鼓', '“汉语桥"比赛中获得一等奖。莉迪亚说：“学', '的文物,还充分运用先进科技手段进行展示，', '励,一起学习。我们的中文一天比一天好,还', '习中国书法让我的内心变得安宁和纯粹。我', '洲和亚洲的灿烂文明”', '帮助人们更好理解中华文明。"塔吉丁说，厄', '学会了中文歌和中国舞。我们一定要到中国', '也喜欢中国的服饰,希望未来能去中国学习，', '立特里亚与中国都拥有悠久的文明,始终相', '去。学好中文,我们的未来不是梦!"', '把中国不同民族元素融入服装设计中，创作', '从阿斯马拉出发,沿着蜿蜒曲折的盘山', '互理解、相互尊重。我希望未来与中国同行', '据厄特孔院中方院长黄鸣飞介绍,这所', '出更多精美作品，也把厄特文化分享给更多', '公路一路向东寻找丝路印迹。驱车两个小', '加强合作,共同向世界展示非洲和亚洲的灿', '孔院成立于2013年3月，由贵州财经大学和', '的中国朋友。”', '时,记者来到位于厄立特里亚港口城市马萨', '烂文明。”', '谈起在中国求学的经历,约翰娜记忆犹', '新：“中国的发展在当今世界是独一无二的。', '沿着中国特色社会主义道路坚定前行，中国', '创造了发展奇迹,这一切都离不开中国共产党', '的领导。中国的发展经验值得许多国家学习', '借鉴，”', '正在西南大学学习的厄立特里亚博士生', '穆卢盖塔·泽穆伊对中国怀有深厚感情。8', '年前，在北京师范大学获得硕士学位后，穆卢', '盖塔在社交媒体上写下这样一段话：“这是我', '人生的重要一步，自此我拥有了一双坚固的', '鞋子.赋予我穿越荆棘的力量。”', '“鲜花曾告诉我你怎样走过，大地知道你', '心中的每一个角落"厄立特里亚阿斯马拉', '大学综合楼二层，一阵优美的歌声在走廊里回', '响。循着熟悉的旋律轻轻推开一间教室的门，', '学生们正跟着老师学唱中文歌曲《同一首歌》。', '这是厄特孔院阿斯马拉大学教学点的一', '节中文歌曲课。为了让学生们更好地理解歌', '词大意，老师尤斯拉·穆罕默德萨尔·侯赛因逐', '字翻译和解释歌词。随着伴奏声响起，学生们', '边唱边随着节拍摇动身体，现场气氛热烈。'], 'rec_scores': array([0.99972075, ..., 0.96241361]), 'rec_polys': array([[[133,  35],
         ...,
-        [  76,   98]],
+        [133, 131]],
 
        ...,
 
-       [[1142, 1350],
+       [[ 13, 754],
         ...,
-        [1142, 1367]]], dtype=int16), 'rec_boxes': array([[  76, ...,  103],
+        [ 13, 777]]], dtype=int16), 'rec_boxes': array([[133, ..., 131],
        ...,
-       [1142, ..., 1367]], dtype=int16)}}}
+       [ 13, ..., 777]], dtype=int16)}}}
 </code></pre></details>
 
 运行结果参数说明可以参考[2.2 Python脚本方式集成](#222-python脚本方式集成)中的结果解释。
@@ -1605,10 +1608,11 @@ MKL-DNN 缓存容量。
 from paddleocr import PPStructureV3
 
 pipeline = PPStructureV3()
-# ocr = PPStructureV3(use_doc_orientation_classify=True) # 通过 use_doc_orientation_classify 指定是否使用文档方向分类模型
-# ocr = PPStructureV3(use_doc_unwarping=True) # 通过 use_doc_unwarping 指定是否使用文本图像矫正模块
-# ocr = PPStructureV3(use_textline_orientation=True) # 通过 use_textline_orientation 指定是否使用文本行方向分类模型
-# ocr = PPStructureV3(device="gpu") # 通过 device 指定模型推理时使用 GPU
+# pipeline = PPStructureV3(lang="en") # 将 lang 参数设置为使用英文文本识别模型。对于其他支持的语言，请参阅第5节：附录部分。默认配置为中英文模型。
+# pipeline = PPStructureV3(use_doc_orientation_classify=True) # 通过 use_doc_orientation_classify 指定是否使用文档方向分类模型
+# pipeline = PPStructureV3(use_doc_unwarping=True) # 通过 use_doc_unwarping 指定是否使用文本图像矫正模块
+# pipeline = PPStructureV3(use_textline_orientation=True) # 通过 use_textline_orientation 指定是否使用文本行方向分类模型
+# pipeline = PPStructureV3(device="gpu") # 通过 device 指定模型推理时使用 GPU
 output = pipeline.predict("./pp_structure_v3_demo.png")
 for res in output:
     res.print() ## 打印预测的结构化输出
@@ -2075,25 +2079,25 @@ for item in markdown_images:
 </tr>
 <tr>
 <td><code>use_doc_orientation_classify</code></td>
-<td>是否加载并使用文档方向分类模块。如果设置为<code>None</code>，将使用产线初始化的该参数值，默认初始化为<code>True</code>。</td>
+<td>是否加载并使用文档方向分类模块。如果设置为<code>None</code>，将使用产线初始化的该参数值，默认初始化为<code>False</code>。</td>
 <td><code>bool|None</code></td>
 <td><code>None</code></td>
 </tr>
 <tr>
 <td><code>use_doc_unwarping</code></td>
-<td>是否加载并使用文本图像矫正模块。如果设置为<code>None</code>，将使用产线初始化的该参数值，默认初始化为<code>True</code>。</td>
+<td>是否加载并使用文本图像矫正模块。如果设置为<code>None</code>，将使用产线初始化的该参数值，默认初始化为<code>False</code>。</td>
 <td><code>bool|None</code></td>
 <td><code>None</code></td>
 </tr>
 <tr>
 <td><code>use_textline_orientation</code></td>
-<td>是否加载并使用文本行方向分类模块。如果设置为<code>None</code>，将使用产线初始化的该参数值，默认初始化为<code>True</code>。</td>
+<td>是否加载并使用文本行方向分类模块。如果设置为<code>None</code>，将使用产线初始化的该参数值，默认初始化为<code>False</code>。</td>
 <td><code>bool|None</code></td>
 <td><code>None</code></td>
 </tr>
 <tr>
 <td><code>use_seal_recognition</code></td>
-<td>是否加载并使用印章文本识别子产线。如果设置为<code>None</code>，将使用产线初始化的该参数值，默认初始化为<code>True</code>。</td>
+<td>是否加载并使用印章文本识别子产线。如果设置为<code>None</code>，将使用产线初始化的该参数值，默认初始化为<code>False</code>。</td>
 <td><code>bool|None</code></td>
 <td><code>None</code></td>
 </tr>
@@ -2111,13 +2115,13 @@ for item in markdown_images:
 </tr>
 <tr>
 <td><code>use_chart_recognition</code></td>
-<td>是否加载并使用图表解析模块。如果设置为<code>None</code>，将使用产线初始化的该参数值，默认初始化为<code>True</code>。</td>
+<td>是否加载并使用图表解析模块。如果设置为<code>None</code>，将使用产线初始化的该参数值，默认初始化为<code>False</code>。</td>
 <td><code>bool|None</code></td>
 <td><code>None</code></td>
 </tr>
 <tr>
 <td><code>use_region_detection</code></td>
-<td>是否加载并使用文档区域检测子产线。如果设置为<code>None</code>，将使用产线初始化的该参数值，默认初始化为<code>True</code>。</td>
+<td>是否加载并使用文档区域检测模块。如果设置为<code>None</code>，将使用产线初始化的该参数值，默认初始化为<code>True</code>。</td>
 <td><code>bool|None</code></td>
 <td><code>None</code></td>
 </tr>
@@ -2147,7 +2151,7 @@ for item in markdown_images:
 <td><code>use_tensorrt</code></td>
 <td>是否启用 Paddle Inference 的 TensorRT 子图引擎。如果模型不支持通过 TensorRT 加速，即使设置了此标志，也不会使用加速。<br/>
 对于 CUDA 11.8 版本的飞桨，兼容的 TensorRT 版本为 8.x（x>=6），建议安装 TensorRT 8.6.1.6。<br/>
-对于 CUDA 12.6 版本的飞桨，兼容的 TensorRT 版本为 10.x（x>=5），建议安装 TensorRT 10.5.0.18。
+
 </td>
 <td><code>bool</code></td>
 <td><code>False</code></td>
@@ -2217,13 +2221,13 @@ MKL-DNN 缓存容量。
 <td><code>use_doc_orientation_classify</code></td>
 <td>是否在推理时使用文档方向分类模块。设置为<code>None</code>表示使用实例化参数，否则该参数优先级更高。</td>
 <td><code>bool|None</code></td>
-<td><code>False</code></td>
+<td><code>None</code></td>
 </tr>
 <tr>
 <td><code>use_doc_unwarping</code></td>
 <td>是否在推理时使用文本图像矫正模块。设置为<code>None</code>表示使用实例化参数，否则该参数优先级更高。</td>
 <td><code>bool|None</code></td>
-<td><code>False</code></td>
+<td><code>None</code></td>
 </tr>
 <tr>
 <td><code>use_textline_orientation</code></td>
@@ -2251,13 +2255,13 @@ MKL-DNN 缓存容量。
 </tr>
 <tr>
 <td><code>use_chart_recognition</code></td>
-<td>是否使用图表解析模块。设置为<code>None</code>表示使用实例化参数，否则该参数优先级更高。</td>
+<td>是否在推理时使用图表解析模块。设置为<code>None</code>表示使用实例化参数，否则该参数优先级更高。</td>
 <td><code>bool|None</code></td>
-<td><code>False</code></td>
+<td><code>None</code></td>
 </tr>
 <tr>
 <td><code>use_region_detection</code></td>
-<td>是否使用文档区域检测子产线。设置为<code>None</code>表示使用实例化参数，否则该参数优先级更高。</td>
+<td>是否在推理时使用文档区域检测模块。设置为<code>None</code>表示使用实例化参数，否则该参数优先级更高。</td>
 <td><code>bool|None</code></td>
 <td><code>None</code></td>
 </tr>
@@ -2491,93 +2495,100 @@ MKL-DNN 缓存容量。
 </tr>
 </table>
 
-- 调用`print()` 方法会将结果打印到终端，打印到终端的内容解释如下：
-    - `input_path`: `(str)` 待预测图像或者PDF的输入路径
-
-    - `page_index`: `(Union[int, None])` 如果输入是PDF文件，则表示当前是PDF的第几页，否则为 `None`
-
-    - `model_settings`: `(Dict[str, bool])` 配置产线所需的模型参数
-
-        - `use_doc_preprocessor`: `(bool)` 控制是否启用文档预处理子产线
-        - `use_seal_recognition`: `(bool)` 控制是否启用印章文本识别子产线
-        - `use_table_recognition`: `(bool)` 控制是否启用表格识别子产线
-        - `use_formula_recognition`: `(bool)` 控制是否启用公式识别子产线
-
-    - `doc_preprocessor_res`: `(Dict[str, Union[List[float], str]])` 文档预处理结果dict，仅当`use_doc_preprocessor=True`时存在
-        - `input_path`: `(str)` 文档预处理子产线接受的图像路径，当输入为`numpy.ndarray`时，保存为`None`，此处为`None`
-        - `page_index`: `None`，此处的输入为`numpy.ndarray`，所以值为`None`
-        - `model_settings`: `(Dict[str, bool])` 文档预处理子产线的模型配置参数
-          - `use_doc_orientation_classify`: `(bool)` 控制是否启用文档图像方向分类子模块
-          - `use_doc_unwarping`: `(bool)` 控制是否启用文本图像扭曲矫正子模块
-        - `angle`: `(int)` 文档图像方向分类子模块的预测结果，启用时返回实际角度值
-
-    - `parsing_res_list`: `(List[Dict])` 解析结果的列表，每个元素为一个dict，列表顺序为解析后的阅读顺序。
-        - `block_bbox`: `(np.ndarray)` 版面区域的边界框。
-        - `block_label`: `(str)` 版面区域的标签，例如`text`, `table`等。
-        - `block_content`: `(str)` 内容为版面区域内的内容。
-        - `seg_start_flag`: `(bool)` 标识该版面区域是否是段落的开始。
-        - `seg_end_flag`: `(bool)` 标识该版面区域是否是段落的结束。
-        - `sub_label`: `(str)` 版面区域的子标签，例如`text`的子标签可能为`title_text`。
-        - `sub_index`: `(int)` 版面区域的子索引，用于恢复Markdown。
-        - `index`: `(int)` 版面区域的索引，用于显示版面排序结果。
-
-
-
-
-
-    - `overall_ocr_res`: `(Dict[str, Union[List[str], List[float], numpy.ndarray]])` 全局 OCR 结果的dict
-      - `input_path`: `(Union[str, None])` 图像OCR子产线接受的图像路径，当输入为`numpy.ndarray`时，保存为`None`
-      - `page_index`: `None`，此处的输入为`numpy.ndarray`，所以值为`None`
-      - `model_settings`: `(Dict)` OCR子产线的模型配置参数
-      - `dt_polys`: `(List[numpy.ndarray])` 文本检测的多边形框列表。每个检测框由4个顶点坐标构成的numpy数组表示，数组shape为(4, 2)，数据类型为int16
-      - `dt_scores`: `(List[float])` 文本检测框的置信度列表
-      - `text_det_params`: `(Dict[str, Dict[str, int, float]])` 文本检测模块的配置参数
-        - `limit_side_len`: `(int)` 图像预处理时的边长限制值
-        - `limit_type`: `(str)` 边长限制的处理方式
-        - `thresh`: `(float)` 文本像素分类的置信度阈值
-        - `box_thresh`: `(float)` 文本检测框的置信度阈值
-        - `unclip_ratio`: `(float)` 文本检测框的膨胀系数
-        - `text_type`: `(str)` 文本检测的类型，当前固定为"general"
-
-      - `text_type`: `(str)` 文本检测的类型，当前固定为"general"
-      - `textline_orientation_angles`: `(List[int])` 文本行方向分类的预测结果。启用时返回实际角度值（如[0,0,1]
-      - `text_rec_score_thresh`: `(float)` 文本识别结果的过滤阈值
-      - `rec_texts`: `(List[str])` 文本识别结果列表，仅包含置信度超过`text_rec_score_thresh`的文本
-      - `rec_scores`: `(List[float])` 文本识别的置信度列表，已按`text_rec_score_thresh`过滤
-      - `rec_polys`: `(List[numpy.ndarray])` 经过置信度过滤的文本检测框列表，格式同`dt_polys`
-
-    - `formula_res_list`: `(List[Dict[str, Union[numpy.ndarray, List[float], str]]])` 公式识别结果列表，每个元素为一个dict
-        - `rec_formula`: `(str)` 公式识别结果
-        - `rec_polys`: `(numpy.ndarray)` 公式检测框，shape为(4, 2)，dtype为int16
-        - `formula_region_id`: `(int)` 公式所在的区域编号
-
-    - `seal_res_list`: `(List[Dict[str, Union[numpy.ndarray, List[float], str]]])` 印章文本识别结果列表，每个元素为一个dict
-        - `input_path`: `(str)` 印章图像的输入路径
-        - `page_index`: `None`，此处的输入为`numpy.ndarray`，所以值为`None`
-        - `model_settings`: `(Dict)` 印章文本识别子产线的模型配置参数
-        - `dt_polys`: `(List[numpy.ndarray])` 印章检测框列表，格式同`dt_polys`
-        - `text_det_params`: `(Dict[str, Dict[str, int, float]])` 印章检测模块的配置参数, 具体参数含义同上
-        - `text_type`: `(str)` 印章检测的类型，当前固定为"seal"
-        - `text_rec_score_thresh`: `(float)` 印章文本识别结果的过滤阈值
-        - `rec_texts`: `(List[str])` 印章文本识别结果列表，仅包含置信度超过`text_rec_score_thresh`的文本
-        - `rec_scores`: `(List[float])` 印章文本识别的置信度列表，已按`text_rec_score_thresh`过滤
-        - `rec_polys`: `(List[numpy.ndarray])` 经过置信度过滤的印章检测框列表，格式同`dt_polys`
-        - `rec_boxes`: `(numpy.ndarray)` 检测框的矩形边界框数组，shape为(n, 4)，dtype为int16。每一行表示一个矩形
-
-    - `table_res_list`: `(List[Dict[str, Union[numpy.ndarray, List[float], str]]])` 表格识别结果列表，每个元素为一个dict
-        - `cell_box_list`: `(List[numpy.ndarray])` 表格单元格的边界框列表
-        - `pred_html`: `(str)` 表格的HTML格式字符串
-        - `table_ocr_pred`: `(dict)` 表格的OCR识别结果
-            - `rec_polys`: `(List[numpy.ndarray])` 单元格的检测框列表
-            - `rec_texts`: `(List[str])` 单元格的识别结果
-            - `rec_scores`: `(List[float])` 单元格的识别置信度
-            - `rec_boxes`: `(numpy.ndarray)` 检测框的矩形边界框数组，shape为(n, 4)，dtype为int16。每一行表示一个矩形
-
-- 调用`save_to_json()` 方法会将上述内容保存到指定的 `save_path` 中，如果指定为目录，则保存的路径为`save_path/{your_img_basename}_res.json`，如果指定为文件，则直接保存到该文件中。由于 json 文件不支持保存numpy数组，因此会将其中的 `numpy.array` 类型转换为列表形式。
-- 调用`save_to_img()` 方法会将可视化结果保存到指定的 `save_path` 中，如果指定为目录，则会将版面区域检测可视化图像、全局OCR可视化图像、版面阅读顺序可视化图像等内容保存，如果指定为文件，则直接保存到该文件中。(产线通常包含较多结果图片，不建议直接指定为具体的文件路径，否则多张图会被覆盖，仅保留最后一张图)
-- 调用`save_to_markdown()` 方法会将转化后的 Markdown 文件保存到指定的 `save_path` 中，保存的文件路径为`save_path/{your_img_basename}.md`，如果输入是 PDF 文件，建议直接指定目录，否责多个 markdown 文件会被覆盖。
-- 调用 `concatenate_markdown_pages()` 方法将 `PP-StructureV3 pipeline` 输出的多页Markdown内容`markdown_list`合并为单个完整文档，并返回合并后的Markdown内容。
-
+<ul>
+   <li>调用<code>print()</code> 方法会将结果打印到终端，打印到终端的内容解释如下：</li>
+      <ul>
+        <li><code>input_path</code>: <code>(str)</code>  待预测图像或者PDF的输入路径</li>
+        <li><code>page_index</code>: <code>(Union[int, None])</code> 如果输入是PDF文件，则表示当前是PDF的第几页，否则为  <code>None</code></li>
+        <li><code>model_settings</code>: <code>(Dict[str, bool])</code>  配置产线所需的模型参数</li>
+            <ul>
+                <li><code>use_doc_preprocessor</code>: <code>(bool)</code>  控制是否启用文档预处理子产线</li>
+                <li><code>use_seal_recognition</code>: <code>(bool)</code> 控制是否启用印章文本识别子产线</li>
+                <li><code>use_table_recognition</code>: <code>(bool)</code> 控制是否启用表格识别子产线</li>
+                <li><code>use_formula_recognition</code>: <code>(bool)</code> 控制是否启用公式识别子产线</li>
+            </ul>
+        </li>
+        <li><code>doc_preprocessor_res</code>: <code>(Dict[str, Union[List[float], str]])</code> 文档预处理结果dict，仅当<code>use_doc_preprocessor=True</code>时存在</li>
+            <ul>
+                <li><code>input_path</code>: <code>(str)</code>  文档预处理子产线接受的图像路径，当输入为 <code>numpy.ndarray</code> 时，保存为<code> None</code> ，此处为<code> None</code> </li>
+                <li><code>page_index</code>: <code>None</code> ，此处的输入为<code>numpy.ndarray</code> ，所以值为<code> None</code> </li>
+                <li><code>model_settings</code>: <code>(Dict[str, bool])</code>  文档预处理子产线的模型配置参数</li>
+                    <ul>
+                        <li><code>use_doc_orientation_classify</code>: <code>(bool)</code>  控制是否启用文档图像方向分类子模块</li>
+                        <li><code>use_doc_unwarping</code>: <code>(bool)</code>  控制是否启用文本图像扭曲矫正子模块</li>
+                    </ul>
+                <li><code>angle</code>: <code>(int)</code>  文档图像方向分类子模块的预测结果，启用时返回实际角度值</li>
+            </ul>
+        <li><code>parsing_res_list</code>: <code>(List[Dict])</code> 解析结果的列表，每个元素为一个字典，列表顺序为解析后的阅读顺序。</li>
+            <ul>
+                <li><code>block_bbox</code>: <code>(np.ndarray)</code> 版面区域的边界框。</li>
+                <li><code>block_label</code>: <code>(str)</code> 版面区域的标签，例如<code>text</code>, <code>table</code>等。</li>
+                <li><code>block_content</code>: <code>(str)</code> 内容为版面区域内的内容。</li>
+                <li><code>block_id</code>: <code>(int)</code> 版面区域的索引，用于显示版面排序结果。</li>
+                <li><code>block_order</code> <code>(int)</code> 版面区域的顺序，用于显示版面阅读顺序,对于非排序部分，默认值为 <code> None</code> 。</li>
+            </ul>
+            <li><code>overall_ocr_res</code>: <code>(Dict[str, Union[List[str], List[float], numpy.ndarray]])</code> 全局 OCR 结果的dict</li>
+                <ul>
+                    <li><code>input_path</code>: <code>(Union[str, None])</code> 图像OCR子产线接受的图像路径，当输入为<code>numpy.ndarray</code>时，保存为<code> None</code> </li>
+                    <li><code>page_index</code>: <code> None</code> ，此处的输入为<code>numpy.ndarray</code>，所以值为<code> None</code> </li>
+                    <li><code>model_settings</code>: <code>(Dict)</code> OCR子产线的模型配置参数</li>
+                    <li><code>dt_polys</code>: <code>(List[numpy.ndarray])</code> 文本检测的多边形框列表。每个检测框由4个顶点坐标构成的numpy数组表示，数组shape为(4, 2)，数据类型为int16</li>
+                    <li><code>dt_scores</code>: <code>(List[float])</code> 文本检测框的置信度列表</li>
+                    <li><code>text_det_params</code>: <code>(Dict[str, Dict[str, int, float]])</code> 文本检测模块的配置参数</li>
+                        <ul>
+                            <li><code>limit_side_len</code>: <code>(int)</code> 图像预处理时的边长限制值</li>
+                            <li><code>limit_type</code>: <code>(str)</code> 边长限制的处理方式</li>
+                            <li><code>thresh</code>: <code>(float)</code> 文本像素分类的置信度阈值</li>
+                            <li><code>box_thresh</code>: <code>(float)</code> 文本检测框的置信度阈值</li>
+                            <li><code>unclip_ratio</code>: <code>(float)</code> 文本检测框的膨胀系数</li>
+                            <li><code>text_type</code>: <code>(str)</code> 文本检测的类型，当前固定为"general"</li>
+                        </ul>
+                    <li><code>text_type</code>: <code>(str)</code> 文本检测的类型，当前固定为"general"</li>
+                    <li><code>textline_orientation_angles</code>: <code>(List[int])</code> 文本行方向分类的预测结果。启用时返回实际角度值（如[0,0,1]</li>
+                    <li><code>text_rec_score_thresh</code>: <code>(float)</code> 文本识别结果的过滤阈值</li>
+                    <li><code>rec_texts</code>: <code>(List[str])</code> 文本识别结果列表，仅包含置信度超过<code>text_rec_score_thresh</code>的文本</li>
+                    <li><code>rec_scores</code>: <code>(List[float])</code> 文本识别的置信度列表，已按<code>text_rec_score_thresh</code>过滤</li>
+                    <li><code>rec_polys</code>: <code>(List[numpy.ndarray])</code> 经过置信度过滤的文本检测框列表，格式同<code>dt_polys</code></li>
+                </ul>
+            <li><code>formula_res_list</code>: <code>(List[Dict[str, Union[numpy.ndarray, List[float], str]]])</code> 公式识别结果列表，每个元素为一个dict</li>
+                <ul>
+                    <li><code>rec_formula</code>: <code>(str)</code> 公式识别结果</li>
+                    <li><code>rec_polys</code>: <code>(numpy.ndarray)</code> 公式检测框，shape为(4, 2)，dtype为int16</li>
+                    <li><code>formula_region_id</code>: <code>(int)</code> 公式所在的区域编号</li>
+                </ul>
+            <li><code>seal_res_list</code>: <code>(List[Dict[str, Union[numpy.ndarray, List[float], str]]])</code> 印章文本识别结果列表，每个元素为一个dict</li>
+                <ul>
+                    <li><code>input_path</code>: <code>(str)</code> 印章图像的输入路径</li>
+                    <li><code>page_index</code>: <code> None</code> ，此处的输入为<code>numpy.ndarray</code>，所以值为<code> None</code> </li>
+                    <li><code>model_settings</code>: <code>(Dict)</code> 印章文本识别子产线的模型配置参数</li>
+                    <li><code>dt_polys</code>: <code>(List[numpy.ndarray])</code> 印章检测框列表，格式同<code>dt_polys</code></li>
+                    <li><code>text_det_params</code>: <code>(Dict[str, Dict[str, int, float]])</code> 印章检测模块的配置参数, 具体参数含义同上</li>
+                    <li><code>text_type</code>: <code>(str)</code> 印章检测的类型，当前固定为"seal"</li>
+                    <li><code>text_rec_score_thresh</code>: <code>(float)</code> 印章文本识别结果的过滤阈值</li>
+                    <li><code>rec_texts</code>: <code>(List[str])</code> 印章文本识别结果列表，仅包含置信度超过<code>text_rec_score_thresh</code>的文本</li>
+                    <li><code>rec_scores</code>: <code>(List[float])</code> 印章文本识别的置信度列表，已按<code>dt_polys</code>过滤</li>
+                    <li><code>rec_polys</code>: <code>(List[numpy.ndarray])</code> 经过置信度过滤的印章检测框列表，格式同<code>dt_polys</code></li>
+                    <li><code>rec_boxes</code>: <code>(numpy.ndarray)</code> 检测框的矩形边界框数组，shape为(n, 4)，dtype为int16。每一行表示一个矩形</li>
+                </ul>
+            <li><code>table_res_list</code>: <code>(List[Dict[str, Union[numpy.ndarray, List[float], str]]])</code> 表格识别结果列表，每个元素为一个dict</li>
+                <ul>
+                    <li><code>cell_box_list</code>: <code>(List[numpy.ndarray])</code> 表格单元格的边界框列表</li>
+                    <li><code>pred_html</code>: <code>(str)</code> 表格的HTML格式字符串</li>
+                    <li><code>table_ocr_pred</code>: <code>(dict)</code> 表格的OCR识别结果</li>
+                    <ul>
+                        <li><code>rec_polys</code>: <code>(List[numpy.ndarray])</code> 单元格的检测框列表</li>
+                        <li><code>rec_texts</code>: <code>(List[str])</code> 单元格的识别结果</li>
+                        <li><code>rec_scores</code>: <code>(List[float])</code>单元格的识别置信度</li>
+                        <li><code>rec_boxes</code>: <code>(numpy.ndarray)</code> 检测框的矩形边界框数组，shape为(n, 4)，dtype为int16。每一行表示一个矩形</li>
+                    </ul>
+                </ul>
+            </ul>
+    </li>
+    <li>调用<code>save_to_json()</code> 方法会将上述内容保存到指定的 <code>save_path</code> 中，如果指定为目录，则保存的路径为<code>save_path/{your_img_basename}_res.json</code>，如果指定为文件，则直接保存到该文件中。由于 json 文件不支持保存numpy数组，因此会将其中的 <code>numpy.array</code> 类型转换为列表形式。</li>
+    <li>调用<code>save_to_img()</code> 方法会将可视化结果保存到指定的 <code>save_path</code> 中，如果指定为目录，则会将版面区域检测可视化图像、全局OCR可视化图像、版面阅读顺序可视化图像等内容保存，如果指定为文件，则直接保存到该文件中。(产线通常包含较多结果图片，不建议直接指定为具体的文件路径，否则多张图会被覆盖，仅保留最后一张图)</li>
+    <li>调用<code>save_to_markdown()</code> 方法会将转化后的 Markdown 文件保存到指定的 <code>save_path</code> 中，保存的文件路径为<code>save_path/{your_img_basename}.md</code>，如果输入是 PDF 文件，建议直接指定目录，否责多个 markdown 文件会被覆盖。
+    调用 <code>concatenate_markdown_pages()</code> 方法将 <code>PP-StructureV3 pipeline</code> 输出的多页Markdown内容<code>markdown_list</code>合并为单个完整文档，并返回合并后的Markdown内容。</li>
+</ul>
 此外，也支持通过属性获取带结果的可视化图像和预测结果，具体如下：
 <table>
 <thead>
@@ -2607,11 +2618,11 @@ MKL-DNN 缓存容量。
 </tr>
 </tbody>
 </table>
-
-- `json` 属性获取的预测结果为dict类型的数据，相关内容与调用 `save_to_json()` 方法保存的内容一致。
-- `img` 属性返回的预测结果是一个dict类型的数据。其中，键分别为 `layout_det_res`、`overall_ocr_res`、`text_paragraphs_ocr_res`、`formula_res_region1`、`table_cell_img` 和 `seal_res_region1`，对应的值是 `Image.Image` 对象：分别用于显示版面区域检测、OCR、OCR文本段落、公式、表格和印章结果的可视化图像。如果没有使用可选模块，则dict中只包含 `layout_det_res`。
-- `markdown` 属性返回的预测结果是一个dict类型的数据。其中，键分别为 `markdown_texts` 、 `markdown_images`和`page_continuation_flags`，对应的值分别是 markdown 文本，在 Markdown 中显示的图像（`Image.Image` 对象）和用于标识当前页面第一个元素是否为段开始以及最后一个元素是否为段结束的bool元组。
-
+<ul>
+    <li><code>json</code> 属性获取的预测结果为dict类型的数据，相关内容与调用 <code>save_to_json()</code> 方法保存的内容一致。</li>
+    <li><code>img</code> 属性返回的预测结果是一个dict类型的数据。其中，键分别为 <code>layout_det_res</code>、<code>overall_ocr_res</code>、<code>text_paragraphs_ocr_res</code>、<code>formula_res_region1</code>、<code>table_cell_img</code> 和 <code>seal_res_region1</code>，对应的值是 <code>Image.Image</code> 对象：分别用于显示版面区域检测、OCR、OCR文本段落、公式、表格和印章结果的可视化图像。如果没有使用可选模块，则dict中只包含 <code>layout_det_res</code>。</li>
+    <li><code>markdown</code> 属性返回的预测结果是一个dict类型的数据。其中，键分别为 <code>markdown_texts</code> 、 <code>markdown_images</code>和<code>page_continuation_flags</code>，对应的值分别是 markdown 文本，在 Markdown 中显示的图像（<code>Image.Image</code> 对象）和用于标识当前页面第一个元素是否为段开始以及最后一个元素是否为段结束的bool元组。</li>
+</ul>
 </details>
 
 
@@ -2769,8 +2780,20 @@ MKL-DNN 缓存容量。
 <td>否</td>
 </tr>
 <tr>
+<td><code>useChartRecognition</code></td>
+<td><code>boolean</code> | <code>null</code></td>
+<td>请参阅产线对象中 <code>predict</code> 方法的 <code>use_chart_recognition</code> 参数相关说明。</td>
+<td>否</td>
+</tr>
+<tr>
+<td><code>useRegionDetection</code></td>
+<td><code>boolean</code> | <code>null</code></td>
+<td>请参阅产线对象中 <code>predict</code> 方法的 <code>use_region_detection</code> 参数相关说明。</td>
+<td>否</td>
+</tr>
+<tr>
 <td><code>layoutThreshold</code></td>
-<td><code>number</code> | <code>null</code></td>
+<td><code>number</code> | <code>object</code> | </code><code>null</code></td>
 <td>请参阅产线对象中 <code>predict</code> 方法的 <code>layout_threshold</code> 参数相关说明。</td>
 <td>否</td>
 </tr>
@@ -2865,9 +2888,27 @@ MKL-DNN 缓存容量。
 <td>否</td>
 </tr>
 <tr>
-<td><code>useTableCellsOcrResults</code></td>
+<td><code>useWiredTableCellsTransToHtml</code></td>
 <td><code>boolean</code></td>
-<td>请参阅产线对象中 <code>predict</code> 方法的 <code>use_table_cells_ocr_results</code> 参数相关说明。</td>
+<td>请参阅产线对象中 <code>predict</code> 方法的 <code>use_wired_table_cells_trans_to_html</code> 参数相关说明。</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>useWirelessTableCellsTransToHtml</code></td>
+<td><code>boolean</code></td>
+<td>请参阅产线对象中 <code>predict</code> 方法的 <code>use_wireless_table_cells_trans_to_html</code> 参数相关说明。</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>useTableOrientationClassify</code></td>
+<td><code>boolean</code></td>
+<td>请参阅产线对象中 <code>predict</code> 方法的 <code>use_table_orientation_classify</code> 参数相关说明。</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>useOcrResultsWithTableCells</code></td>
+<td><code>boolean</code></td>
+<td>请参阅产线对象中 <code>predict</code> 方法的 <code>use_ocr_results_with_table_cells</code> 参数相关说明。</td>
 <td>否</td>
 </tr>
 <tr>
@@ -3582,7 +3623,7 @@ SubPipelines:
 ......
 ```
 
-在产线配置文件中，不仅包含 PaddleOCR CLI 和 Python API 支持的参数，还可进行更多高级配置，具体信息可在 [PaddleX模型产线使用概览](https://paddlepaddle.github.io/PaddleX/3.0/pipeline_usage/pipeline_develop_guide.html) 中找到对应的产线使用教程，参考其中的详细说明，根据需求调整各项配置。
+在产线配置文件中，不仅包含 PaddleOCR CLI 和 Python API 支持的参数，还可进行更多高级配置，具体信息可在 [PaddleX模型产线使用概览](https://paddlepaddle.github.io/PaddleX/latest/pipeline_usage/pipeline_develop_guide.html) 中找到对应的产线使用教程，参考其中的详细说明，根据需求调整各项配置。
 
 3. 在 CLI 中加载产线配置文件
 
@@ -3601,3 +3642,139 @@ from paddleocr import PPStructureV3
 
 pipeline = PPStructureV3(paddlex_config="PP-StructureV3.yaml")
 ```
+
+## 5. 附录
+
+<details><summary><b>支持语言</b></summary>
+
+<table border="1" cellspacing="0" cellpadding="4">
+  <thead>
+    <tr>
+      <th><code>lang</code></th>
+      <th>语言名称</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>abq</code></td><td>阿布哈兹文</td></tr>
+    <tr><td><code>af</code></td><td>南非荷兰文</td></tr>
+    <tr><td><code>ang</code></td><td>古英文</td></tr>
+    <tr><td><code>ar</code></td><td>阿拉伯文</td></tr>
+    <tr><td><code>ava</code></td><td>阿瓦尔文</td></tr>
+    <tr><td><code>az</code></td><td>阿塞拜疆文</td></tr>
+    <tr><td><code>be</code></td><td>白俄罗斯文</td></tr>
+    <tr><td><code>bg</code></td><td>保加利亚文</td></tr>
+    <tr><td><code>bgc</code></td><td>哈里亚纳文</td></tr>
+    <tr><td><code>bh</code></td><td>比哈尔文</td></tr>
+    <tr><td><code>bho</code></td><td>博杰普尔文</td></tr>
+    <tr><td><code>bs</code></td><td>波斯尼亚文</td></tr>
+    <tr><td><code>ch</code></td><td>简体中文</td></tr>
+    <tr><td><code>che</code></td><td>车臣文</td></tr>
+    <tr><td><code>chinese_cht</code></td><td>繁体中文</td></tr>
+    <tr><td><code>cs</code></td><td>捷克文</td></tr>
+    <tr><td><code>cy</code></td><td>威尔士文</td></tr>
+    <tr><td><code>da</code></td><td>丹麦文</td></tr>
+    <tr><td><code>dar</code></td><td>达尔格瓦文</td></tr>
+    <tr><td><code>de</code> or <code>german</code></td><td>德文</td></tr>
+    <tr><td><code>en</code></td><td>英文</td></tr>
+    <tr><td><code>es</code></td><td>西班牙文</td></tr>
+    <tr><td><code>et</code></td><td>爱沙尼亚文</td></tr>
+    <tr><td><code>fa</code></td><td>波斯文</td></tr>
+    <tr><td><code>fr</code> or <code>french</code></td><td>法文</td></tr>
+    <tr><td><code>ga</code></td><td>爱尔兰文</td></tr>
+    <tr><td><code>gom</code></td><td>孔卡尼文</td></tr>
+    <tr><td><code>hi</code></td><td>印地文</td></tr>
+    <tr><td><code>hr</code></td><td>克罗地亚文</td></tr>
+    <tr><td><code>hu</code></td><td>匈牙利文</td></tr>
+    <tr><td><code>id</code></td><td>印尼文</td></tr>
+    <tr><td><code>inh</code></td><td>印古什文</td></tr>
+    <tr><td><code>is</code></td><td>冰岛文</td></tr>
+    <tr><td><code>it</code></td><td>意大利文</td></tr>
+    <tr><td><code>japan</code></td><td>日文</td></tr>
+    <tr><td><code>ka</code></td><td>格鲁吉亚文</td></tr>
+    <tr><td><code>kbd</code></td><td>卡巴尔达文</td></tr>
+    <tr><td><code>korean</code></td><td>韩文</td></tr>
+    <tr><td><code>ku</code></td><td>库尔德文</td></tr>
+    <tr><td><code>la</code></td><td>拉丁文</td></tr>
+    <tr><td><code>lbe</code></td><td>拉克文</td></tr>
+    <tr><td><code>lez</code></td><td>列兹金文</td></tr>
+    <tr><td><code>lt</code></td><td>立陶宛文</td></tr>
+    <tr><td><code>lv</code></td><td>拉脱维亚文</td></tr>
+    <tr><td><code>mah</code></td><td>马加希文</td></tr>
+    <tr><td><code>mai</code></td><td>迈蒂利文</td></tr>
+    <tr><td><code>mi</code></td><td>毛利文</td></tr>
+    <tr><td><code>mn</code></td><td>蒙古文</td></tr>
+    <tr><td><code>mr</code></td><td>马拉地文</td></tr>
+    <tr><td><code>ms</code></td><td>马来文</td></tr>
+    <tr><td><code>mt</code></td><td>马耳他文</td></tr>
+    <tr><td><code>ne</code></td><td>尼泊尔文</td></tr>
+    <tr><td><code>new</code></td><td>尼瓦尔文</td></tr>
+    <tr><td><code>nl</code></td><td>荷兰文</td></tr>
+    <tr><td><code>no</code></td><td>挪威文</td></tr>
+    <tr><td><code>oc</code></td><td>奥克文</td></tr>
+    <tr><td><code>pi</code></td><td>巴利文</td></tr>
+    <tr><td><code>pl</code></td><td>波兰文</td></tr>
+    <tr><td><code>pt</code></td><td>葡萄牙文</td></tr>
+    <tr><td><code>ro</code></td><td>罗马尼亚文</td></tr>
+    <tr><td><code>rs_cyrillic</code></td><td>塞尔维亚语西里尔字母</td></tr>
+    <tr><td><code>rs_latin</code></td><td>塞尔维亚语拉丁字母</td></tr>
+    <tr><td><code>ru</code></td><td>俄文</td></tr>
+    <tr><td><code>sa</code></td><td>梵文</td></tr>
+    <tr><td><code>sck</code></td><td>萨达里文</td></tr>
+    <tr><td><code>sk</code></td><td>斯洛伐克文</td></tr>
+    <tr><td><code>sl</code></td><td>斯洛文尼亚文</td></tr>
+    <tr><td><code>sq</code></td><td>阿尔巴尼亚文</td></tr>
+    <tr><td><code>sv</code></td><td>瑞典文</td></tr>
+    <tr><td><code>sw</code></td><td>斯瓦希里文</td></tr>
+    <tr><td><code>tab</code></td><td>塔巴萨兰文</td></tr>
+    <tr><td><code>ta</code></td><td>泰米尔文</td></tr>
+    <tr><td><code>te</code></td><td>泰卢固文</td></tr>
+    <tr><td><code>tl</code></td><td>塔加洛文</td></tr>
+    <tr><td><code>tr</code></td><td>土耳其文</td></tr>
+    <tr><td><code>ug</code></td><td>维吾尔文</td></tr>
+    <tr><td><code>uk</code></td><td>乌克兰文</td></tr>
+    <tr><td><code>ur</code></td><td>乌尔都文</td></tr>
+    <tr><td><code>uz</code></td><td>乌兹别克文</td></tr>
+    <tr><td><code>vi</code></td><td>越南文</td></tr>
+  </tbody>
+</table>
+
+</details>
+
+<details><summary><b>OCR模型版本与支持语言的对应关系</b></summary>
+
+<table border="1" cellspacing="0" cellpadding="4">
+  <thead>
+    <tr>
+      <th><code>ocr_version</code></th>
+      <th>Supported <code>lang</code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>PP-OCRv5</code></td>
+      <td><code>ch</code>, <code>en</code>, <code>fr</code>, <code>de</code>, <code>japan</code>, <code>korean</code>, <code>chinese_cht</code>, <code>af</code>, <code>it</code>, <code>es</code>, <code>bs</code>, <code>pt</code>, <code>cs</code>, <code>cy</code>, <code>da</code>, <code>et</code>, <code>ga</code>, <code>hr</code>, <code>hu</code>, <code>rslatin</code>, <code>id</code>, <code>oc</code>, <code>is</code>, <code>lt</code>, <code>mi</code>, <code>ms</code>, <code>nl</code>, <code>no</code>, <code>pl</code>, <code>sk</code>, <code>sl</code>, <code>sq</code>, <code>sv</code>, <code>sw</code>, <code>tl</code>, <code>tr</code>, <code>uz</code>, <code>la</code>, <code>ru</code>, <code>be</code>, <code>uk</code></td>
+    </tr>
+    <tr>
+      <td><code>PP-OCRv4</code></td>
+      <td><code>ch</code>, <code>en</code></td>
+    </tr>
+    <tr>
+      <td><code>PP-OCRv3</code></td>
+      <td>
+        <code>abq</code>, <code>af</code>, <code>ady</code>, <code>ang</code>, <code>ar</code>, <code>ava</code>, <code>az</code>, <code>be</code>,
+        <code>bg</code>, <code>bgc</code>, <code>bh</code>, <code>bho</code>, <code>bs</code>, <code>ch</code>, <code>che</code>,
+        <code>chinese_cht</code>, <code>cs</code>, <code>cy</code>, <code>da</code>, <code>dar</code>, <code>de</code>, <code>german</code>,
+        <code>en</code>, <code>es</code>, <code>et</code>, <code>fa</code>, <code>fr</code>, <code>french</code>, <code>ga</code>, <code>gom</code>,
+        <code>hi</code>, <code>hr</code>, <code>hu</code>, <code>id</code>, <code>inh</code>, <code>is</code>, <code>it</code>, <code>japan</code>,
+        <code>ka</code>, <code>kbd</code>, <code>korean</code>, <code>ku</code>, <code>la</code>, <code>lbe</code>, <code>lez</code>, <code>lt</code>,
+        <code>lv</code>, <code>mah</code>, <code>mai</code>, <code>mi</code>, <code>mn</code>, <code>mr</code>, <code>ms</code>, <code>mt</code>,
+        <code>ne</code>, <code>new</code>, <code>nl</code>, <code>no</code>, <code>oc</code>, <code>pi</code>, <code>pl</code>, <code>pt</code>,
+        <code>ro</code>, <code>rs_cyrillic</code>, <code>rs_latin</code>, <code>ru</code>, <code>sa</code>, <code>sck</code>, <code>sk</code>,
+        <code>sl</code>, <code>sq</code>, <code>sv</code>, <code>sw</code>, <code>ta</code>, <code>tab</code>, <code>te</code>, <code>tl</code>,
+        <code>tr</code>, <code>ug</code>, <code>uk</code>, <code>ur</code>, <code>uz</code>, <code>vi</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+</details>

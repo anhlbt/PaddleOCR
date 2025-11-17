@@ -31,8 +31,8 @@ from typing import Any, Callable, Dict, List, NoReturn, Optional, Type, Union
 from urllib.parse import urlparse
 
 import httpx
-import magic
 import numpy as np
+import puremagic
 from fastmcp import Context, FastMCP
 from mcp.types import ImageContent, TextContent
 from PIL import Image as PILImage
@@ -70,7 +70,7 @@ def _is_url(s: str) -> bool:
 
 
 def _infer_file_type_from_bytes(data: bytes) -> Optional[str]:
-    mime = magic.from_buffer(data, mime=True)
+    mime = puremagic.from_string(data, mime=True)
     if mime.startswith("image/"):
         return "image"
     elif mime == "application/pdf":
@@ -411,7 +411,7 @@ class SimpleInferencePipelineHandler(PipelineHandler):
                 image_arr = np.array(image_pil.convert("RGB"))
                 return np.ascontiguousarray(image_arr[..., ::-1])
             except Exception as e:
-                raise ValueError(f"Failed to decode Base64 image: {e}")
+                raise ValueError(f"Failed to decode Base64 image: {str(e)}") from e
         elif _is_file_path(input_data) or _is_url(input_data):
             return input_data
         else:
@@ -439,11 +439,11 @@ class SimpleInferencePipelineHandler(PipelineHandler):
                 if file_type_str is None:
                     raise ValueError(
                         "Unsupported file type in Base64 data. "
-                        "Only image files (JPEG, PNG, etc.) and PDF documents are supported."
+                        "Only images (JPEG, PNG, etc.) and PDF documents are supported."
                     )
                 return input_data, file_type_str
             except Exception as e:
-                raise ValueError(f"Failed to decode Base64 data: {e}")
+                raise ValueError(f"Failed to decode Base64 data: {str(e)}") from e
         elif _is_file_path(input_data):
             try:
                 with open(input_data, "rb") as f:
@@ -453,11 +453,11 @@ class SimpleInferencePipelineHandler(PipelineHandler):
                 if file_type_str is None:
                     raise ValueError(
                         f"Unsupported file type for '{input_data}'. "
-                        "Only image files (JPEG, PNG, etc.) and PDF documents are supported."
+                        "Only images (JPEG, PNG, etc.) and PDF documents are supported."
                     )
                 return input_data, file_type_str
             except Exception as e:
-                raise ValueError(f"Failed to read file: {e}")
+                raise ValueError(f"Failed to read file: {str(e)}") from e
         else:
             raise ValueError("Invalid input data format")
 
@@ -561,24 +561,24 @@ class OCRHandler(SimpleInferencePipelineHandler):
         }
 
     async def _parse_local_result(self, local_result: Dict, ctx: Context) -> Dict:
-        result = local_result[0]
-        texts = result["rec_texts"]
-        scores = result["rec_scores"]
-        boxes = result["rec_boxes"]
-
         clean_texts, confidences, text_lines = [], [], []
 
-        for i, text in enumerate(texts):
-            if text and text.strip():
-                conf = scores[i] if i < len(scores) else 0
-                clean_texts.append(text.strip())
-                confidences.append(conf)
-                instance = {
-                    "text": text.strip(),
-                    "confidence": round(conf, 3),
-                    "bbox": boxes[i].tolist(),
-                }
-                text_lines.append(instance)
+        for result in local_result:
+            texts = result["rec_texts"]
+            scores = result["rec_scores"]
+            boxes = result["rec_boxes"]
+
+            for i, text in enumerate(texts):
+                if text and text.strip():
+                    conf = scores[i] if i < len(scores) else 0
+                    clean_texts.append(text.strip())
+                    confidences.append(conf)
+                    instance = {
+                        "text": text.strip(),
+                        "confidence": round(conf, 3),
+                        "bbox": boxes[i].tolist(),
+                    }
+                    text_lines.append(instance)
 
         return {
             "text": "\n".join(clean_texts),
@@ -776,7 +776,9 @@ class PPStructureV3Handler(SimpleInferencePipelineHandler):
                     img_bytes = response.content
                     return base64.b64encode(img_bytes).decode("ascii")
             except Exception as e:
-                await ctx.error(f"Failed to download image from URL {img_data}: {e}")
+                await ctx.error(
+                    f"Failed to download image from URL {img_data}: {str(e)}"
+                )
                 return img_data
         elif _is_base64(img_data):
             return img_data

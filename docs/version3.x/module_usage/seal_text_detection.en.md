@@ -9,6 +9,7 @@ The seal text detection module typically outputs multi-point bounding boxes arou
 
 ## II. Supported Model List
 
+> The inference time only includes the model inference time and does not include the time for pre- or post-processing.
 
 <table>
 <thead>
@@ -184,7 +185,7 @@ By default, GPU 0 is used if available; otherwise, CPU is used.
 <td><code>use_tensorrt</code></td>
 <td>Whether to use the Paddle Inference TensorRT subgraph engine. If the model does not support acceleration through TensorRT, setting this flag will not enable acceleration.<br/>
 For Paddle with CUDA version 11.8, the compatible TensorRT version is 8.x (x>=6), and it is recommended to install TensorRT 8.6.1.6.<br/>
-For Paddle with CUDA version 12.6, the compatible TensorRT version is 10.x (x>=5), and it is recommended to install TensorRT 10.5.0.18.
+
 </td>
 <td><code>bool</code></td>
 <td><code>False</code></td>
@@ -431,11 +432,15 @@ The training commands are as follows:
 ```bash
 # Single GPU training (default training method)
 python3 tools/train.py -c configs/det/PP-OCRv4/PP-OCRv4_server_seal_det.yml \
-   -o Global.pretrained_model=./PP-OCRv4_server_seal_det_pretrained.pdparams
+   -o Global.pretrained_model=./PP-OCRv4_server_seal_det_pretrained.pdparams \
+   Train.dataset.data_dir=./dataset/ocr_curve_det_dataset_examples Train.dataset.label_file_list=./dataset/ocr_curve_det_dataset_examples/train.txt \
+   Eval.dataset.data_dir=./dataset/ocr_curve_det_dataset_examples Eval.dataset.label_file_list=./dataset/ocr_curve_det_dataset_examples/val.txt
    
 # Multi-GPU training, specify GPU ids using the --gpus parameter
-python3 -m paddle.distributed.launch --gpus '0,1,2,3' tools/train.py -c configs/det/PP-OCRv4/PP-OCRv4_server_seal_det.yml \
-        -o Global.pretrained_model=./PP-OCRv4_server_seal_det_pretrained.pdparams
+python3 -m paddle.distributed.launch --gpus '0,1,2,3'  tools/train.py -c configs/det/PP-OCRv4/PP-OCRv4_server_seal_det.yml \
+   -o Global.pretrained_model=./PP-OCRv4_server_seal_det_pretrained.pdparams \
+   Train.dataset.data_dir=./dataset/ocr_curve_det_dataset_examples Train.dataset.label_file_list=./dataset/ocr_curve_det_dataset_examples/train.txt \
+   Eval.dataset.data_dir=./dataset/ocr_curve_det_dataset_examples Eval.dataset.label_file_list=./dataset/ocr_curve_det_dataset_examples/val.txt
 ```
 
 ### 4.3 Model Evaluation
@@ -446,15 +451,15 @@ You can evaluate the trained weights, such as `output/xxx/xxx.pdparams`, using t
 # Make sure to set the pretrained_model path to the local path. If using a model that was trained and saved by yourself, be sure to modify the path and filename to {path/to/weights}/{model_name}.
 # Demo test set evaluation
 python3 tools/eval.py -c configs/det/PP-OCRv4/PP-OCRv4_server_seal_det.yml -o \
-Global.pretrained_model=output/xxx/xxx.pdparams
+    Global.pretrained_model=output/xxx/xxx.pdparams
 ```
 
 ### 4.4 Model Export
 
 ```bash
 python3 tools/export_model.py -c configs/det/PP-OCRv4/PP-OCRv4_server_seal_det.yml -o \
-Global.pretrained_model=output/xxx/xxx.pdparams \
-save_inference_dir="./PP-OCRv4_server_seal_det_infer/"
+    Global.pretrained_model=output/xxx/xxx.pdparams \
+    Global.save_inference_dir="./PP-OCRv4_server_seal_det_infer/"
 ```
 
 After exporting the model, the static graph model will be stored in the `./PP-OCRv4_server_seal_det_infer/` directory. In this directory, you will see the following files:

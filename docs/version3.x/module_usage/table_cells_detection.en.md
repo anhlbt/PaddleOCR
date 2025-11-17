@@ -12,6 +12,8 @@ The Table Cell Detection Module is a key component of the table recognition task
 
 ## II. Supported Model List
 
+> The inference time only includes the model inference time and does not include the time for pre- or post-processing.
+
 <table>
 <tr>
 <th>Model</th><th>Model Download Link</th>
@@ -172,7 +174,7 @@ By default, GPU 0 is used if available; otherwise, CPU is used.</td>
 <td><code>use_tensorrt</code></td>
 <td>Whether to use the Paddle Inference TensorRT subgraph engine. If the model does not support acceleration through TensorRT, setting this flag will not enable acceleration.<br/>
 For Paddle with CUDA version 11.8, the compatible TensorRT version is 8.x (x>=6), and it is recommended to install TensorRT 8.6.1.6.<br/>
-For Paddle with CUDA version 12.6, the compatible TensorRT version is 10.x (x>=5), and it is recommended to install TensorRT 10.5.0.18.</td>
+</td>
 <td><code>bool</code></td>
 <td><code>False</code></td>
 </tr>

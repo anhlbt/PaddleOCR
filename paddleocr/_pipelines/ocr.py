@@ -77,6 +77,7 @@ class PaddleOCR(PaddleXPipelineWrapper):
         text_det_unclip_ratio=None,
         text_det_input_shape=None,
         text_rec_score_thresh=None,
+        return_word_box=None,
         text_rec_input_shape=None,
         lang=None,
         ocr_version=None,
@@ -138,6 +139,7 @@ class PaddleOCR(PaddleXPipelineWrapper):
             "text_det_unclip_ratio": text_det_unclip_ratio,
             "text_det_input_shape": text_det_input_shape,
             "text_rec_score_thresh": text_rec_score_thresh,
+            "return_word_box": return_word_box,
             "text_rec_input_shape": text_rec_input_shape,
         }
         base_params = {}
@@ -177,6 +179,7 @@ class PaddleOCR(PaddleXPipelineWrapper):
         text_det_box_thresh=None,
         text_det_unclip_ratio=None,
         text_rec_score_thresh=None,
+        return_word_box=None,
     ):
         return self.paddlex_pipeline.predict(
             input,
@@ -189,6 +192,7 @@ class PaddleOCR(PaddleXPipelineWrapper):
             text_det_box_thresh=text_det_box_thresh,
             text_det_unclip_ratio=text_det_unclip_ratio,
             text_rec_score_thresh=text_rec_score_thresh,
+            return_word_box=return_word_box,
         )
 
     def predict(
@@ -204,6 +208,7 @@ class PaddleOCR(PaddleXPipelineWrapper):
         text_det_box_thresh=None,
         text_det_unclip_ratio=None,
         text_rec_score_thresh=None,
+        return_word_box=None,
     ):
         return list(
             self.predict_iter(
@@ -217,6 +222,7 @@ class PaddleOCR(PaddleXPipelineWrapper):
                 text_det_box_thresh=text_det_box_thresh,
                 text_det_unclip_ratio=text_det_unclip_ratio,
                 text_rec_score_thresh=text_rec_score_thresh,
+                return_word_box=return_word_box,
             )
         )
 
@@ -272,6 +278,8 @@ class PaddleOCR(PaddleXPipelineWrapper):
             "SubPipelines.DocPreprocessor.use_doc_unwarping": self._params[
                 "use_doc_unwarping"
             ],
+            "use_doc_preprocessor": self._params["use_doc_orientation_classify"]
+            or self._params["use_doc_unwarping"],
             "use_textline_orientation": self._params["use_textline_orientation"],
             "SubModules.TextDetection.limit_side_len": self._params[
                 "text_det_limit_side_len"
@@ -287,6 +295,9 @@ class PaddleOCR(PaddleXPipelineWrapper):
             ],
             "SubModules.TextRecognition.score_thresh": self._params[
                 "text_rec_score_thresh"
+            ],
+            "SubModules.TextRecognition.return_word_box": self._params[
+                "return_word_box"
             ],
             "SubModules.TextRecognition.input_shape": self._params[
                 "text_rec_input_shape"
@@ -338,8 +349,15 @@ class PaddleOCR(PaddleXPipelineWrapper):
             "vi",
             "french",
             "german",
+            "fi",
+            "eu",
+            "gl",
+            "lb",
+            "rm",
+            "ca",
+            "qu",
         ]
-        ARABIC_LANGS = ["ar", "fa", "ug", "ur"]
+        ARABIC_LANGS = ["ar", "fa", "ug", "ur", "ps", "ku", "sd", "bal"]
         ESLAV_LANGS = ["ru", "be", "uk"]
         CYRILLIC_LANGS = [
             "ru",
@@ -358,6 +376,23 @@ class PaddleOCR(PaddleXPipelineWrapper):
             "lbe",
             "lez",
             "tab",
+            "kk",
+            "ky",
+            "tg",
+            "mk",
+            "tt",
+            "cv",
+            "ba",
+            "mhr",
+            "mo",
+            "udm",
+            "kv",
+            "os",
+            "bua",
+            "xal",
+            "tyv",
+            "sah",
+            "kaa",
         ]
         DEVANAGARI_LANGS = [
             "hi",
@@ -391,18 +426,25 @@ class PaddleOCR(PaddleXPipelineWrapper):
         if ppocr_version is None:
             if (
                 lang
-                in ["ch", "chinese_cht", "en", "japan", "korean"]
+                in [
+                    "ch",
+                    "chinese_cht",
+                    "en",
+                    "japan",
+                    "korean",
+                    "th",
+                    "el",
+                    "te",
+                    "ta",
+                ]
                 + LATIN_LANGS
                 + ESLAV_LANGS
-            ):
-                ppocr_version = "PP-OCRv5"
-            elif lang in (
-                LATIN_LANGS
                 + ARABIC_LANGS
                 + CYRILLIC_LANGS
                 + DEVANAGARI_LANGS
-                + SPECIFIC_LANGS
             ):
+                ppocr_version = "PP-OCRv5"
+            elif lang in (SPECIFIC_LANGS):
                 ppocr_version = "PP-OCRv3"
             else:
                 # Unknown language specified
@@ -410,14 +452,30 @@ class PaddleOCR(PaddleXPipelineWrapper):
 
         if ppocr_version == "PP-OCRv5":
             rec_lang, rec_model_name = None, None
-            if lang in ("ch", "chinese_cht", "en", "japan"):
+            if lang in ("ch", "chinese_cht", "japan"):
                 rec_model_name = "PP-OCRv5_server_rec"
+            elif lang == "en":
+                rec_model_name = "en_PP-OCRv5_mobile_rec"
             elif lang in LATIN_LANGS:
                 rec_lang = "latin"
             elif lang in ESLAV_LANGS:
                 rec_lang = "eslav"
+            elif lang in ARABIC_LANGS:
+                rec_lang = "arabic"
+            elif lang in CYRILLIC_LANGS:
+                rec_lang = "cyrillic"
+            elif lang in DEVANAGARI_LANGS:
+                rec_lang = "devanagari"
             elif lang == "korean":
                 rec_lang = "korean"
+            elif lang == "th":
+                rec_lang = "th"
+            elif lang == "el":
+                rec_lang = "el"
+            elif lang == "te":
+                rec_lang = "te"
+            elif lang == "ta":
+                rec_lang = "ta"
 
             if rec_lang is not None:
                 rec_model_name = f"{rec_lang}_PP-OCRv5_mobile_rec"
@@ -572,6 +630,11 @@ class PaddleOCRCLISubcommandExecutor(PipelineCLISubcommandExecutor):
             "--text_rec_score_thresh",
             type=float,
             help="Text recognition threshold. Text results with scores greater than this threshold are retained.",
+        )
+        subparser.add_argument(
+            "--return_word_box",
+            type=str2bool,
+            help="Whether to return the coordinates of the recognition result.",
         )
         subparser.add_argument(
             "--text_rec_input_shape",
