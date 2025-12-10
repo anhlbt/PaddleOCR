@@ -2,9 +2,17 @@
 comments: true
 ---
 
-# PaddleOCR-VL-RTX50 环境配置教程
+# PaddleOCR-VL NVIDIA Blackwell 架构 GPU 环境配置教程
 
-本教程是 NVIDIA RTX 50 系 GPU 的环境配置教程，目的是完成相关的环境配置，环境配置完毕后请参考 [PaddleOCR-VL 使用教程](./PaddleOCR-VL.md) 使用 PaddleOCR-VL。
+本教程是 NVIDIA Blackwell 架构 GPU 的环境配置教程，目的是完成相关的环境配置，环境配置完毕后请参考 [PaddleOCR-VL 使用教程](./PaddleOCR-VL.md) 使用 PaddleOCR-VL。
+
+NVIDIA Blackwell 架构 GPU 包括但不限于以下几种：
+
+- RTX 5090
+- RTX 5080
+- RTX 5070、RTX 5070 Ti
+- RTX 5060、RTX 5060 Ti
+- RTX 5050
 
 教程开始前，**请确认您的 NVIDIA 驱动支持 CUDA 12.9 或以上版本**。
 
@@ -12,13 +20,26 @@ comments: true
 
 此步骤主要介绍如何搭建 PaddleOCR-VL 的运行环境，有以下两种方式，任选一种即可：
 
-- 方法一：使用官方 Docker 镜像（暂不支持，正在适配中）。
+- 方法一：使用官方 Docker 镜像。
 
 - 方法二：手动安装 PaddlePaddle 和 PaddleOCR。
 
 ### 1.1 方法一：使用 Docker 镜像
 
-暂不支持，正在适配中。
+我们推荐使用官方 Docker 镜像（要求 Docker 版本 >= 19.03，机器装配有 GPU 且 NVIDIA 驱动支持 CUDA 12.9 或以上版本）：
+
+```shell
+docker run \
+    -it \
+    --gpus all \
+    --network host \
+    --user root \
+    ccr-2vdh3abv-pub.cnc.bj.baidubce.com/paddlepaddle/paddleocr-vl:latest-gpu-sm120 \
+    /bin/bash
+# 在容器中调用 PaddleOCR CLI 或 Python API
+```
+
+如果您希望在无法连接互联网的环境中使用 PaddleOCR-VL，请将上述命令中的 `ccr-2vdh3abv-pub.cnc.bj.baidubce.com/paddlepaddle/paddleocr-vl:latest-gpu-sm120`（镜像大小约为 10 GB）更换为离线版本镜像 `ccr-2vdh3abv-pub.cnc.bj.baidubce.com/paddlepaddle/paddleocr-vl:latest-gpu-sm120-offline`（镜像大小约为 12 GB）。
 
 ### 1.2 方法二：手动安装 PaddlePaddle 和 PaddleOCR
 
@@ -36,11 +57,12 @@ source .venv_paddleocr/bin/activate
 执行如下命令完成安装：
 
 ```shell
+# 注意这里安装的是 cu129 的 PaddlePaddle
 python -m pip install paddlepaddle-gpu==3.2.1 -i https://www.paddlepaddle.org.cn/packages/stable/cu129/
 python -m pip install -U "paddleocr[doc-parser]"
 # 对于 Linux 系统，执行：
 python -m pip install https://paddle-whl.bj.bcebos.com/nightly/cu126/safetensors/safetensors-0.6.2.dev0-cp38-abi3-linux_x86_64.whl
-# 对于Windows 系统，执行：
+# 对于 Windows 系统，执行：
 python -m pip install https://xly-devops.cdn.bcebos.com/safetensors-nightly/safetensors-0.6.2.dev0-cp38-abi3-win_amd64.whl
 ```
 
@@ -58,13 +80,27 @@ python -m pip install https://xly-devops.cdn.bcebos.com/safetensors-nightly/safe
 
 启动 VLM 推理服务有以下两种方式，任选一种即可：
 
-- 方法一：使用官方 Docker 镜像启动服务（暂不支持，正在适配中）。
+- 方法一：使用官方 Docker 镜像启动服务。
 
 - 方法二：通过 PaddleOCR CLI 手动安装依赖后启动服务。
 
 #### 3.1.1 方法一：使用 Docker 镜像
 
-暂不支持，正在适配中。
+PaddleOCR 提供了 Docker 镜像，用于快速启动 vLLM 推理服务。可使用以下命令启动服务（要求 Docker 版本 >= 19.03，机器装配有 GPU 且 NVIDIA 驱动支持 CUDA 12.9 或以上版本）：
+
+```shell
+docker run \
+    -it \
+    --rm \
+    --gpus all \
+    --network host \
+    ccr-2vdh3abv-pub.cnc.bj.baidubce.com/paddlepaddle/paddleocr-genai-vllm-server:latest-gpu-sm120 \
+    paddleocr genai_server --model_name PaddleOCR-VL-0.9B --host 0.0.0.0 --port 8118 --backend vllm
+```
+
+如果您希望在无法连接互联网的环境中启动服务，请将上述命令中的 `ccr-2vdh3abv-pub.cnc.bj.baidubce.com/paddlepaddle/paddleocr-genai-vllm-server:latest-gpu-sm120`（镜像大小约为 12 GB）更换为离线版本镜像 `ccr-2vdh3abv-pub.cnc.bj.baidubce.com/paddlepaddle/paddleocr-genai-vllm-server:latest-gpu-sm120-offline`（镜像大小约为 14 GB）。
+
+启动 vLLM 推理服务可以传入更多参数，支持的参数详见下一小节。
 
 #### 3.1.2 方法二：通过 PaddleOCR CLI 安装和使用
 
@@ -118,7 +154,7 @@ paddleocr genai_server --model_name PaddleOCR-VL-0.9B --backend vllm --port 8118
 
 此步骤主要介绍如何将 PaddleOCR-VL 部署为服务并调用，有以下两种方式，任选一种即可：
 
-- 方法一：使用 Docker Compose 部署（暂不支持，正在适配中）。
+- 方法一：使用 Docker Compose 部署。
 
 - 方法二：手动安装依赖部署。
 
@@ -126,69 +162,41 @@ paddleocr genai_server --model_name PaddleOCR-VL-0.9B --backend vllm --port 8118
 
 ### 4.1 方法一：使用 Docker Compose 部署
 
-暂不支持，正在适配中。
+1. 从 [此处](https://github.com/PaddlePaddle/PaddleOCR/blob/main/deploy/paddleocr_vl_docker/compose.yaml) 复制内容保存为 `compose.yaml` 文件。
+
+2. 复制以下内容并保存为 `.env` 文件：
+
+    ```
+    API_IMAGE_TAG_SUFFIX=latest-gpu-sm120-offline
+    VLM_BACKEND=vllm
+    VLM_IMAGE_TAG_SUFFIX=latest-gpu-sm120-offline
+    ```
+
+3. 在 `compose.yaml` 和 `.env` 文件所在目录下执行以下命令启动服务器，默认监听 **8080** 端口：
+
+    ```shell
+    # 必须在 compose.yaml 和 .env 文件所在的目录中执行
+    docker compose up
+    ```
+
+    启动后将看到类似如下输出：
+
+    ```text
+    paddleocr-vl-api             | INFO:     Started server process [1]
+    paddleocr-vl-api             | INFO:     Waiting for application startup.
+    paddleocr-vl-api             | INFO:     Application startup complete.
+    paddleocr-vl-api             | INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+    ```
+
+此方式基于 vLLM 框架对 VLM 推理进行加速，更适合生产环境部署。
+
+此外，使用此方式启动服务器后，除拉取镜像外，无需连接互联网。如需在离线环境中部署，可先在联网机器上拉取 Compose 文件中涉及的镜像，导出并传输至离线机器中导入，即可在离线环境下启动服务。
+
+如需调整产线相关配置（如模型路径、批处理大小、部署设备等），可参考 4.4 小节。
 
 ### 4.2 方法二：手动安装依赖部署
 
-执行以下命令，通过 PaddleX CLI 安装服务化部署插件：
-
-```shell
-paddlex --install serving
-```
-
-然后，使用 PaddleX CLI 启动服务器：
-
-```shell
-paddlex --serve --pipeline PaddleOCR-VL
-```
-
-启动后将看到类似如下输出，服务器默认监听 **8080** 端口：
-
-```text
-INFO:     Started server process [63108]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
-```
-
-与服务化部署相关的命令行参数如下：
-
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--pipeline</code></td>
-<td>PaddleX 产线注册名或产线配置文件路径。</td>
-</tr>
-<tr>
-<td><code>--device</code></td>
-<td>产线部署设备。默认情况下，若 GPU 可用则使用 GPU，否则使用 CPU。</td>
-</tr>
-<tr>
-<td><code>--host</code></td>
-<td>服务器绑定的主机名或 IP 地址，默认为 <code>0.0.0.0</code>。</td>
-</tr>
-<tr>
-<td><code>--port</code></td>
-<td>服务器监听的端口号，默认为 <code>8080</code>。</td>
-</tr>
-<tr>
-<td><code>--use_hpip</code></td>
-<td>启用高性能推理模式。请参考高性能推理文档了解更多信息。</td>
-</tr>
-<tr>
-<td><code>--hpi_config</code></td>
-<td>高性能推理配置。请参考高性能推理文档了解更多信息。</td>
-</tr>
-</tbody>
-</table>
-
-如需调整产线相关配置（如模型路径、批处理大小、部署设备等），可参考 4.4 小节。
+请参考[PaddleOCR-VL 使用教程](./PaddleOCR-VL.md) 相同章节。
 
 ### 4.3 客户端调用方式
 
