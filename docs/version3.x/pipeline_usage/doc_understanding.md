@@ -16,6 +16,8 @@ comments: true
 
 在本产线中，您可以根据下方的基准测试数据选择使用的模型。
 
+> 推理耗时仅包含模型推理耗时，不包含前后处理耗时。
+
 <details>
 <summary> <b>文档类视觉语言模型模块：</b></summary>
 
@@ -53,14 +55,16 @@ comments: true
 
 ## 2. 快速开始
 
-在本地使用文档理解产线前，请确保您已经按照[安装教程](../installation.md)完成了wheel包安装。安装完成后，可以在本地使用命令行体验或 Python 集成。
+在本地使用文档理解产线前，请确保您已经按照[安装教程](../installation.md)完成了wheel包安装。如果您希望选择性安装依赖，请参考安装教程中的相关说明。该产线对应的依赖分组为 `doc-parser`。安装完成后，可以在本地使用命令行体验或 Python 集成。
+
+**请注意，如果在执行过程中遇到程序失去响应、程序异常退出、内存资源耗尽、推理速度极慢等问题，请尝试参考文档调整配置，例如关闭不需要使用的功能或使用更轻量的模型。**
 
 ### 2.1 命令行方式体验
 
 一行命令即可快速体验 doc_understanding 产线效果：
 
 ```bash
-paddleocr doc_understanding -i "{'image': 'https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/medal_table.png', 'query': '识别这份表格的内容, 以markdown格式输出'}"
+paddleocr doc_understanding -i "{'image': 'https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/medal_table.png', 'query': '识别这份表格的内容，以markdown格式输出'}"
 ```
 
 <details><summary><b>命令行支持更多参数设置，点击展开以查看命令行参数的详细说明</b></summary>
@@ -76,7 +80,7 @@ paddleocr doc_understanding -i "{'image': 'https://paddle-model-ecology.bj.bcebo
 <tbody>
 <tr>
 <td><code>input</code></td>
-<td>待预测数据，必填。如"{'image': 'https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/medal_table.png', 'query': '识别这份表格的内容, 以markdown格式输出'}"。
+<td>待预测数据，必填。如"{'image': 'https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/medal_table.png', 'query': '识别这份表格的内容，以markdown格式输出'}"。
 </td>
 <td><code>str</code></td>
 <td></td>
@@ -101,13 +105,13 @@ paddleocr doc_understanding -i "{'image': 'https://paddle-model-ecology.bj.bcebo
 </tr>
 <tr>
 <td><code>doc_understanding_batch_size</code></td>
-<td>文档理解模型的批处理大小。如果设置为<code>None</code>，将默认设置批处理大小为<code>1</code>。</td>
+<td>文档理解模型的batch size。如果设置为<code>None</code>，将默认设置batch size为<code>1</code>。</td>
 <td><code>int</code></td>
 <td></td>
 </tr>
 <tr>
 <td><code>device</code></td>
-<td>用于推理的设备。支持指定具体卡号。
+<td>用于推理的设备。支持指定具体卡号：
 <ul>
 <li><b>CPU</b>：如 <code>cpu</code> 表示使用 CPU 进行推理；</li>
 <li><b>GPU</b>：如 <code>gpu:0</code> 表示使用第 1 块 GPU 进行推理；</li>
@@ -119,43 +123,6 @@ paddleocr doc_understanding -i "{'image': 'https://paddle-model-ecology.bj.bcebo
 </td>
 <td><code>str</code></td>
 <td></td>
-</tr>
-<tr>
-<td><code>enable_hpi</code></td>
-<td>是否启用高性能推理。</td>
-<td><code>bool</code></td>
-<td><code>False</code></td>
-</tr>
-<tr>
-<td><code>use_tensorrt</code></td>
-<td>是否使用 TensorRT 进行推理加速。</td>
-<td><code>bool</code></td>
-<td><code>False</code></td>
-</tr>
-<tr>
-<td><code>min_subgraph_size</code></td>
-<td>最小子图大小，用于优化模型子图的计算。</td>
-<td><code>int</code></td>
-<td><code>3</code></td>
-</tr>
-<tr>
-<td><code>precision</code></td>
-<td>计算精度，如 fp32、fp16。</td>
-<td><code>str</code></td>
-<td><code>fp32</code></td>
-</tr>
-<tr>
-<td><code>enable_mkldnn</code></td>
-<td>是否启用 MKL-DNN 加速库。如果不设置，将默认关闭。
-</td>
-<td><code>bool</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>cpu_threads</code></td>
-<td>在 CPU 上进行推理时使用的线程数。</td>
-<td><code>int</code></td>
-<td><code>8</code></td>
 </tr>
 <tr>
 <td><code>paddlex_config</code></td>
@@ -171,7 +138,7 @@ paddleocr doc_understanding -i "{'image': 'https://paddle-model-ecology.bj.bcebo
 运行结果会被打印到终端上，默认配置的 doc_understanding 产线的运行结果如下：
 
 ```bash
-{'res': {'image': 'https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/medal_table.png', 'query': '识别这份表格的内容, 以markdown格式输出', 'result': '| 名次 | 国家/地区 | 金牌 | 银牌 | 铜牌 | 奖牌总数 |\n| --- | --- | --- | --- | --- | --- |\n| 1 | 中国（CHN） | 48 | 22 | 30 | 100 |\n| 2 | 美国（USA） | 36 | 39 | 37 | 112 |\n| 3 | 俄罗斯（RUS） | 24 | 13 | 23 | 60 |\n| 4 | 英国（GBR） | 19 | 13 | 19 | 51 |\n| 5 | 德国（GER） | 16 | 11 | 14 | 41 |\n| 6 | 澳大利亚（AUS） | 14 | 15 | 17 | 46 |\n| 7 | 韩国（KOR） | 13 | 11 | 8 | 32 |\n| 8 | 日本（JPN） | 9 | 8 | 8 | 25 |\n| 9 | 意大利（ITA） | 8 | 9 | 10 | 27 |\n| 10 | 法国（FRA） | 7 | 16 | 20 | 43 |\n| 11 | 荷兰（NED） | 7 | 5 | 4 | 16 |\n| 12 | 乌克兰（UKR） | 7 | 4 | 11 | 22 |\n| 13 | 肯尼亚（KEN） | 6 | 4 | 6 | 16 |\n| 14 | 西班牙（ESP） | 5 | 11 | 3 | 19 |\n| 15 | 牙买加（JAM） | 5 | 4 | 2 | 11 |\n'}}
+{'res': {'image': 'https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/medal_table.png', 'query': '识别这份表格的内容，以markdown格式输出', 'result': '| 名次 | 国家/地区 | 金牌 | 银牌 | 铜牌 | 奖牌总数 |\n| --- | --- | --- | --- | --- | --- |\n| 1 | 中国（CHN） | 48 | 22 | 30 | 100 |\n| 2 | 美国（USA） | 36 | 39 | 37 | 112 |\n| 3 | 俄罗斯（RUS） | 24 | 13 | 23 | 60 |\n| 4 | 英国（GBR） | 19 | 13 | 19 | 51 |\n| 5 | 德国（GER） | 16 | 11 | 14 | 41 |\n| 6 | 澳大利亚（AUS） | 14 | 15 | 17 | 46 |\n| 7 | 韩国（KOR） | 13 | 11 | 8 | 32 |\n| 8 | 日本（JPN） | 9 | 8 | 8 | 25 |\n| 9 | 意大利（ITA） | 8 | 9 | 10 | 27 |\n| 10 | 法国（FRA） | 7 | 16 | 20 | 43 |\n| 11 | 荷兰（NED） | 7 | 5 | 4 | 16 |\n| 12 | 乌克兰（UKR） | 7 | 4 | 11 | 22 |\n| 13 | 肯尼亚（KEN） | 6 | 4 | 6 | 16 |\n| 14 | 西班牙（ESP） | 5 | 11 | 3 | 19 |\n| 15 | 牙买加（JAM） | 5 | 4 | 2 | 11 |\n'}}
 ```
 
 ### 2.2 Python脚本方式集成
@@ -210,24 +177,24 @@ for res in output:
 <tr>
 <td><code>doc_understanding_model_name</code></td>
 <td>文档理解模型的名称。如果设置为<code>None</code>，将会使用产线默认模型。</td>
-<td><code>str</code></td>
+<td><code>str|None</code></td>
 <td><code>None</code></td>
 </tr>
 <tr>
 <td><code>doc_understanding_model_dir</code></td>
 <td>文档理解模型的目录路径。如果设置为<code>None</code>，将会下载官方模型。</td>
-<td><code>str</code></td>
+<td><code>str|None</code></td>
 <td><code>None</code></td>
 </tr>
 <tr>
 <td><code>doc_understanding_batch_size</code></td>
-<td>文档理解模型的批处理大小。如果设置为<code>None</code>，将默认设置批处理大小为<code>1</code>。</td>
-<td><code>int</code></td>
+<td>文档理解模型的batch size。如果设置为<code>None</code>，将默认设置batch size为<code>1</code>。</td>
+<td><code>int|None</code></td>
 <td><code>None</code></td>
 </tr>
 <tr>
 <td><code>device</code></td>
-<td>用于推理的设备。支持指定具体卡号。
+<td>用于推理的设备。支持指定具体卡号：
 <ul>
 <li><b>CPU</b>：如 <code>cpu</code> 表示使用 CPU 进行推理；</li>
 <li><b>GPU</b>：如 <code>gpu:0</code> 表示使用第 1 块 GPU 进行推理；</li>
@@ -238,50 +205,13 @@ for res in output:
 <li><b>None</b>：如果设置为<code>None</code>，将默认使用产线初始化的该参数值，初始化时，会优先使用本地的 GPU 0号设备，如果没有，则使用 CPU 设备。</li>
 </ul>
 </td>
-<td><code>str</code></td>
+<td><code>str|None</code></td>
 <td><code>None</code></td>
-</tr>
-<tr>
-<td><code>enable_hpi</code></td>
-<td>是否启用高性能推理。</td>
-<td><code>bool</code></td>
-<td><code>False</code></td>
-</tr>
-<tr>
-<td><code>use_tensorrt</code></td>
-<td>是否使用TensorRT进行推理加速。</td>
-<td><code>bool</code></td>
-<td><code>False</code></td>
-</tr>
-<tr>
-<td><code>min_subgraph_size</code></td>
-<td>最小子图大小，用于优化模型子图的计算。</td>
-<td><code>int</code></td>
-<td><code>3</code></td>
-</tr>
-<tr>
-<td><code>precision</code></td>
-<td>计算精度，如 fp32、fp16。</td>
-<td><code>str</code></td>
-<td><code>"fp32"</code></td>
-</tr>
-<tr>
-<td><code>enable_mkldnn</code></td>
-<td>是否启用 MKL-DNN 加速库。如果设置为<code>None</code>，将默认关闭。
-</td>
-<td><code>bool</code></td>
-<td><code>None</code></td>
-</tr>
-<tr>
-<td><code>cpu_threads</code></td>
-<td>在 CPU 上进行推理时使用的线程数。</td>
-<td><code>int</code></td>
-<td><code>8</code></td>
 </tr>
 <tr>
 <td><code>paddlex_config</code></td>
 <td>PaddleX产线配置文件路径。</td>
-<td><code>str</code></td>
+<td><code>str|None</code></td>
 <td><code>None</code></td>
 </tr>
 </tbody>
@@ -304,7 +234,7 @@ for res in output:
 </thead>
 <tr>
 <td><code>input</code></td>
-<td>待预测数据，目前仅支持字典类型的输入
+<td>待预测数据，目前仅支持dict类型的输入
 <ul>
   <li><b>Python Dict</b>：如PP-DocBee的输入形式为: <code>{"image":/path/to/image, "query": user question}</code> ,分别表示输入的图像和对应的用户问题。</li>
 </ul>
@@ -828,7 +758,7 @@ openai接口调用示例
 <pre><code class="language-python">import base64
 from openai import OpenAI
 
-API_BASE_URL = "http://0.0.0.0:8080"
+API_BASE_URL = "http://127.0.0.1:8080"
 
 # 初始化OpenAI客户端
 client = OpenAI(

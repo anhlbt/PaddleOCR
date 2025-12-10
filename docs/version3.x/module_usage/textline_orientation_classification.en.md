@@ -9,6 +9,8 @@ The text line orientation classification module primarily distinguishes the orie
 
 ## 2. Supported Model List
 
+> The inference time only includes the model inference time and does not include the time for pre- or post-processing.
+
 <table>
 <thead>
 <tr>
@@ -16,24 +18,26 @@ The text line orientation classification module primarily distinguishes the orie
 <th>Top-1 Accuracy (%)</th>
 <th>GPU Inference Time (ms)<br/>[Normal Mode / High-Performance Mode]</th>
 <th>CPU Inference Time (ms)</th>
-<th>Model Size (M)</th>
+<th>Model Storage Size (MB)</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>PP-LCNet_x0_25_textline_ori</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-LCNet_x0_25_textline_ori_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-LCNet_x0_25_textline_ori_pretrained.pdparams">Training Model</a></td>
+<td>PP-LCNet_x0_25_textline_ori</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-LCNet_x0_25_textline_ori_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-LCNet_x0_25_textline_ori_pretrained.pdparams">Training Model</a></td>
 <td>98.85</td>
-<td>-</td>
-<td>-</td>
+<td>2.16 / 0.41</td>
+<td>2.37 / 0.73</td>
 <td>0.96</td>
 <td>Text line classification model based on PP-LCNet_x0_25, with two classes: 0 degrees and 180 degrees</td>
 </tr>
 <tr>
-<td>PP-LCNet_x1_0_textline_ori</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-LCNet_x1_0_textline_ori_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-LCNet_x1_0_textline_ori_pretrained.pdparams">Training Model</a></td>
+<td>PP-LCNet_x1_0_textline_ori</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-LCNet_x1_0_textline_ori_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-LCNet_x1_0_textline_ori_pretrained.pdparams">Training Model</a></td>
 <td>99.42</td>
-<td>-</td>
-<td>-</td>
+<td>- / -</td>
+<td>2.98 / 2.98</td>
 <td>6.5</td>
 <td>Text line classification model based on PP-LCNet_x1_0, with two classes: 0 degrees and 180 degrees</td>
 </tr>
@@ -48,11 +52,16 @@ The text line orientation classification module primarily distinguishes the orie
       <li><b>Performance Test Environment</b>
           <ul>
              <li><strong>Test Dataset：</strong> PaddleX Self-built Dataset, Covering Multiple Scenarios Such as Documents and Certificates, Containing 1000 Images.</li>
-              <li><strong>Hardware Configuration：</strong>
+              <li><strong>Hardware Configuration:</strong>
                   <ul>
                       <li>GPU: NVIDIA Tesla T4</li>
                       <li>CPU: Intel Xeon Gold 6271C @ 2.60GHz</li>
-                      <li>Other Environments: Ubuntu 20.04 / cuDNN 8.6 / TensorRT 8.5.2.2</li>
+                  </ul>
+              </li>
+              <li><strong>Software Environment:</strong>
+                  <ul>
+                      <li>Ubuntu 20.04 / CUDA 11.8 / cuDNN 8.9 / TensorRT 8.6.1.6</li>
+                      <li>paddlepaddle 3.0.0 / paddleocr 3.0.3</li>
                   </ul>
               </li>
           </ul>
@@ -94,6 +103,8 @@ You can quickly experience the functionality with a single command:
 ```bash
 paddleocr textline_orientation_classification -i https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/textline_rot180_demo.jpg
 ```  
+
+<b>Note: </b>The official models would be download from HuggingFace by default. If can't access to HuggingFace, please set the environment variable `PADDLE_PDX_MODEL_SOURCE="BOS"` to change the model source to BOS. In the future, more model sources will be supported.
 
 You can also integrate the text line orientation classification model into your project. Run the following code after downloading the [example image](https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/textline_rot180_demo.jpg) to your local machine. 
 
@@ -140,57 +151,62 @@ The explanations for the methods, parameters, etc., are as follows:
 <tbody>
 <tr>
 <td><code>model_name</code></td>
-<td>Name of the model</td>
-<td><code>str</code></td>
+<td>Model name. If set to <code>None</code>, <code>PP-LCNet_x0_25_textline_ori</code> will be used.</td>
+<td><code>str|None</code></td>
 <td><code>None</code></td>
 </tr>
 <tr>
 <td><code>model_dir</code></td>
-<td>Model storage path</td>
-<td><code>str</code></td>
+<td>Model storage path.</td>
+<td><code>str|None</code></td>
 <td><code>None</code></td>
 </tr>
 <tr>
 <td><code>device</code></td>
-<td>Device(s) to use for inference.<br/>
-<b>Examples:</b> <code>cpu</code>, <code>gpu</code>, <code>npu</code>, <code>gpu:0</code>, <code>gpu:0,1</code>.<br/>
-If multiple devices are specified, inference will be performed in parallel. Note that parallel inference is not always supported.<br/>
-By default, GPU 0 will be used if available; otherwise, the CPU will be used.
+<td>Device for inference.<br/>
+<b>For example:</b> <code>"cpu"</code>, <code>"gpu"</code>, <code>"npu"</code>, <code>"gpu:0"</code>, <code>"gpu:0,1"</code>.<br/>
+If multiple devices are specified, parallel inference will be performed.<br/>
+By default, GPU 0 is used if available; otherwise, CPU is used.
 </td>
-<td><code>str</code></td>
+<td><code>str|None</code></td>
 <td><code>None</code></td>
 </tr>
 <tr>
 <td><code>enable_hpi</code></td>
-<td>Whether to use the high performance inference.</td>
+<td>Whether to enable high-performance inference.</td>
 <td><code>bool</code></td>
 <td><code>False</code></td>
 </tr>
 <tr>
 <td><code>use_tensorrt</code></td>
-<td>Whether to use the Paddle Inference TensorRT subgraph engine.</td>
+<td>Whether to use the Paddle Inference TensorRT subgraph engine. If the model does not support acceleration through TensorRT, setting this flag will not enable acceleration.<br/>
+For Paddle with CUDA version 11.8, the compatible TensorRT version is 8.x (x>=6), and it is recommended to install TensorRT 8.6.1.6.<br/>
+
+</td>
 <td><code>bool</code></td>
 <td><code>False</code></td>
 </tr>
 <tr>
-<td><code>min_subgraph_size</code></td>
-<td>Minimum subgraph size for TensorRT when using the Paddle Inference TensorRT subgraph engine.</td>
-<td><code>int</code></td>
-<td><code>3</code></td>
-</tr>
-<tr>
 <td><code>precision</code></td>
-<td>Precision for TensorRT when using the Paddle Inference TensorRT subgraph engine.<br/><b>Options:</b> <code>fp32</code>, <code>fp16</code>, etc.</td>
+<td>Computation precision when using the TensorRT subgraph engine in Paddle Inference.<br/><b>Options:</b> <code>"fp32"</code>, <code>"fp16"</code>.</td>
 <td><code>str</code></td>
-<td><code>fp32</code></td>
+<td><code>"fp32"</code></td>
 </tr>
 <tr>
 <td><code>enable_mkldnn</code></td>
 <td>
-Whether to use MKL-DNN acceleration for inference.
+Whether to enable MKL-DNN acceleration for inference. If MKL-DNN is unavailable or the model does not support it, acceleration will not be used even if this flag is set.
 </td>
 <td><code>bool</code></td>
 <td><code>True</code></td>
+</tr>
+<tr>
+<td><code>mkldnn_cache_capacity</code></td>
+<td>
+MKL-DNN cache capacity.
+</td>
+<td><code>int</code></td>
+<td><code>10</code></td>
 </tr>
 <tr>
 <td><code>cpu_threads</code></td>
@@ -198,16 +214,8 @@ Whether to use MKL-DNN acceleration for inference.
 <td><code>int</code></td>
 <td><code>10</code></td>
 </tr>
-<tr>
-<td><code>top_k</code></td>
-<td>The top-k value for prediction results. If not specified, the default value in the official PaddleOCR model configuration is used. If the value is 5, the top 5 categories and their corresponding classification probabilities will be returned.</td>
-<td><code>int</code></td>
-<td><code>None</code></td>
-</tr>
 </tbody>
 </table>
-
-* `model_name` must be specified. Once `model_name` is set, the default built-in model parameters of PaddleOCR will be used. On this basis, if `model_dir` is specified, the user-defined model will be used.
 
 * Use the `predict()` method of the text line direction classification model to perform inference. This method returns a list of results. In addition, this module also provides the `predict_iter()` method. Both methods accept the same parameters and return the same result format. The difference is that `predict_iter()` returns a `generator`, which processes and retrieves prediction results step by step. It is suitable for handling large datasets or memory-efficient scenarios. You can choose either method based on your actual needs. The `predict()` method accepts the parameters `input` and `batch_size`, which are described in detail below:
 <table>
@@ -221,11 +229,13 @@ Whether to use MKL-DNN acceleration for inference.
 </thead>
 <tr>
 <td><code>input</code></td>
-<td>Input data for prediction. Multiple input types are supported. This parameter is required.
-<ul>
-<li><b>Python Var</b>: such as <code>numpy.ndarray</code> representing image data</li>
-<li><b>str</b>: such as the local path of an image or PDF file: <code>/root/data/img.jpg</code>; <b>or a URL link</b>, such as the online URL of an image or PDF file: <a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/general_doc_preprocessor_002.png">Example</a>; <b>or a local directory</b> that contains images for prediction, such as <code>/root/data/</code> (currently, directories containing PDF files are not supported; PDF files must be specified as individual file paths)</li>
-<li><b>List</b>: list elements must be of the above types, such as <code>[numpy.ndarray, numpy.ndarray]</code>, <code>["/root/data/img1.jpg", "/root/data/img2.jpg"]</code>, <code>["/root/data1", "/root/data2"]</code></li>
+<td>Input data to be predicted. Required. Supports multiple input types:<ul>
+<li><b>Python Var</b>: e.g., <code>numpy.ndarray</code> representing image data</li>
+<li><b>str</b>: 
+  - Local image or PDF file path: <code>/root/data/img.jpg</code>;
+  - <b>URL</b> of image or PDF file: e.g., <a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/general_doc_preprocessor_002.png">example</a>;
+  - <b>Local directory</b>: directory containing images for prediction, e.g., <code>/root/data/</code> (Note: directories containing PDF files are not supported; PDFs must be specified by exact file path)</li>
+<li><b>list</b>: Elements must be of the above types, e.g., <code>[numpy.ndarray, numpy.ndarray]</code>, <code>["/root/data/img1.jpg", "/root/data/img2.jpg"]</code>, <code>["/root/data1", "/root/data2"]</code></li>
 </ul>
 </td>
 <td><code>Python Var|str|list</code></td>
@@ -256,14 +266,14 @@ Whether to use MKL-DNN acceleration for inference.
 <tr>
 <td><code>input</code></td>
 <td>Data to be predicted, supporting multiple input types</td>
-<td><code>Python Var</code>/<code>str</code>/<code>list</code></td>
+<td><code>Python Var|str|list</code></td>
 <td>
 <ul>
   <li><b>Python variable</b>, such as image data represented by <code>numpy.ndarray</code></li>
   <li><b>File path</b>, such as the local path of an image file: <code>/root/data/img.jpg</code></li>
   <li><b>URL link</b>, such as the network URL of an image file: <a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/textline_rot180_demo.jpg">Example</a></li>
   <li><b>Local directory</b>, the directory should contain data files to be predicted, such as the local path: <code>/root/data/</code></li>
-  <li><b>List</b>, the elements of the list should be of the above-mentioned data types, such as <code>[numpy.ndarray, numpy.ndarray]</code>, <code>[\"/root/data/img1.jpg\", \"/root/data/img2.jpg\"]</code>, <code>[\"/root/data1\", \"/root/data2\"]</code></li>
+  <li><b>list</b>, the elements of the list should be of the above-mentioned data types, such as <code>[numpy.ndarray, numpy.ndarray]</code>, <code>[\"/root/data/img1.jpg\", \"/root/data/img2.jpg\"]</code>, <code>[\"/root/data1\", \"/root/data2\"]</code></li>
 </ul>
 </td>
 <td>None</td>

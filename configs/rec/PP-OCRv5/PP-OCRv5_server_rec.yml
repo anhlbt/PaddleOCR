@@ -2,15 +2,15 @@ Global:
   model_name: PP-OCRv5_server_rec # To use static model for inference.
   debug: false
   use_gpu: true
-  epoch_num: 75
+  epoch_num: 250
   log_smooth_window: 20
   print_batch_step: 10
   save_model_dir: ./output/PP-OCRv5_server_rec
-  save_epoch_step: 1
+  save_epoch_step: 10
   eval_batch_step: [0, 2000]
   cal_metric_during_train: true
   calc_epoch_interval: 1
-  pretrained_model: null # ./pretrained_models/PP-OCRv5_server_rec_pretrained.pdparams
+  pretrained_model: null # ./pretrained_models/PP-OCRv5_server_rec_pretrained.pdparams  # null # 
   checkpoints: ./output/PP-OCRv5_server_rec/latest
   save_inference_dir:
   use_visualdl: false

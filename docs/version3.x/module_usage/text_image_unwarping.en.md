@@ -12,20 +12,27 @@ The primary purpose of text image rectification is to perform geometric transfor
 
 ## 2. Supported Model List
 
+> The inference time only includes the model inference time and does not include the time for pre- or post-processing.
+
 <table>
 <thead>
 <tr>
 <th>Model</th><th>Model Download Link</th>
 <th>CER</th>
-<th>Model Storage Size (M)</th>
+<th>GPU Inference Time (ms)<br/>[Normal Mode / High-Performance Mode]</th>
+<th>CPU Inference Time (ms)<br/>[Normal Mode / High-Performance Mode]</th>
+<th>Model Storage Size (MB)</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>UVDoc</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/UVDoc_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/UVDoc_pretrained.pdparams">Training Model</a></td>
+<td>UVDoc</td>
+<td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/UVDoc_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/UVDoc_pretrained.pdparams">Training Model</a></td>
 <td>0.179</td>
-<td>30.3 M</td>
+<td>19.05 / 19.05</td>
+<td>- / 869.82</td>
+<td>30.3</td>
 <td>High-accuracy text image rectification model</td>
 </tr>
 </tbody>
@@ -41,7 +48,12 @@ The primary purpose of text image rectification is to perform geometric transfor
                   <ul>
                       <li>GPU: NVIDIA Tesla T4</li>
                       <li>CPU: Intel Xeon Gold 6271C @ 2.60GHz</li>
-                      <li>Other Environment: Ubuntu 20.04 / cuDNN 8.6 / TensorRT 8.5.2.2</li>
+                  </ul>
+              </li>
+              <li><strong>Software Environment:</strong>
+                  <ul>
+                      <li>Ubuntu 20.04 / CUDA 11.8 / cuDNN 8.9 / TensorRT 8.6.1.6</li>
+                      <li>paddlepaddle 3.0.0 / paddleocr 3.0.3</li>
                   </ul>
               </li>
           </ul>
@@ -83,6 +95,8 @@ You can quickly experience it with one command:
 ```bash
 paddleocr text_image_unwarping -i https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/doc_test.jpg
 ```
+
+<b>Note: </b>The official models would be download from HuggingFace by default. If can't access to HuggingFace, please set the environment variable `PADDLE_PDX_MODEL_SOURCE="BOS"` to change the model source to BOS. In the future, more model sources will be supported.
 
 You can also integrate the model inference from the image rectification module into your project. Before running the following code, please download the [sample image](https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/doc_test.jpg) locally.
 
@@ -153,15 +167,12 @@ By default, GPU 0 will be used if available; otherwise, the CPU will be used.
 </tr>
 <tr>
 <td><code>use_tensorrt</code></td>
-<td>Whether to use the Paddle Inference TensorRT subgraph engine.</td>
+<td>Whether to use the Paddle Inference TensorRT subgraph engine. If the model does not support acceleration through TensorRT, setting this flag will not enable acceleration.<br/>
+For Paddle with CUDA version 11.8, the compatible TensorRT version is 8.x (x>=6), and it is recommended to install TensorRT 8.6.1.6.<br/>
+
+</td>
 <td><code>bool</code></td>
 <td><code>False</code></td>
-</tr>
-<tr>
-<td><code>min_subgraph_size</code></td>
-<td>Minimum subgraph size for TensorRT when using the Paddle Inference TensorRT subgraph engine.</td>
-<td><code>int</code></td>
-<td><code>3</code></td>
 </tr>
 <tr>
 <td><code>precision</code></td>
@@ -172,10 +183,18 @@ By default, GPU 0 will be used if available; otherwise, the CPU will be used.
 <tr>
 <td><code>enable_mkldnn</code></td>
 <td>
- Whether to use acceleration for inference.
+Whether to enable MKL-DNN acceleration for inference. If MKL-DNN is unavailable or the model does not support it, acceleration will not be used even if this flag is set.
 </td>
 <td><code>bool</code></td>
 <td><code>True</code></td>
+</tr>
+<tr>
+<td><code>mkldnn_cache_capacity</code></td>
+<td>
+MKL-DNN cache capacity.
+</td>
+<td><code>int</code></td>
+<td><code>10</code></td>
 </tr>
 <tr>
 <td><code>cpu_threads</code></td>
@@ -185,8 +204,6 @@ By default, GPU 0 will be used if available; otherwise, the CPU will be used.
 </tr>
 </tbody>
 </table>
-
-* Among them, `model_name` must be specified. After specifying `model_name`, the default model parameters built into PaddleX are used. When `model_dir` is specified, the user-defined model is used.
 
 * Call the `predict()` method of the image rectification model for inference prediction. This method will return a result list. Additionally, this module also provides a `predict_iter()` method. Both methods are consistent in terms of parameter acceptance and result return. The difference is that `predict_iter()` returns a `generator`, which can process and obtain prediction results step by step, suitable for handling large datasets or scenarios where memory saving is desired. You can choose to use either of these methods according to your actual needs. The `predict()` method has parameters `input` and `batch_size`, with specific explanations as follows:
 
@@ -208,7 +225,7 @@ By default, GPU 0 will be used if available; otherwise, the CPU will be used.
   - Local image or PDF file path: <code>/root/data/img.jpg</code>;
   - <b>URL</b> of image or PDF file: e.g., <a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/general_doc_preprocessor_002.png">example</a>;
   - <b>Local directory</b>: directory containing images for prediction, e.g., <code>/root/data/</code> (Note: directories containing PDF files are not supported; PDFs must be specified by exact file path)</li>
-<li><b>List</b>: Elements must be of the above types, e.g., <code>[numpy.ndarray, numpy.ndarray]</code>, <code>["/root/data/img1.jpg", "/root/data/img2.jpg"]</code>, <code>["/root/data1", "/root/data2"]</code></li>
+<li><b>list</b>: Elements must be of the above types, e.g., <code>[numpy.ndarray, numpy.ndarray]</code>, <code>["/root/data/img1.jpg", "/root/data/img2.jpg"]</code>, <code>["/root/data1", "/root/data2"]</code></li>
 </ul>
 </td>
 <td><code>Python Var|str|list</code></td>

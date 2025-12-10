@@ -13,19 +13,19 @@ comments: true
 - PaddlePaddle with CUDA 11.8
 
   ```bash linenums="1"
-  python3 -m pip install paddlepaddle-gpu -i https://www.paddlepaddle.org.cn/packages/stable/cu118/
+  python3 -m pip install "paddlepaddle-gpu<=2.6" -i https://www.paddlepaddle.org.cn/packages/stable/cu118/
   ```
 
 - PaddlePaddle with CUDA 12.3
 
   ```bash linenums="1"
-  python3 -m pip install paddlepaddle-gpu -i https://www.paddlepaddle.org.cn/packages/stable/cu123/
+  python3 -m pip install "paddlepaddle-gpu<=2.6" -i https://www.paddlepaddle.org.cn/packages/stable/cu123/
   ```
 
 - If your machine does not have an available GPU, please run the following command to install the CPU version
 
   ```bash linenums="1"
-  python3 -m pip install paddlepaddle -i https://www.paddlepaddle.org.cn/packages/stable/cpu/
+  python3 -m pip install "paddlepaddle<=2.6" -i https://www.paddlepaddle.org.cn/packages/stable/cpu/
   ```
 
 For more software version requirements, please refer to the instructions in the [Installation Document](https://www.paddlepaddle.org.cn/en/install/quick).
@@ -33,7 +33,7 @@ For more software version requirements, please refer to the instructions in the 
 ### 1.2 Install PaddleOCR Whl Package
 
 ```bash linenums="1"
-python3 -m pip install paddleocr
+python3 -m pip install "paddleocr<3.0"
 
 # Install the image direction classification dependency package paddleclas (if you do not use the image direction classification, you can skip it)
 python3 -m pip install paddleclas
@@ -262,7 +262,7 @@ for line in result:
 
 #### 2.2.5 Key Information Extraction
 
-Key information extraction does not currently support use by the whl package. For detailed usage tutorials, please refer to: [Inference](../infer_deploy/python_infer.en.md).
+Key information extraction does not currently support use by the whl package. For detailed usage tutorials, please refer to: [Inference](../legacy/python_infer.en.md).
 
 #### 2.2.6 layout recovery
 
@@ -392,4 +392,4 @@ Most of the parameters are consistent with the PaddleOCR whl package, see [whl p
 
 ## 3. Summary
 
-Through the content in this section, you can master the use of PP-Structure related functions through PaddleOCR whl package. Please refer to [documentation tutorial](../index.en.md) for more detailed usage tutorials including model training, inference and deployment, etc.
+Through the content in this section, you can master the use of PP-Structure related functions through PaddleOCR whl package. Please refer to [documentation tutorial](https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.7.1/README_en.md) for more detailed usage tutorials including model training, inference and deployment, etc.

@@ -89,14 +89,14 @@ cd PaddleOCR
 pip install -r requirements.txt
 pip install -r ppstructure/kie/requirements.txt
 # 安装PaddleOCR引擎用于预测
-pip install paddleocr -U
+pip install "paddleocr<3.0"
 ```
 
 NOTE: For KIE tasks, it is necessary to downgrade the Paddle framework version (Paddle<2.6) and the PaddleNLP version (PaddleNLP<2.6).
 
 The visualized results of SER are saved in the `./output` folder by default. Examples of results are as follows.
 
-![img](https://github.com/PaddlePaddle/PaddleOCR/raw/main/ppstructure/docs/kie/result_ser/zh_val_42_ser.jpg)
+![img](./images/zh_val_42_ser.jpg)
 
 ### 4.2 Quick start
 
